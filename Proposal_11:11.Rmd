@@ -1,24 +1,24 @@
 ---
-title: "Proposal_11/11"
-author: "Ze Li, Qianying Wu, Zheshu Jiang, Yimeng Cai"
-date: "11/11/2023"
 output: pdf_document
 ---
 
-# Group Member: 
+# Proposal
 
-Yimeng Cai (yc3577), Zheshu Jiang (zj2379), Ze Li (zl2746), Qianying Wu (qw2418)
+Group member: Yimeng Cai (yc3577), Zheshu Jiang (zj2379), Ze Li (zl2746), Qianying Wu (qw2418)
 
-# Project Title: 
+1. Project title: 
 
-Multiple Linear Regression Analysis on Socio-economic factors and Bioindicators of Type II Diabetes by using R
+Regression Analysis on Socio-economic factors and Bioindicators of Type II Diabetes by using R
 
 
-# Project Motivation
 
-  Type II Diabetes is a global health concern that affects more than 37 million Americans and places a significant burden on healthcare systems. As a multifaceted disease, Type II diabetes was influenced by both socio-economic factors and biological indicators. By analyzing a comprehensive dataset from the Behavioral Risk Factor Surveillance System, we aim to uncover the correlations between diabetes prevalence and factors such as sex, education, income, lifestyle habits, and bioindicators like blood glucose and cholesterol levels. Through visualizations and statistical analysis in R, we aspire to highlight patterns that could inform better prevention and management strategies, thereby contributing to the broader dialogue on public health and socio-economic policies related to diabetes. 
+2. Project Motivation
 
-# Data Resources: 
+Type II Diabetes is a global health concern that affects more than 37 million Americans and places a significant burden on healthcare systems. As a multifaceted disease, Type II diabetes was influenced by both socio-economic factors and biological indicators. By analyzing a comprehensive dataset from the Behavioral Risk Factor Surveillance System, we aim to uncover the correlations between diabetes prevalence and factors such as sex, education, income, lifestyle habits, and bioindicators like blood glucose and cholesterol levels. Through visualizations and statistical analysis in R, we aspire to highlight patterns that could inform better prevention and management strategies, thereby contributing to the broader dialogue on public health and socio-economic policies related to diabetes etc.. 
+
+
+
+3. Data resources: 
   
   https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data
   
@@ -26,7 +26,9 @@ Multiple Linear Regression Analysis on Socio-economic factors and Bioindicators 
     
   The dataset was collected by the Behavioral Risk Factor Surveillance System (BRFSS) in 2015. This original dataset contains responses from 441,455 individuals and has 330 features. For this project, we use the one with 253,680 responses and a three-class diabetes target variable indicating no diabetes, prediabetes, or diabetes. The other potential factors for diabetes are blood pressure, cholesterol, cholesterol check, BMI, stroke, heart disease, and habits of smoking, physical exercise, eating fruit.
   
-# Intended Final Products
+  
+  
+4. Intended Final Products
 
 * Demographics Visualization:
 
@@ -39,9 +41,11 @@ Multiple Linear Regression Analysis on Socio-economic factors and Bioindicators 
 * Symptoms Association:
 
   With the understanding of factors correlated with the disease, we plan to study the physiological symptoms associated with type II diabetes in order to decide which biological symptom is able to perform as a significant bioindicator or biomarker through statistical tests. 
+ 
+ 
   
+5.  Visualizations
 
-#  Visualizations
 *  We will use a stacked bar chart to show the proportion of individuals with heart disease within diabetic, pre-diabetic, and non-diabetic groups using ggplot.
 
 * To explore the associations between blood glucose and diabetes association, we plan to visualize with a histogram or density plot, overlaying the distribution of blood glucose levels for diabetic, pre-diabetic, and non-diabetic groups using ggplot. We will also create a scatter plot with a trend line to observe the relationship between blood glucose levels and diabetes by ggplot.
@@ -52,8 +56,7 @@ Multiple Linear Regression Analysis on Socio-economic factors and Bioindicators 
 
 
 
-
-# Coding challenges
+6. Coding challenges
  
 *  It could be challenging to format data suitable for plotting, including handling missing values, outliers, and categorization.
 
@@ -63,8 +66,7 @@ Multiple Linear Regression Analysis on Socio-economic factors and Bioindicators 
 In addition, embedding statistical test results, like p-values, into plots and plotting dimensions and scales for clarity and to accommodate various factor levels could be difficult.
 
 
-    
-# Planned Timeline
+7. Planned Timeline
 
 Timeline      | Requirement             | Predicted Timeline
 ------------- | ----------------------- | -------------
