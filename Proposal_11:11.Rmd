@@ -39,6 +39,29 @@ Multiple Linear Regression Analysis on Socio-economic factors and Bioindicators 
 * Symptoms Association:
 
   With the understanding of factors correlated with the disease, we plan to study the physiological symptoms associated with type II diabetes in order to decide which biological symptom is able to perform as a significant bioindicator or biomarker through statistical tests. 
+  
+
+#  Visualizations
+*  We will use a stacked bar chart to show the proportion of individuals with heart disease within diabetic, pre-diabetic, and non-diabetic groups using ggplot.
+
+* To explore the associations between blood glucose and diabetes association, we plan to visualize with a histogram or density plot, overlaying the distribution of blood glucose levels for diabetic, pre-diabetic, and non-diabetic groups using ggplot. We will also create a scatter plot with a trend line to observe the relationship between blood glucose levels and diabetes by ggplot.
+
+* To visualize how diabetes prevalence varies across different demographic groups—such as sex, income, age, smoking status, and alcohol consumption—we will create a series of density plots. Each plot will display the distribution of diabetes cases within each demographic category, providing a clear visual comparison of how the disease's occurrence differs among various segments of the population.
+
+* Lastly, we will display side-by-side boxplots to show the spread of BMI across the dataset to give BMI Level Distribution by ggplot.
+
+
+
+
+# Coding challenges
+ 
+*  It could be challenging to format data suitable for plotting, including handling missing values, outliers, and categorization.
+
+*  It could also be challenging to ensure accurate representation of data while constructing bar charts, dot plots, and density plots, ensuring accurate representation of data, for example, picking the right variables.
+
+*  We also need to customize aesthetics of the graphs by mastering ggplot2's aesthetic parameters to differentiate categories visually by color, shape, or size.
+In addition, embedding statistical test results, like p-values, into plots and plotting dimensions and scales for clarity and to accommodate various factor levels could be difficult.
+
 
     
 # Planned Timeline
