@@ -34,9 +34,9 @@ https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/da
   
 6.  Visualizations
 *  Use a stacked bar chart to show the proportion of individuals with heart disease within diabetic, pre-diabetic, and non-diabetic groups using ggplot. 
-*  Visualize with a histogram or density plot, overlaying the distribution of blood glucose levels for diabetic, pre-diabetic, and non-diabetic groups using ggplot. We will also create a scatter plot with a trend line to observe the relationship between blood glucose levels and diabetes by ggplot. 
+*  Visualize with a histogram or density plot, overlaying the distribution of blood glucose levels for diabetic, pre-diabetic, and non-diabetic groups using ggplot. We will also create a scatter plot with a trend line to observe the relationship between blood glucose levels and diabetes. 
 *  To visualize how diabetes prevalence varies across different demographic groups—such as sex, income, age, smoking status, and alcohol consumption—we will create a series of density plots. Each plot will display the distribution of diabetes cases within each demographic category, providing a clear visual comparison of how the disease's occurrence differs among various segments of the population. 
-*  Display side-by-side boxplots to show the spread of BMI across the dataset to give BMI Level Distribution by ggplot.
+*  Display side-by-side boxplots to show the spread of BMI across the dataset to give BMI Level distributions.
 
 
 7. Coding challenges
