@@ -11,7 +11,7 @@ Type II Diabetes is a global health concern that affects more than 37 million Am
 
 3. Data resources:  
 https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data
-* Data Description: The dataset was collected by the Behavioral Risk Factor Surveillance System (BRFSS) in 2015. This original dataset contains responses from 441,455 individuals and has 330 features. For this project, we use the one with 253,680 responses and a three-class diabetes target variable indicating no diabetes, prediabetes, or diabetes. The other potential factors for diabetes are blood pressure, cholesterol, BMI, heart disease, and habits of smoking, physical exercise, eating fruit.
+* Data Description: The dataset was collected by the Behavioral Risk Factor Surveillance System (BRFSS) in 2015. This original dataset contains responses from 441,455 individuals and has 330 features. For this project, we use the one with 253,680 responses and a three-class diabetes target variable indicating no diabetes, prediabetes, or diabetes. The potential factors for diabetes are biological factors such as sex, blood pressure, cholesterol, BMI, heart disease, social factors such as education and income, and habits of smoking, physical exercise, eating fruit etc..
 
 4. Intended Final Products
 *  Factors Visualization: We decide to perform data visualization of diabetes distributions among population in different biological factors(sex, bmi) and socio-economic factors(income, education, smoking). 
@@ -42,6 +42,5 @@ Timeline      | Requirement             | Predicted Timeline
 12/9          | Report                  | Nov 24
 12/9          | webpage and screencast  | Dec 1-7
 12/9          | peer assessment         | Dec 7-8
-12/14         | In class discussion     | 
 
 
