@@ -1,13 +1,13 @@
 ---
 output: pdf_document
 ---
-# Proposal
+## Final Project Proposal
 Group member: Yimeng Cai (yc3577), Zheshu Jiang (zj2379), Ze Li (zl2746), Qianying Wu (qw2418)
 
 1. Project title: Regression Analysis on Multiple Factors and Bioindicators of Type II Diabetes
 
-2. Project Motivation 
-Type II Diabetes is a global health concern that affects more than 37 million Americans and places a significant burden on healthcare systems. As a multifaceted disease, Type II diabetes is influenced by both social factors,  biological factors, and bioindicators. By analyzing a comprehensive dataset from the Behavioral Risk Factor Surveillance System (BRFSS), we aim to uncover the correlations between diabetes prevalence and factors such as sex, education, income, bmi, smoking status and bioindicators like blood glucose and cholesterol levels. Through visualizations and statistical analysis in R, we aspire to highlight patterns that could inform better prevention and management strategies, thereby contributing to the broader dialogue on public health and policies related to diabetes.
+2. Project Motivation: 
+Type II Diabetes is a global health concern that affects more than 37 million Americans. By analyzing a comprehensive dataset from the Behavioral Risk Factor Surveillance System, we aim to uncover the correlations between diabetes prevalence and social and biological factors such as sex, education, income, bmi, smoking status and bioindicators like blood glucose and cholesterol levels. Through visualizations and statistical analysis in R, we aspire to highlight patterns that could inform better prevention and management strategies, thereby contributing to the broader dialogue on public health and policies related to diabetes.
 
 3. Data resources:  
 https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data
