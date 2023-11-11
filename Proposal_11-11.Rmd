@@ -25,12 +25,12 @@ https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/da
 
 6. Visualizations
 *   Use a stacked bar chart to show the proportion of individuals with heart disease within diabetic, pre-diabetic, and non-diabetic sample groups using ggplot. 
-*   Visualize with a histogram or density plot, overlaying the distribution of blood glucose levels for samples using ggplot. e.g. We create a scatter plot with a trend line to observe the relationship between blood glucose levels and diabetes. 
-*   To visualize how diabetes prevalence varies across different biological factor groups—such as sex, bmi, and socio-economic factors like smoking status, education, and income, we create a series of density plots. Each plot displays the distribution of diabetes within each factor category, providing a clear visual comparison of how the disease's occurrence differs among various segments of the population. e.g. For the bmi, we display side-by-side boxplots to show the spread of BMI across the dataset to give BMI Level distributions.
+*   Visualize with a histogram or density plot, overlaying the distribution biology factors blood pressure and cholesterol levels using ggplot. 
+*   To visualize how diabetes prevalence varies across different demographic factor groups such as income, sex, bmi, and socio-economic factors like education and income, we create a series of density plots. Each plot displays the distribution of diabetes within each factor category, providing a clear visual comparison of how the disease's occurrence differs among various segments of the population.
 
 7. Coding challenges
 *  Plotting: including handling missing values, outliers, and categorization. 
-*  Ensuring accurate representation of data while constructing bar charts, dot plots, and density plots, ensuring accurate representation of data, for example, picking the right variables. 
+*  Ensuring accurate representation of data while constructing bar charts, dot plots, and density plots, for example, picking the right variables. 
 *  Customizing aesthetics of the graphs by mastering ggplot2's aesthetic parameters to differentiate categories visually by color, shape, or size. 
 *  Embedding statistical test results, like p-values, into plots and scales for clarity and to accommodate various factor levels can be difficult.
 
