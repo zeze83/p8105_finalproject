@@ -1,0 +1,81 @@
+---
+title: "Data cleaning and EDA"
+author: "Qianying Wu"
+date: "2023-11-21"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(ggplot2)
+```
+
+## Read in Data
+
+```{r}
+diabetes_raw <- read_csv("data/Diabetes_012_data.csv") |>
+  # factor Diabetes to 0, 1, 2
+  mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2)),
+         HighBP = factor(HighBP, levels = c(0, 1), labels = c("No", "Yes"))) 
+
+head(diabetes_raw)
+
+```
+
+## Exploratory Data Analysis
+
+### Univariate Analysis
+
+####  Diabetes Type
+
+```{r}
+
+diabetes_raw$Diabetes_012 <- factor(diabetes_raw$Diabetes_012, levels = c(0, 1, 2),
+                                     labels = c("No Diabetes", "Pre-Diabetes", "Diabetes"))
+
+# Use ggplot2 to plot the frequency chart
+ggplot(data = diabetes_raw) +
+  geom_bar(mapping = aes(x = Diabetes_012), fill = "skyblue") +
+  labs(x = "Diabetes Status", y = "Frequency", title = "Frequency of Diabetes Categories") +
+  theme_minimal()
+```
+
+####  High Blood Pressure
+
+```{r}
+ggplot(data = diabetes_raw) +
+  geom_bar(mapping = aes(x = HighBP), fill = "lightgreen") +
+  labs(x = "High Blood Pressure", y = "Frequency", title = "Frequency of High Blood Pressure") +
+  theme_minimal()
+```
+
+####
+
+
+####
+
+
+####
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Bivariate Analysis
+
+#### High Blood Pressure in Different Diabetes Status
+
