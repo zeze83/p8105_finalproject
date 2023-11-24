@@ -87,6 +87,20 @@ categorize_bmi <- function(bmi) {
 diabetes_raw$weight_status <- sapply(diabetes_raw$BMI, categorize_bmi)
 ```
 
+#### Plot: Association between Diabetes Status and blood pressure status
+
+``` r
+ggplot(diabetes_raw, aes(x = Diabetes_012, fill = HighBP)) +
+  geom_bar(position = "fill") +
+  ylab("Blood Pressure Status") +
+  xlab("Diabetes Status") +
+  ggtitle("Association between Diabetes Status and Blood Pressure Status") +
+  scale_fill_brewer(palette = "Pastel1") +
+  theme_minimal()
+```
+
+![](EDA_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
 #### Plot: Association between Diabetes Status and Weight Status
 
 ``` r
@@ -99,7 +113,7 @@ ggplot(diabetes_raw, aes(x = Diabetes_012, fill = weight_status)) +
   theme_minimal()
 ```
 
-![](EDA_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](EDA_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 #### 
 
