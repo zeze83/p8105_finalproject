@@ -68,7 +68,24 @@ ggplot(data = diabetes_raw) +
 
 ![](EDA_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-#### 
+#### bmi categorization
+
+``` r
+# write a function to categorize bmi values to diverse weight status
+categorize_bmi <- function(bmi) {
+  if (bmi < 18.5) {
+    return("Underweight")
+  } else if (bmi >= 18.5 & bmi < 25) {
+    return("Normal weight")
+  } else if (bmi >= 25 & bmi < 30) {
+    return("Overweight")
+  } else {
+    return("Obesity")
+  }
+}
+# add a column named weight_status to the data set
+diabetes_raw$weight_status <- sapply(diabetes_raw$BMI, categorize_bmi)
+```
 
 #### 
 
