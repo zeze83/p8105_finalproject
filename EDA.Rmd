@@ -1,0 +1,230 @@
+---
+title: "Data cleaning and EDA"
+author: "Qianying Wu"
+date: "2023-11-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(table1)
+```
+
+## Read in Data
+
+```{r}
+diabetes_raw <- read_csv("data/Diabetes_012_data.csv") |>
+  # factor Diabetes to 0, 1, 2
+  mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2)),
+         HighBP = factor(HighBP, levels = c(0, 1), labels = c("No", "Yes"))) 
+
+head(diabetes_raw)
+
+```
+
+## Exploratory Data Analysis
+
+### Univariate Analysis
+
+####  Diabetes Type
+
+```{r}
+
+diabetes_raw$Diabetes_012 <- factor(diabetes_raw$Diabetes_012, levels = c(0, 1, 2),
+                                     labels = c("No Diabetes", "Pre-Diabetes", "Diabetes"))
+
+# Use ggplot2 to plot the frequency chart
+ggplot(data = diabetes_raw) +
+  geom_bar(mapping = aes(x = Diabetes_012), fill = "skyblue") +
+  labs(x = "Diabetes Status", y = "Frequency", title = "Frequency of Diabetes Categories") +
+  theme_minimal()
+```
+
+####  High Blood Pressure
+
+```{r}
+ggplot(data = diabetes_raw) +
+  geom_bar(mapping = aes(x = HighBP), fill = "lightgreen") +
+  labs(x = "High Blood Pressure", y = "Frequency", title = "Frequency of High Blood Pressure") +
+  theme_minimal()
+```
+
+#### bmi categorization
+
+```{r}
+# write a function to categorize bmi values to diverse weight status
+categorize_bmi <- function(bmi) {
+  if (bmi < 18.5) {
+    return("Underweight")
+  } else if (bmi >= 18.5 & bmi < 25) {
+    return("Normal weight")
+  } else if (bmi >= 25 & bmi < 30) {
+    return("Overweight")
+  } else {
+    return("Obesity")
+  }
+}
+# add a column named weight_status to the data set
+diabetes_raw$weight_status <- sapply(diabetes_raw$BMI, categorize_bmi)
+
+```
+
+#### Plot: Association between Diabetes Status and blood pressure status
+```{r}
+ggplot(diabetes_raw, aes(x = Diabetes_012, fill = HighBP)) +
+  geom_bar(position = "fill") +
+  ylab("Blood Pressure Status") +
+  xlab("Diabetes Status") +
+  ggtitle("Association between Diabetes Status and Blood Pressure Status") +
+  scale_fill_brewer(palette = "Pastel1") +
+  theme_minimal()
+```
+
+#### Plot: Association between Diabetes Status and Weight Status
+```{r}
+ggplot(diabetes_raw, aes(x = Diabetes_012, fill = weight_status)) +
+  geom_bar(position = "fill") +
+  ylab("Proportion") +
+  xlab("Diabetes Status") +
+  ggtitle("Association between Diabetes Status and Weight Status") +
+  scale_fill_brewer(palette = "Pastel1") +
+  theme_minimal()
+```
+
+#### Plot: Box plot distribution of BMI in different Diabetes status
+```{r}
+plotBMI = ggplot(diabetes_raw, aes(x = BMI, y = Diabetes_012, fill = Diabetes_012))+
+        geom_boxplot(alpha = 0.5) +
+        theme(legend.position = 'none') +
+        scale_fill_brewer(palette = 'Pastel1') +
+        ylab("Diabetes Status") +
+        xlab("BMI Distribution") +
+        ggtitle("Box Plot Distribution of BMI over Diabetes Status") +
+        theme_minimal()
+        
+  
+  
+plotBMI
+```
+
+#### Plot: Smoking Status over Diabetes Status
+```{r}
+plot_smoke = 
+  ggplot(diabetes_raw, aes(Smoker, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_012), position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Smoking Status") +
+  ggtitle("Smoking Status Frequencies over Diabetes Status") +
+  theme_minimal()
+
+plot_smoke
+```
+### Plot: Fruits or Veggies over different Diabetes Status
+```{r}
+mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c("Light Pink","Light Blue"))
+```
+
+
+
+#### Plot: Distribution of Education Level over different Diabetes Status
+```{r}
+plot_education = 
+  ggplot(diabetes_raw, aes(x = Education, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_012), position = 'dodge') +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Education Level") +
+  ggtitle("Education Level Frequencies over Diabetes Status") +
+  theme_minimal()
+
+plot_education
+```
+
+#### Plot: Distribution of Income Level over different Diabetes Status
+```{r}
+plot_income = 
+  ggplot(diabetes_raw, aes(Income, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_012), position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Income Level") +
+  ggtitle("Income Level Frequencies over Diabetes Status") +
+  theme_minimal()
+
+plot_income
+```
+
+#### Statistical Test 1.1 P-value function
+```{r}
+pvalue <- function(x, ...) {
+    # Construct vectors of data y, and groups (strata) g
+    y <- unlist(x)
+    g <- factor(rep(1:length(x), times=sapply(x, length)))
+    if (is.numeric(y)) {
+        # For numeric variables, perform a one-side anova test
+        p <- aov(y ~ g)$p.value
+    } else {
+        # For categorical variables, perform a chi-squared test of independence
+        p <- chisq.test(table(y, g))$p.value
+    }
+    # Format the p-value, using an HTML entity for the less-than sign.
+    # The initial empty string places the output on the line below the variable label.
+    c("", sub("<", "&lt;", format.pval(p, digits=3, eps=0.001)))
+}
+```
+
+
+#### Create R table 1
+```{r}
+## Rtable_1 shows the demographics stats
+Rtable_1 = 
+  table1(~ factor(Sex) + Age| Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+
+Rtable_1
+```
+
+
+```{r}
+## Rtable_2 shows the physiology status factor stats
+Rtable_2 = 
+  table1(~ factor(HighBP) + factor(HighChol) + BMI + factor(weight_status) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+
+Rtable_2
+```
+
+
+```{r}
+## Rtable_3 shows the social-economic factor stats
+Rtable_3 = 
+  table1(~ factor(Education) + factor(Income) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+
+Rtable_3
+```
+
+```{r}
+## Rtable_4 shows the physical-habits factor stats
+Rtable_4 = 
+  table1(~ factor(Smoker) + factor(PhysActivity) + factor(Fruits) + factor(Veggies) + factor(HvyAlcoholConsump) + factor(AnyHealthcare) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+
+Rtable_4
+```
+
+```{r}
+## Rtable_5 shows the symptoms/disease related stats
+Rtable_5 = 
+  table1(~ factor(Stroke) + factor(HeartDiseaseorAttack) + factor(DiffWalk) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+
+Rtable_5
+```
+
+
+
+
+### Bivariate Analysis
+
+#### High Blood Pressure in Different Diabetes Status
+
