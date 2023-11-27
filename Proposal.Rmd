@@ -1,5 +1,9 @@
 ---
-output: github_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
 ---
 ## Final Project Proposal
 Group member: Yimeng Cai (yc3577), Zheshu Jiang (zj2379), Ze Li (zl2746), Qianying Wu (qw2418)
