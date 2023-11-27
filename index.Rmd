@@ -1,0 +1,27 @@
+---
+title: "P8105 Final Project - Diabetes"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
+---
+
+# Link to other website
+
+This is a [link](http://www.google.com/) to a good data science tool.
+
+Here is a link to [p8105](https://p8105.com/index.html).
+
+Here is a link to the [about](about.html) page.
+
+You can also still use R!
+
+# New section: include picture
+
+There is an image of ISFJ.
+![](images/isfj.png)
+
+# Other stuff
+
+[plotly](plotly.html) codes

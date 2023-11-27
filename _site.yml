@@ -1,0 +1,16 @@
+name: "P8105 Final Project"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Exploratory Data Analysis"
+      href: exploratorydataanalysis.html
+    - text: "Statistical Anaylsis"
+      href: statisticalanaylsis.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<you@youremail.com>
+    - icon: fa-github fa-lg
+      href: https://github.com/zeze83/p8105_finalproject
+output:
+  html_document:
+    theme: cerulean
