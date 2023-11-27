@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   right:
     - text: "Exploratory Data Analysis"
-      href: exploratorydataanalysis.html
+      href: EDA.html
     - text: "Statistical Anaylsis"
       href: statisticalanaylsis.html
     - icon: fa-envelope fa-lg

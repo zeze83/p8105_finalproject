@@ -19,8 +19,8 @@ You can also still use R!
 
 # New section: include picture
 
-There is an image of ISFJ.
-![](images/isfj.png)
+There is an image of diabetes.
+![](images/diabetes1.jpeg)
 
 # Other stuff
 
