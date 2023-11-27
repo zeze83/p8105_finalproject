@@ -1,8 +1,10 @@
 ---
 title: "Data cleaning and EDA"
-author: "Qianying Wu"
-date: "2023-11-21"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}
@@ -13,6 +15,21 @@ library(ggplot2)
 library(table1)
 ```
 
+* Data Description: 
+
+The dataset was collected by the Behavioral Risk Factor Surveillance System (BRFSS) in 2015. This original dataset contains responses from 441,455 individuals and has 330 features. For this project, we use the one with 253,680 responses and a three-class diabetes target variable indicating no diabetes, prediabetes, or diabetes. The potential factors for diabetes are biological factors such as sex, blood pressure, cholesterol, BMI, heart disease, social factors such as education and income, and habits of smoking, physical exercise, eating fruit etc..
+
+* `Diabetes_012`: 0 is for no diabetes or only during pregnancy, 1 is for prediabetes, and 2 is for diabetes. 
+* `High BP`: 0 = no high BP 1 = high BP
+* `HighChol`: 0 = no high cholesterol 1 = high cholesterol
+* `Cholcheck`: 0 = no cholesterol check in 5 years 1 = yes cholesterol check in 5 years
+* `BMI`: Body Mass Index
+* `Smoker`: Have you smoked at least 100 cigarettes in your entire life? [Note: 5 packs = 100 cigarettes] 0 = no 1 = yes
+* `Stroke`: (Ever told) you had a stroke. 0 = no 1 = yes
+* `HeartDiseaseorAttack`: coronary heart disease (CHD) or myocardial infarction (MI) 0 = no 1 = yes
+* `PhysActivity`: physical activity in past 30 days - not including job 0 = no 1 = yes
+* `Fruits`: Consume Fruit 1 or more times per day 0 = no 1 = yes
+
 ## Read in Data
 
 ```{r}
@@ -22,7 +39,6 @@ diabetes_raw <- read_csv("data/Diabetes_012_data.csv") |>
          HighBP = factor(HighBP, levels = c(0, 1), labels = c("No", "Yes"))) 
 
 head(diabetes_raw)
-
 ```
 
 ## Exploratory Data Analysis
