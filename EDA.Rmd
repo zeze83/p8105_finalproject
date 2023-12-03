@@ -162,7 +162,7 @@ HighChol_dist =
   scale_fill_brewer(palette = 'Pastel1') +
   ylab("Frequencies") +
   xlab("Diabetes Status") +
-  ggtitle("High Cholestoral over Diabetes") +
+  ggtitle("HighChol over Diabetes") +
   theme_minimal()
 
 HighChol_dist
@@ -191,7 +191,7 @@ Heartdisease_dist =
   scale_fill_brewer(palette = 'Pastel1') +
   ylab("Frequencies") +
   xlab("Diabetes Status") +
-  ggtitle("Heart Disease or Attack over Diabetes Status") +
+  ggtitle("Heart Disease over Diabetes") +
   theme_minimal()
 
 Heartdisease_dist
@@ -300,6 +300,7 @@ Veggies_dist
 plots1 = plot_grid(
   HighBP_dist + theme(legend.position="none"),
   HighChol_dist + theme(legend.position="none"), 
+  Heartdisease_dist + theme(legend.position="none"),
   Fruits_dist + theme(legend.position="none"), 
   Veggies_dist + theme(legend.position="none"),
   Age_dist + theme(legend.position="none"),
