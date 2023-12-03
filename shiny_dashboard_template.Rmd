@@ -1,0 +1,81 @@
+---
+title: "Shiny Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(shiny)
+diabetes_new <- read.csv("data/diabetes_new.csv")
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+variable_list <- diabetes_new %>% 
+  select(-Diabetes_status) %>% 
+  names()
+
+selectInput(
+  inputId = "variable_choice",
+  label = h3("Select The Variable you are interested in"),
+  choices = variable_list,
+  selected = "HighBP"
+)
+
+
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderPlotly({
+  selected_variable <- input[["variable_choice"]]
+  
+  if (selected_variable %in% c("HighBP", "HighChol","Sex","HeartDiseaseorAttack","Smoker","PhysActivity","Fruits","Veggies","HvyAlcoholConsump","weight_status")) {
+    # Categorical variable bar chart
+    p <- ggplot(diabetes_new, aes_string(x = "Diabetes_status", fill = selected_variable)) + 
+      geom_bar(position = "dodge") +
+      scale_fill_brewer(palette = 'Pastel1') +
+      ylab("Frequencies") +
+      xlab("Diabetes Status") +
+      ggtitle(paste(selected_variable, "over Diabetes Status")) +
+      theme_minimal()
+  } else {
+    # Numerical variable histogram
+  p <- ggplot(diabetes_new, aes_string(x = selected_variable))+ 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = 'Pastel1') +
+      ylab("Count") +
+      xlab(selected_variable) +
+      ggtitle(paste(selected_variable, "Distribution")) +
+      theme_minimal()
+}
+ggplotly(p)
+})
+```
+
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
