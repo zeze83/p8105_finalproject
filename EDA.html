@@ -13,7 +13,7 @@
 
 <title>Data cleaning and EDA</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -527,19 +527,227 @@ diabetes_raw</code></pre>
 our interested factors with the diabetes variable respectively.</p>
 <div id="distribution-of-diabetes-types" class="section level4">
 <h4>Distribution of Diabetes Types</h4>
-<pre class="r"><code># Use ggplot2 to plot the frequency chart
-ggplot(data = diabetes_raw) +
-  geom_bar(mapping = aes(x = Diabetes_012)) +
-  
-  labs(x = &quot;Diabetes Status&quot;, y = &quot;Frequency&quot;, title = &quot;Frequency of Diabetes Categories&quot;) +
-  theme_minimal()</code></pre>
+<pre class="r"><code>Diabetesraw_dist = 
+  ggplot(diabetes_raw, aes(Diabetes_012)) + 
+  geom_bar(aes(fill = Diabetes_012)) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes Status&quot;) +
+  ggtitle(&quot;Raw Overall Diabetes Status Distribution&quot;) +
+  theme_minimal()
+
+Diabetesraw_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>From the distribution of Diabetes Status, we realize that
+Pre-Diabetes status has extreme low data samples, so we will exclude
+this data in our future analysis.</p>
+<pre class="r"><code>diabetes_new = 
+  diabetes_raw |&gt;
+  filter(Diabetes_012 == &#39;Diabetes&#39; | Diabetes_012 == &#39;No Diabetes&#39;) |&gt;
+  rename(Diabetes_status = Diabetes_012)
+
+diabetes_new</code></pre>
+<pre><code>## # A tibble: 249,049 × 14
+##    Diabetes_status HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex   
+##    &lt;fct&gt;           &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt; 
+##  1 No Diabetes     Yes    Yes         40      1 No                   Female
+##  2 No Diabetes     No     No          25      1 No                   Female
+##  3 No Diabetes     Yes    Yes         28      0 No                   Female
+##  4 No Diabetes     Yes    No          27      0 No                   Female
+##  5 No Diabetes     Yes    Yes         24      0 No                   Female
+##  6 No Diabetes     Yes    Yes         25      1 No                   Male  
+##  7 No Diabetes     Yes    No          30      1 No                   Female
+##  8 No Diabetes     Yes    Yes         25      1 No                   Female
+##  9 Diabetes        Yes    Yes         30      1 Yes                  Female
+## 10 No Diabetes     No     No          24      0 No                   Male  
+## # ℹ 249,039 more rows
+## # ℹ 7 more variables: Income &lt;dbl&gt;, Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;,
+## #   Fruits &lt;fct&gt;, Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;</code></pre>
 </div>
-<div id="high-blood-pressure-and-diabetes-types" class="section level4">
-<h4>High Blood Pressure and Diabetes Types</h4>
 </div>
-<div id="bmi-categorization" class="section level4">
-<h4>BMI Categorization</h4>
+</div>
+<div
+id="now-we-are-ready-to-do-univariable-distribution-over-diabetes-status."
+class="section level2">
+<h2>Now We are ready to do univariable distribution over diabetes
+status.</h2>
+<div id="high-blood-pressure-via-diabetes" class="section level4">
+<h4>1. High Blood Pressure via Diabetes</h4>
+<pre class="r"><code>HighBP_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HighBP), position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes Status&quot;) +
+  ggtitle(&quot;HighBP over Diabetes&quot;) +
+  theme_minimal()
+
+HighBP_dist</code></pre>
+<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+## ℹ Please use `after_stat(count)` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="high-cholesterol-level-via-diabetes" class="section level4">
+<h4>2. High Cholesterol Level via Diabetes</h4>
+<pre class="r"><code>HighChol_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HighChol), position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes Status&quot;) +
+  ggtitle(&quot;High Cholestoral over Diabetes&quot;) +
+  theme_minimal()
+
+HighChol_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="bmi-via-diabetes" class="section level4">
+<h4>3. BMI via Diabetes</h4>
+<pre class="r"><code>BMI_dist = 
+  ggplot(diabetes_new, aes(BMI, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;BMI&quot;) +
+  ggtitle(&quot;BMI Distribution&quot;) +
+  theme_minimal()
+
+BMI_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="heart-disease-or-attack-via-diabetes" class="section level4">
+<h4>4. Heart Disease or Attack via Diabetes</h4>
+<pre class="r"><code>Heartdisease_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HeartDiseaseorAttack), position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes Status&quot;) +
+  ggtitle(&quot;Heart Disease or Attack over Diabetes Status&quot;) +
+  theme_minimal()
+
+Heartdisease_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="age-via-diabetes" class="section level4">
+<h4>5. Age via Diabetes</h4>
+<pre class="r"><code>Age_dist = 
+  ggplot(diabetes_new, aes(Age, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Age&quot;) +
+  ggtitle(&quot;Age Distribution&quot;) +
+  theme_minimal()
+
+Age_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="sex-via-diabetes" class="section level4">
+<h4>5. Sex via Diabetes</h4>
+<pre class="r"><code>Sex_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Sex), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;Sex over Diabetes Status&quot;) +
+  theme_minimal()
+
+Sex_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+#### 6. Sex via Diabetes</p>
+<pre class="r"><code>Sex_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Sex), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;Sex over Diabetes Status&quot;) +
+  theme_minimal()
+
+Sex_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+#### 7. Income via Diabetes</p>
+<pre class="r"><code>Income_dist = 
+  ggplot(diabetes_new, aes(Income, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Income&quot;) +
+  ggtitle(&quot;Income Distribution&quot;) +
+  theme_minimal()
+
+Income_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="education-via-diabetes" class="section level4">
+<h4>8. Education via Diabetes</h4>
+<pre class="r"><code>Education_dist = 
+  ggplot(diabetes_new, aes(Education, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Education&quot;) +
+  ggtitle(&quot;Education Distribution&quot;) +
+  theme_minimal()
+
+Education_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="fruits-via-diabetes" class="section level4">
+<h4>9. Fruits via Diabetes</h4>
+<pre class="r"><code>Fruits_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Fruits), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;Fruits over Diabetes&quot;) +
+  theme_minimal()
+
+Fruits_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+#### 10. Veggies via Diabetes</p>
+<pre class="r"><code>Veggies_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Veggies), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;Vegetables over Diabetes&quot;) +
+  theme_minimal()
+
+Veggies_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plots-all-together" class="section level2">
+<h2>Plots all together</h2>
+<pre class="r"><code>plots1 = plot_grid(
+  HighBP_dist + theme(legend.position=&quot;none&quot;),
+  HighChol_dist + theme(legend.position=&quot;none&quot;), 
+  Fruits_dist + theme(legend.position=&quot;none&quot;), 
+  Veggies_dist + theme(legend.position=&quot;none&quot;),
+  Age_dist + theme(legend.position=&quot;none&quot;),
+  BMI_dist + theme(legend.position=&quot;none&quot;),
+  Education_dist + theme(legend.position=&quot;none&quot;), 
+  Income_dist + theme(legend.position=&quot;none&quot;)) +
+  theme(axis.text.x = element_text(size = 5))
+plots1</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>plots2 = plot_grid(
+  Age_dist + theme(legend.position=&quot;none&quot;), 
+  BMI_dist + theme(legend.position=&quot;none&quot;), 
+  Education_dist + theme(legend.position=&quot;none&quot;), 
+  Income_dist) +
+  theme(axis.text.x = element_text(size = 5))
+plots2</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<p>BMI Categorization</p>
 <pre class="r"><code># write a function to categorize bmi values to diverse weight status
 categorize_bmi &lt;- function(bmi) {
   if (bmi &lt; 18.5) {
@@ -554,7 +762,6 @@ categorize_bmi &lt;- function(bmi) {
 }
 # add a column named weight_status to the data set
 diabetes_raw$weight_status &lt;- sapply(diabetes_raw$BMI, categorize_bmi)</code></pre>
-</div>
 <div
 id="plot-association-between-diabetes-status-and-blood-pressure-status"
 class="section level4">
@@ -567,7 +774,7 @@ status</h4>
   ggtitle(&quot;Association between Diabetes Status and Blood Pressure Status&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 <div id="plot-association-between-diabetes-status-and-weight-status"
 class="section level4">
@@ -579,7 +786,7 @@ class="section level4">
   ggtitle(&quot;Association between Diabetes Status and Weight Status&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="plot-box-plot-distribution-of-bmi-in-different-diabetes-status"
 class="section level4">
@@ -596,7 +803,7 @@ class="section level4">
   
   
 plotBMI</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
 <div id="plot-smoking-status-over-diabetes-status"
 class="section level4">
@@ -611,15 +818,10 @@ class="section level4">
   theme_minimal()
 
 plot_smoke</code></pre>
-<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
-## ℹ Please use `after_stat(count)` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 ### Plot: Fruits or Veggies over different Diabetes Status</p>
 <pre class="r"><code>mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c(&quot;Light Pink&quot;,&quot;Light Blue&quot;))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div
 id="plot-distribution-of-education-level-over-different-diabetes-status"
@@ -636,7 +838,7 @@ Status</h4>
   theme_minimal()
 
 plot_education</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div
 id="plot-distribution-of-income-level-over-different-diabetes-status"
@@ -653,7 +855,7 @@ Status</h4>
   theme_minimal()
 
 plot_income</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
 <div id="statistical-test-1.1-p-value-function" class="section level4">
 <h4>Statistical Test 1.1 P-value function</h4>
@@ -997,7 +1199,6 @@ Rtable_3 =
 
 #Rtable_5</code></pre>
 </div>
-</div>
 <div
 id="data-random-sampling-each-500-from-both-diabetes-and-nondiabetes-population.-join-them-together."
 class="section level3">
@@ -1085,7 +1286,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between HighBP &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 </div>
 <div id="highchol-bmi" class="section level3">
 <h3>1. HighChol + BMI</h3>
@@ -1096,7 +1297,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between Cholesterol Level &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-33-1.png" width="672" />
 ### Veggies + Fruits vs Physactivity</p>
 <div id="high-blood-pressure-in-different-diabetes-status"
 class="section level4">

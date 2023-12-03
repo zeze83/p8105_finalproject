@@ -13,6 +13,7 @@ library(tidyverse)
 library(readr)
 library(ggplot2)
 library(table1)
+library(cowplot)
 ```
 
 
@@ -111,27 +112,216 @@ We first perform univariate analysis for our dependent variable `Diabetes_012` a
 
 #### Distribution of Diabetes Types
 ```{r}
-
-
-# Use ggplot2 to plot the frequency chart
-ggplot(data = diabetes_raw) +
-  geom_bar(mapping = aes(x = Diabetes_012)) +
-  
-  labs(x = "Diabetes Status", y = "Frequency", title = "Frequency of Diabetes Categories") +
+Diabetesraw_dist = 
+  ggplot(diabetes_raw, aes(Diabetes_012)) + 
+  geom_bar(aes(fill = Diabetes_012)) +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes Status") +
+  ggtitle("Raw Overall Diabetes Status Distribution") +
   theme_minimal()
+
+Diabetesraw_dist
 ```
 
 
-
-
-
-####  High Blood Pressure and Diabetes Types
+From the distribution of Diabetes Status, we realize that Pre-Diabetes status has extreme low data samples, so we will exclude this data in our future analysis.
 
 ```{r}
+diabetes_new = 
+  diabetes_raw |>
+  filter(Diabetes_012 == 'Diabetes' | Diabetes_012 == 'No Diabetes') |>
+  rename(Diabetes_status = Diabetes_012)
+
+diabetes_new
+  
+```
+
+
+## Now We are ready to do univariable distribution over diabetes status.
+
+####  1. High Blood Pressure via Diabetes
+```{r}
+HighBP_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HighBP), position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes Status") +
+  ggtitle("HighBP over Diabetes") +
+  theme_minimal()
+
+HighBP_dist
+```
+
+####  2. High Cholesterol Level via Diabetes
+```{r}
+HighChol_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HighChol), position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes Status") +
+  ggtitle("High Cholestoral over Diabetes") +
+  theme_minimal()
+
+HighChol_dist
+```
+
+
+####  3. BMI via Diabetes
+```{r}
+BMI_dist = 
+  ggplot(diabetes_new, aes(BMI, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("BMI") +
+  ggtitle("BMI Distribution") +
+  theme_minimal()
+
+BMI_dist
+```
+
+####  4. Heart Disease or Attack via Diabetes
+```{r}
+Heartdisease_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HeartDiseaseorAttack), position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes Status") +
+  ggtitle("Heart Disease or Attack over Diabetes Status") +
+  theme_minimal()
+
+Heartdisease_dist
+```
+
+####  5. Age via Diabetes
+```{r}
+Age_dist = 
+  ggplot(diabetes_new, aes(Age, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Age") +
+  ggtitle("Age Distribution") +
+  theme_minimal()
+
+Age_dist
+```
+
+
+####  5. Sex via Diabetes
+```{r}
+Sex_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Sex), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("Sex over Diabetes Status") +
+  theme_minimal()
+
+Sex_dist
+```
+####  6. Sex via Diabetes
+```{r}
+Sex_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Sex), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("Sex over Diabetes Status") +
+  theme_minimal()
+
+Sex_dist
+```
+####  7. Income via Diabetes
+```{r}
+Income_dist = 
+  ggplot(diabetes_new, aes(Income, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Income") +
+  ggtitle("Income Distribution") +
+  theme_minimal()
+
+Income_dist
+```
+
+
+####  8. Education via Diabetes
+```{r}
+Education_dist = 
+  ggplot(diabetes_new, aes(Education, ..count..)) + 
+  geom_bar(aes(fill = Diabetes_status)) +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Education") +
+  ggtitle("Education Distribution") +
+  theme_minimal()
+
+Education_dist
+```
+
+
+####  9. Fruits via Diabetes
+```{r}
+Fruits_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Fruits), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("Fruits over Diabetes") +
+  theme_minimal()
+
+Fruits_dist
+```
+####  10. Veggies via Diabetes
+```{r}
+Veggies_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Veggies), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("Vegetables over Diabetes") +
+  theme_minimal()
+
+Veggies_dist
+```
+
+## Plots all together
+```{r}
+plots1 = plot_grid(
+  HighBP_dist + theme(legend.position="none"),
+  HighChol_dist + theme(legend.position="none"), 
+  Fruits_dist + theme(legend.position="none"), 
+  Veggies_dist + theme(legend.position="none"),
+  Age_dist + theme(legend.position="none"),
+  BMI_dist + theme(legend.position="none"),
+  Education_dist + theme(legend.position="none"), 
+  Income_dist + theme(legend.position="none")) +
+  theme(axis.text.x = element_text(size = 5))
+plots1
+
+plots2 = plot_grid(
+  Age_dist + theme(legend.position="none"), 
+  BMI_dist + theme(legend.position="none"), 
+  Education_dist + theme(legend.position="none"), 
+  Income_dist) +
+  theme(axis.text.x = element_text(size = 5))
+plots2
+
 
 ```
 
-#### BMI Categorization
+
+BMI Categorization
 
 ```{r}
 # write a function to categorize bmi values to diverse weight status
