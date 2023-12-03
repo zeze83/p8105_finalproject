@@ -240,7 +240,61 @@ Rtable_5
 
 
 
-### Bivariate Analysis
+### Data Random sampling each 500 from both diabetes and nondiabetes population. Join them together.
+
+```{r}
+set.seed(123)
+
+diabetes= 
+  diabetes_raw |>
+  filter(Diabetes_012 == 'Diabetes')
+diabetes_sample =
+  sample_n(diabetes, size = 500, replace = FALSE)
+
+diabetes_sample
+
+nondiabetes= 
+  diabetes_raw |>
+  filter(Diabetes_012 == 'No Diabetes')
+nondiabetes_sample =
+  sample_n(nondiabetes, size = 500, replace = FALSE)
+
+nondiabetes_sample
+
+sample_df = full_join(diabetes_sample, nondiabetes_sample)
+sample_df
+
+```
+
+## Covariate visualisation
+
+### 1. HighBP + BMI 
+```{r}
+ggplot(sample_df, aes(fill=Diabetes_012, y=BMI, x=HighBP)) + 
+  geom_bar(position="dodge", stat="identity") +
+  ylab("BMI") +
+  xlab("Blood Pressure Level") +
+  ggtitle("Association between HighBP & BMI") +
+  scale_fill_brewer(palette = "Pastel1") +
+  theme_minimal()
+```
+
+
+### 1. HighChol + BMI 
+```{r}
+ggplot(sample_df, aes(fill=Diabetes_012, y=BMI, x=HighChol)) + 
+  geom_bar(position="dodge", stat="identity") +
+  ylab("BMI") +
+  xlab("Cholesterol Level") +
+  ggtitle("Association between Cholesterol Level & BMI") +
+  scale_fill_brewer(palette = "Pastel1") +
+  theme_minimal()
+```
+### Veggies + Fruits vs Physactivity
+```{r}
+
+```
+
 
 #### High Blood Pressure in Different Diabetes Status
 

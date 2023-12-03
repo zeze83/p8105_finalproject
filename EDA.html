@@ -13,7 +13,7 @@
 
 <title>Data cleaning and EDA</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -397,7 +397,7 @@ including job 0 = no 1 = yes</li>
   mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2)),
          HighBP = factor(HighBP, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;))) </code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -515,12 +515,11 @@ class="section level4">
   theme_minimal()
 
 plot_smoke</code></pre>
-<pre><code>## Warning: The dot-dot notation (`..count..`) was
-## deprecated in ggplot2 3.4.0.
+<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `after_stat(count)` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to
-## see where this warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 ### Plot: Fruits or Veggies over different Diabetes Status</p>
 <pre class="r"><code>mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c(&quot;Light Pink&quot;,&quot;Light Blue&quot;))</code></pre>
@@ -1118,8 +1117,116 @@ Rtable_5</code></pre>
 </div>
 </div>
 </div>
-<div id="bivariate-analysis" class="section level3">
-<h3>Bivariate Analysis</h3>
+<div
+id="data-random-sampling-each-500-from-both-diabetes-and-nondiabetes-population.-join-them-together."
+class="section level3">
+<h3>Data Random sampling each 500 from both diabetes and nondiabetes
+population. Join them together.</h3>
+<pre class="r"><code>set.seed(123)
+
+diabetes= 
+  diabetes_raw |&gt;
+  filter(Diabetes_012 == &#39;Diabetes&#39;)
+diabetes_sample =
+  sample_n(diabetes, size = 500, replace = FALSE)
+
+diabetes_sample</code></pre>
+<pre><code>## # A tibble: 500 × 23
+##    Diabetes_012 HighBP HighChol CholCheck   BMI Smoker Stroke
+##    &lt;fct&gt;        &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Diabetes     Yes           1         1    32      1      0
+##  2 Diabetes     Yes           1         1    30      0      0
+##  3 Diabetes     Yes           1         1    33      1      0
+##  4 Diabetes     Yes           1         1    38      1      0
+##  5 Diabetes     Yes           1         1    21      0      0
+##  6 Diabetes     Yes           0         1    32      1      0
+##  7 Diabetes     Yes           1         1    34      1      0
+##  8 Diabetes     Yes           0         1    30      1      0
+##  9 Diabetes     Yes           1         1    21      1      0
+## 10 Diabetes     Yes           1         1    27      0      0
+## # ℹ 490 more rows
+## # ℹ 16 more variables: HeartDiseaseorAttack &lt;dbl&gt;, PhysActivity &lt;dbl&gt;,
+## #   Fruits &lt;dbl&gt;, Veggies &lt;dbl&gt;, HvyAlcoholConsump &lt;dbl&gt;, AnyHealthcare &lt;dbl&gt;,
+## #   NoDocbcCost &lt;dbl&gt;, GenHlth &lt;dbl&gt;, MentHlth &lt;dbl&gt;, PhysHlth &lt;dbl&gt;,
+## #   DiffWalk &lt;dbl&gt;, Sex &lt;dbl&gt;, Age &lt;dbl&gt;, Education &lt;dbl&gt;, Income &lt;dbl&gt;,
+## #   weight_status &lt;chr&gt;</code></pre>
+<pre class="r"><code>nondiabetes= 
+  diabetes_raw |&gt;
+  filter(Diabetes_012 == &#39;No Diabetes&#39;)
+nondiabetes_sample =
+  sample_n(nondiabetes, size = 500, replace = FALSE)
+
+nondiabetes_sample</code></pre>
+<pre><code>## # A tibble: 500 × 23
+##    Diabetes_012 HighBP HighChol CholCheck   BMI Smoker Stroke
+##    &lt;fct&gt;        &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 No Diabetes  No            0         1    30      1      0
+##  2 No Diabetes  Yes           1         1    28      1      0
+##  3 No Diabetes  No            1         1    26      1      0
+##  4 No Diabetes  No            0         1    24      1      0
+##  5 No Diabetes  No            0         1    26      0      0
+##  6 No Diabetes  Yes           0         1    26      0      0
+##  7 No Diabetes  No            1         1    20      0      0
+##  8 No Diabetes  Yes           1         1    34      0      0
+##  9 No Diabetes  No            0         1    23      1      0
+## 10 No Diabetes  No            0         1    24      1      0
+## # ℹ 490 more rows
+## # ℹ 16 more variables: HeartDiseaseorAttack &lt;dbl&gt;, PhysActivity &lt;dbl&gt;,
+## #   Fruits &lt;dbl&gt;, Veggies &lt;dbl&gt;, HvyAlcoholConsump &lt;dbl&gt;, AnyHealthcare &lt;dbl&gt;,
+## #   NoDocbcCost &lt;dbl&gt;, GenHlth &lt;dbl&gt;, MentHlth &lt;dbl&gt;, PhysHlth &lt;dbl&gt;,
+## #   DiffWalk &lt;dbl&gt;, Sex &lt;dbl&gt;, Age &lt;dbl&gt;, Education &lt;dbl&gt;, Income &lt;dbl&gt;,
+## #   weight_status &lt;chr&gt;</code></pre>
+<pre class="r"><code>sample_df = full_join(diabetes_sample, nondiabetes_sample)</code></pre>
+<pre><code>## Joining with `by = join_by(Diabetes_012, HighBP, HighChol, CholCheck, BMI,
+## Smoker, Stroke, HeartDiseaseorAttack, PhysActivity, Fruits, Veggies,
+## HvyAlcoholConsump, AnyHealthcare, NoDocbcCost, GenHlth, MentHlth, PhysHlth,
+## DiffWalk, Sex, Age, Education, Income, weight_status)`</code></pre>
+<pre class="r"><code>sample_df</code></pre>
+<pre><code>## # A tibble: 1,000 × 23
+##    Diabetes_012 HighBP HighChol CholCheck   BMI Smoker Stroke
+##    &lt;fct&gt;        &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Diabetes     Yes           1         1    32      1      0
+##  2 Diabetes     Yes           1         1    30      0      0
+##  3 Diabetes     Yes           1         1    33      1      0
+##  4 Diabetes     Yes           1         1    38      1      0
+##  5 Diabetes     Yes           1         1    21      0      0
+##  6 Diabetes     Yes           0         1    32      1      0
+##  7 Diabetes     Yes           1         1    34      1      0
+##  8 Diabetes     Yes           0         1    30      1      0
+##  9 Diabetes     Yes           1         1    21      1      0
+## 10 Diabetes     Yes           1         1    27      0      0
+## # ℹ 990 more rows
+## # ℹ 16 more variables: HeartDiseaseorAttack &lt;dbl&gt;, PhysActivity &lt;dbl&gt;,
+## #   Fruits &lt;dbl&gt;, Veggies &lt;dbl&gt;, HvyAlcoholConsump &lt;dbl&gt;, AnyHealthcare &lt;dbl&gt;,
+## #   NoDocbcCost &lt;dbl&gt;, GenHlth &lt;dbl&gt;, MentHlth &lt;dbl&gt;, PhysHlth &lt;dbl&gt;,
+## #   DiffWalk &lt;dbl&gt;, Sex &lt;dbl&gt;, Age &lt;dbl&gt;, Education &lt;dbl&gt;, Income &lt;dbl&gt;,
+## #   weight_status &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="covariate-visualisation" class="section level2">
+<h2>Covariate visualisation</h2>
+<div id="highbp-bmi" class="section level3">
+<h3>1. HighBP + BMI</h3>
+<pre class="r"><code>ggplot(sample_df, aes(fill=Diabetes_012, y=BMI, x=HighBP)) + 
+  geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;) +
+  ylab(&quot;BMI&quot;) +
+  xlab(&quot;Blood Pressure Level&quot;) +
+  ggtitle(&quot;Association between HighBP &amp; BMI&quot;) +
+  scale_fill_brewer(palette = &quot;Pastel1&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="highchol-bmi" class="section level3">
+<h3>1. HighChol + BMI</h3>
+<pre class="r"><code>ggplot(sample_df, aes(fill=Diabetes_012, y=BMI, x=HighChol)) + 
+  geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;) +
+  ylab(&quot;BMI&quot;) +
+  xlab(&quot;Cholesterol Level&quot;) +
+  ggtitle(&quot;Association between Cholesterol Level &amp; BMI&quot;) +
+  scale_fill_brewer(palette = &quot;Pastel1&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+### Veggies + Fruits vs Physactivity</p>
 <div id="high-blood-pressure-in-different-diabetes-status"
 class="section level4">
 <h4>High Blood Pressure in Different Diabetes Status</h4>
