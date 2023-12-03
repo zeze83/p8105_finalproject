@@ -11,7 +11,7 @@
 
 
 
-<title>Proposal.knit</title>
+<title>Report</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -356,141 +356,37 @@ div.tocify {
 
 
 
+<h1 class="title toc-ignore">Report</h1>
 
 </div>
 
 
-<div id="final-project-proposal" class="section level2">
-<h2>Final Project Proposal</h2>
-<p>Group member: Yimeng Cai (yc3577), Zheshu Jiang (zj2379), Ze Li
-(zl2746), Qianying Wu (qw2418)</p>
-<ol style="list-style-type: decimal">
-<li><p>Project title: Regression Analysis on Multiple Factors and
-Bioindicators of Type II Diabetes</p></li>
-<li><p>Project Motivation: Type II Diabetes is a global health concern
-that affects more than 37 million Americans. By analyzing a
-comprehensive dataset from the Behavioral Risk Factor Surveillance
-System, we aim to uncover the correlations between diabetes prevalence
-and social and biological factors such as sex, education, income, bmi,
-smoking status and bioindicators like blood glucose and cholesterol
-levels. Through visualizations and statistical analysis in R, we aspire
-to highlight patterns that could inform better prevention and management
-strategies, thereby contributing to the broader dialogue on public
-health and policies related to diabetes.</p></li>
-<li><p>Data resources:<br />
-<a
-href="https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data"
-class="uri">https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data</a></p></li>
-</ol>
-<ul>
-<li>Data Description: The dataset was collected by the Behavioral Risk
-Factor Surveillance System (BRFSS) in 2015. This original dataset
-contains responses from 441,455 individuals and has 330 features. For
-this project, we use the one with 253,680 responses and a three-class
-diabetes target variable indicating no diabetes, prediabetes, or
-diabetes. The potential factors for diabetes are biological factors such
-as sex, blood pressure, cholesterol, BMI, heart disease, social factors
-such as education and income, and habits of smoking, physical exercise,
-eating fruit etc..</li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Intended Final Products</li>
-</ol>
-<ul>
-<li>Factors Visualization: We decide to perform data visualization of
-diabetes distributions among population in different biological
-factors(sex, bmi) and socio-economic factors(income, education,
-smoking).</li>
-<li>Factors Analysis: We aim to analyze the significance of correlation
-between biological and socio-economic factors and diabetes. By
-implementing data analysis, we are able to study the correlation between
-each factor and frequencies of diabetes.</li>
-<li>Bioindicators Association: We plan to study the bioindicators: blood
-pressure and cholesterol level associated with diabetes to decide which
-biological indicator is able to perform as a significant biomarker.</li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
-<li>Data Analysis</li>
-</ol>
-<ul>
-<li>To make visualization, we plan to use filter, group by, and related
-functions according to different factors and then visualize the
-frequencies for each factor through histograms, box plots etc.</li>
-<li>To analyse factors significance, we perform sample t test, anova
-test, and linear regression model to test for the associations and
-significance by looking at test statistics, or confidence
-intervals.</li>
-<li>To analyse the two bioindicators, we perform a hypothesis test along
-with statistical test like sample t test, linear regression and
-comparing the P-value to ensure the significance.</li>
-</ul>
-<ol start="6" style="list-style-type: decimal">
-<li>Visualizations</li>
-</ol>
-<ul>
-<li>Use a stacked bar chart to show the proportion of individuals with
-heart disease within diabetic, pre-diabetic, and non-diabetic sample
-groups using ggplot.</li>
-<li>Visualize with a histogram or density plot, overlaying the
-distribution biology factors blood pressure and cholesterol levels using
-ggplot.</li>
-<li>To visualize how diabetes prevalence varies across different
-demographic factor groups such as income, sex, bmi, and socio-economic
-factors like education and income, we create a series of density plots.
-Each plot displays the distribution of diabetes within each factor
-category, providing a clear visual comparison of how the disease’s
-occurrence differs among various segments of the population.</li>
-</ul>
-<ol start="7" style="list-style-type: decimal">
-<li>Coding challenges</li>
-</ol>
-<ul>
-<li>Plotting: including handling missing values, outliers, and
-categorization.</li>
-<li>Ensuring accurate representation of data while constructing bar
-charts, dot plots, and density plots, for example, picking the right
-variables.</li>
-<li>Customizing aesthetics of the graphs by mastering ggplot2’s
-aesthetic parameters to differentiate categories visually by color,
-shape, or size.</li>
-<li>Embedding statistical test results, like p-values, into plots and
-scales for clarity and to accommodate various factor levels can be
-difficult.</li>
-</ul>
-<ol start="8" style="list-style-type: decimal">
-<li>Planned Timeline</li>
-</ol>
-<table>
-<thead>
-<tr class="header">
-<th>Timeline</th>
-<th>Requirement</th>
-<th>Predicted Timeline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>11/13-17</td>
-<td>Project review meeting</td>
-<td>Nov 15th or 16th</td>
-</tr>
-<tr class="even">
-<td>12/9</td>
-<td>Report</td>
-<td>Nov 24</td>
-</tr>
-<tr class="odd">
-<td>12/9</td>
-<td>webpage and screencast</td>
-<td>Dec 1-7</td>
-</tr>
-<tr class="even">
-<td>12/9</td>
-<td>peer assessment</td>
-<td>Dec 7-8</td>
-</tr>
-</tbody>
-</table>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. For more details
+on using R Markdown see <a href="http://rmarkdown.rstudio.com"
+class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be
+generated that includes both content as well as the output of any
+embedded R code chunks within the document. You can embed an R code
+chunk like this:</p>
+<pre class="r"><code>summary(cars)</code></pre>
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
+<div id="including-plots" class="section level2">
+<h2>Including Plots</h2>
+<p>You can also embed plots, for example:</p>
+<p><img src="report_files/figure-html/pressure-1.png" width="672" /></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the
+code chunk to prevent printing of the R code that generated the
+plot.</p>
 </div>
 
 
