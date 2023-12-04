@@ -9,8 +9,6 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-install.packages("table1")
-install.packages("cowplot")
 library(tidyverse)
 library(readr)
 library(ggplot2)
@@ -65,7 +63,7 @@ There are 22 variables in our original dataset.
 
 * `Age`: A categorical variable showing the individual's age. (1 = 18-24 9 = 60-64 13 = 80 or older)
 
-* `Education`: A categorical variable showing the individual's Education level in the scale of 1-6.
+* `Education`: A categorical variable showing the individual's Education level in the scale of 1-6. [1 = Never attended school or only kindergarten, 2 = Grades 1 through 8 (Elementary), 3 = Grades 9 through 11 (Some high school), 4 = Grade 12 or GED (High school graduate), 5 = College 1 year to 3 years (Some college or technical school), 6 = College 4 years or more (College graduate)]
 
 * `Income`: A categorical variable showing the individual's income level in the scale of 1-8. (1 = less than 10,000 dollars, 5 = less than 35,000 dollars, 8 = 75,000 dollars or more)
 
@@ -83,6 +81,7 @@ diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
 
 head(diabetes_raw)
 ```
+
 ```{r}
 diabetes_raw <- diabetes_raw |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
@@ -140,8 +139,6 @@ write.csv(diabetes_new, "data/diabetes_new.csv", row.names = FALSE)
   
 ```
 
-
-## Now We are ready to do univariable distribution over diabetes status.
 
 ####  1. High Blood Pressure via Diabetes
 ```{r}
@@ -433,7 +430,7 @@ plot_income =
 plot_income
 ```
 
-#### Statistical Test 1.1 P-value function
+#### Tables
 ```{r}
 pvalue <- function(x, ...) {
     # Construct vectors of data y, and groups (strata) g
@@ -489,14 +486,6 @@ We don't have any healthcare, so drop here
 #Rtable_4
 ```
 
-No diffwalk, so comment here
-```{r}
-## Rtable_5 shows the symptoms/disease related stats
-#Rtable_5 = 
-  #table1(~ factor(Stroke) + factor(HeartDiseaseorAttack) + factor(DiffWalk) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
-
-#Rtable_5
-```
 
 
 

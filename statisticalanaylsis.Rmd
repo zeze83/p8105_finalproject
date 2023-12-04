@@ -6,7 +6,87 @@ output:
     toc_float: true
     theme: flatly
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(ggplot2)
 
-# Statistical Analysis
+```
 
-This website is pretty great
+
+## Statistical Analysis
+
+To investigate the relationship between the variables (...) and diabetes status, we conducted (...) statistical tests and build a predictive model. 
+
+First, we read in the dataset. 
+
+
+```{r}
+diabetes_data <- read_csv("data/diabetes_new.csv")
+
+head(diabetes_data)
+```
+
+#### Correlation analysis for Continuous Variables
+```{r}
+
+
+diabetes_data <- diabetes_data |>
+     mutate(Diabetes_binary = factor(Diabetes_status, levels = c("No Diabetes", "Diabetes"), labels = c(0, 1)))
+
+
+
+cor(diabetes_data$BMI, as.numeric(diabetes_data$Diabetes_binary), method = "pearson") 
+cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = "pearson") 
+
+```
+
+#### Chi-Square for Independence for Categorical Variables
+
+```{r}
+
+
+chisq_test_HighBP <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighBP))
+chisq_test_HighBP
+
+
+chisq_test_HighChol <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighChol))
+chisq_test_HighChol
+
+chisq_test_HeartDiseaseorAttack <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HeartDiseaseorAttack))
+chisq_test_HeartDiseaseorAttack
+
+chisq_test_Smoker <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Smoker))
+chisq_test_Smoker
+
+chisq_test_Sex <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Sex))
+chisq_test_Sex
+
+chisq_test_Income <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Income))
+chisq_test_Income
+
+chisq_test_Education <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Education))
+chisq_test_Education
+
+chisq_test_PhysActivity <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity))
+chisq_test_PhysActivity
+
+chisq_test_Fruits <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Fruits))
+chisq_test_Fruits
+
+chisq_test_Veggies <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Veggies))
+chisq_test_Veggies
+
+chisq_test_HvyAlcoholConsump <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HvyAlcoholConsump))
+chisq_test_HvyAlcoholConsump
+```
+
+
+#### Modeling with Logistic Regression
+
+```{r}
+model <- glm(Diabetes_binary ~ HighBP + HighChol + BMI + Smoker + HeartDiseaseorAttack + Sex + Income + Education + PhysActivity + Fruits + Veggies + Age + HvyAlcoholConsump, family = "binomial", data = diabetes_data)
+summary(model)
+
+```

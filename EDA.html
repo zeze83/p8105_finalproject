@@ -13,7 +13,7 @@
 
 <title>Data cleaning and EDA</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -437,7 +437,11 @@ born sex. (0 = female, 1 = male)</p></li>
 <li><p><code>Age</code>: A categorical variable showing the individual’s
 age. (1 = 18-24 9 = 60-64 13 = 80 or older)</p></li>
 <li><p><code>Education</code>: A categorical variable showing the
-individual’s Education level in the scale of 1-6.</p></li>
+individual’s Education level in the scale of 1-6. [1 = Never attended
+school or only kindergarten, 2 = Grades 1 through 8 (Elementary), 3 =
+Grades 9 through 11 (Some high school), 4 = Grade 12 or GED (High school
+graduate), 5 = College 1 year to 3 years (Some college or technical
+school), 6 = College 4 years or more (College graduate)]</p></li>
 <li><p><code>Income</code>: A categorical variable showing the
 individual’s income level in the scale of 1-8. (1 = less than 10,000
 dollars, 5 = less than 35,000 dollars, 8 = 75,000 dollars or
@@ -563,14 +567,8 @@ diabetes_new</code></pre>
 ## # ℹ 249,039 more rows
 ## # ℹ 7 more variables: Income &lt;dbl&gt;, Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;,
 ## #   Fruits &lt;fct&gt;, Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;</code></pre>
+<pre class="r"><code>write.csv(diabetes_new, &quot;data/diabetes_new.csv&quot;, row.names = FALSE)</code></pre>
 </div>
-</div>
-</div>
-<div
-id="now-we-are-ready-to-do-univariable-distribution-over-diabetes-status."
-class="section level2">
-<h2>Now We are ready to do univariable distribution over diabetes
-status.</h2>
 <div id="high-blood-pressure-via-diabetes" class="section level4">
 <h4>1. High Blood Pressure via Diabetes</h4>
 <pre class="r"><code>HighBP_dist = 
@@ -613,7 +611,7 @@ HighChol_dist</code></pre>
   ylab(&quot;Frequencies&quot;) +
   xlab(&quot;BMI&quot;) +
   ggtitle(&quot;BMI Distribution&quot;) +
-  theme_minimal()
+  theme_minimal() 
 
 BMI_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
@@ -723,6 +721,7 @@ Fruits_dist</code></pre>
 
 Veggies_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
 </div>
 </div>
 <div id="plots-all-together" class="section level2">
@@ -858,8 +857,8 @@ Status</h4>
 plot_income</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
-<div id="statistical-test-1.1-p-value-function" class="section level4">
-<h4>Statistical Test 1.1 P-value function</h4>
+<div id="tables" class="section level4">
+<h4>Tables</h4>
 <pre class="r"><code>pvalue &lt;- function(x, ...) {
     # Construct vectors of data y, and groups (strata) g
     y &lt;- unlist(x)
@@ -1193,12 +1192,6 @@ Rtable_3 =
 #  table1(~ factor(Smoker) + factor(PhysActivity) + factor(Fruits) + factor(Veggies) + factor(HvyAlcoholConsump) + factor(AnyHealthcare) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
 
 #Rtable_4</code></pre>
-<p>No diffwalk, so comment here</p>
-<pre class="r"><code>## Rtable_5 shows the symptoms/disease related stats
-#Rtable_5 = 
-  #table1(~ factor(Stroke) + factor(HeartDiseaseorAttack) + factor(DiffWalk) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
-
-#Rtable_5</code></pre>
 </div>
 <div
 id="data-random-sampling-each-500-from-both-diabetes-and-nondiabetes-population.-join-them-together."
@@ -1287,7 +1280,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between HighBP &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
 <div id="highchol-bmi" class="section level3">
 <h3>1. HighChol + BMI</h3>
@@ -1298,7 +1291,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between Cholesterol Level &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-33-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 ### Veggies + Fruits vs Physactivity</p>
 <div id="high-blood-pressure-in-different-diabetes-status"
 class="section level4">
