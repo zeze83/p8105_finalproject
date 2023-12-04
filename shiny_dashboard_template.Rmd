@@ -12,6 +12,7 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 library(shiny)
+library(rsconnect)
 diabetes_new <- read.csv("data/diabetes_new.csv")
 ```
 
@@ -29,8 +30,6 @@ selectInput(
 
 ```
 
-Column {data-width=650}
------------------------------------------------------------------------
 
 ### Here is the plot we made for you!
 ```{r,echo=FALSE}
