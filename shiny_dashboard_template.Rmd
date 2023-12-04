@@ -53,9 +53,9 @@ renderPlotly({
       theme_minimal()
   } else {
     # Numerical variable histogram
-  p <- ggplot(diabetes_new, aes_string(x = selected_variable))+ 
-  geom_bar(aes(fill = Diabetes_status)) +
-  scale_fill_brewer(palette = 'Pastel1') +
+  p <-  ggplot(diabetes_new, aes_string(x = selected_variable, fill = "Diabetes_status")) +
+  geom_histogram(aes(y = ..count..), position = "identity", alpha = 0.5, binwidth = 1) +
+  scale_fill_brewer(palette = "Pastel1") +
       ylab("Count") +
       xlab(selected_variable) +
       ggtitle(paste(selected_variable, "Distribution")) +
