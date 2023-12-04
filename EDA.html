@@ -13,7 +13,7 @@
 
 <title>Data cleaning and EDA</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -493,33 +493,33 @@ levels. Therefore, we want to keep <code>Income</code>,
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
          PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump) |&gt;
-   mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2), 
-         labels = c(&quot;No Diabetes&quot;, &quot;Pre-Diabetes&quot;, &quot;Diabetes&quot;)),
+   mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2), labels = c(&quot;No Diabetes&quot;, &quot;Pre-Diabetes&quot;, &quot;Diabetes&quot;)),
          HighBP = factor(HighBP, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
          HighChol = factor(HighChol, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
-         HeartDiseaseorAttack = factor(HeartDiseaseorAttack, 
-                                       levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
+         HeartDiseaseorAttack = factor(HeartDiseaseorAttack, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
+         Smoker = factor(Smoker, levels = c(0, 1), labels = c(&quot;Nonsmoker&quot;, &quot;Smoker&quot;)),
          Sex = factor(Sex, levels = c(0, 1), labels = c(&quot;Female&quot;, &quot;Male&quot;)),
          Fruits = factor(Fruits, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
          Veggies = factor(Veggies, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
-         HvyAlcoholConsump = factor(HvyAlcoholConsump, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)))
+         HvyAlcoholConsump = factor(HvyAlcoholConsump, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)),
+         PhysActivity = factor(PhysActivity, levels = c(0, 1), labels = c(&quot;No&quot;, &quot;Yes&quot;)))
 
 diabetes_raw</code></pre>
 <pre><code>## # A tibble: 253,680 × 14
-##    Diabetes_012 HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex    Income
-##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt;   &lt;dbl&gt;
-##  1 No Diabetes  Yes    Yes         40      1 No                   Female      3
-##  2 No Diabetes  No     No          25      1 No                   Female      1
-##  3 No Diabetes  Yes    Yes         28      0 No                   Female      8
-##  4 No Diabetes  Yes    No          27      0 No                   Female      6
-##  5 No Diabetes  Yes    Yes         24      0 No                   Female      4
-##  6 No Diabetes  Yes    Yes         25      1 No                   Male        8
-##  7 No Diabetes  Yes    No          30      1 No                   Female      7
-##  8 No Diabetes  Yes    Yes         25      1 No                   Female      4
-##  9 Diabetes     Yes    Yes         30      1 Yes                  Female      1
-## 10 No Diabetes  No     No          24      0 No                   Male        3
+##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income
+##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;                &lt;fct&gt;  &lt;dbl&gt;
+##  1 No Diabetes  Yes    Yes         40 Smoker   No                   Fema…      3
+##  2 No Diabetes  No     No          25 Smoker   No                   Fema…      1
+##  3 No Diabetes  Yes    Yes         28 Nonsmok… No                   Fema…      8
+##  4 No Diabetes  Yes    No          27 Nonsmok… No                   Fema…      6
+##  5 No Diabetes  Yes    Yes         24 Nonsmok… No                   Fema…      4
+##  6 No Diabetes  Yes    Yes         25 Smoker   No                   Male       8
+##  7 No Diabetes  Yes    No          30 Smoker   No                   Fema…      7
+##  8 No Diabetes  Yes    Yes         25 Smoker   No                   Fema…      4
+##  9 Diabetes     Yes    Yes         30 Smoker   Yes                  Fema…      1
+## 10 No Diabetes  No     No          24 Nonsmok… No                   Male       3
 ## # ℹ 253,670 more rows
-## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;, Fruits &lt;fct&gt;,
+## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;</code></pre>
 </div>
 <div id="exploratory-data-analysis" class="section level2">
@@ -552,20 +552,20 @@ this data in our future analysis.</p>
 
 diabetes_new</code></pre>
 <pre><code>## # A tibble: 249,049 × 14
-##    Diabetes_status HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex   
-##    &lt;fct&gt;           &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt; 
-##  1 No Diabetes     Yes    Yes         40      1 No                   Female
-##  2 No Diabetes     No     No          25      1 No                   Female
-##  3 No Diabetes     Yes    Yes         28      0 No                   Female
-##  4 No Diabetes     Yes    No          27      0 No                   Female
-##  5 No Diabetes     Yes    Yes         24      0 No                   Female
-##  6 No Diabetes     Yes    Yes         25      1 No                   Male  
-##  7 No Diabetes     Yes    No          30      1 No                   Female
-##  8 No Diabetes     Yes    Yes         25      1 No                   Female
-##  9 Diabetes        Yes    Yes         30      1 Yes                  Female
-## 10 No Diabetes     No     No          24      0 No                   Male  
+##    Diabetes_status HighBP HighChol   BMI Smoker    HeartDiseaseorAttack Sex   
+##    &lt;fct&gt;           &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;                &lt;fct&gt; 
+##  1 No Diabetes     Yes    Yes         40 Smoker    No                   Female
+##  2 No Diabetes     No     No          25 Smoker    No                   Female
+##  3 No Diabetes     Yes    Yes         28 Nonsmoker No                   Female
+##  4 No Diabetes     Yes    No          27 Nonsmoker No                   Female
+##  5 No Diabetes     Yes    Yes         24 Nonsmoker No                   Female
+##  6 No Diabetes     Yes    Yes         25 Smoker    No                   Male  
+##  7 No Diabetes     Yes    No          30 Smoker    No                   Female
+##  8 No Diabetes     Yes    Yes         25 Smoker    No                   Female
+##  9 Diabetes        Yes    Yes         30 Smoker    Yes                  Female
+## 10 No Diabetes     No     No          24 Nonsmoker No                   Male  
 ## # ℹ 249,039 more rows
-## # ℹ 7 more variables: Income &lt;dbl&gt;, Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;,
+## # ℹ 7 more variables: Income &lt;dbl&gt;, Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;,
 ## #   Fruits &lt;fct&gt;, Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;</code></pre>
 <pre class="r"><code>write.csv(diabetes_new, &quot;data/diabetes_new.csv&quot;, row.names = FALSE)</code></pre>
 </div>
@@ -645,7 +645,7 @@ Age_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="sex-via-diabetes" class="section level4">
-<h4>5. Sex via Diabetes</h4>
+<h4>6. Sex via Diabetes</h4>
 <pre class="r"><code>Sex_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
   geom_bar(aes(fill = Sex), , position = &quot;dodge&quot;) +
@@ -657,18 +657,6 @@ Age_dist</code></pre>
 
 Sex_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" />
-#### 6. Sex via Diabetes</p>
-<pre class="r"><code>Sex_dist = 
-  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
-  geom_bar(aes(fill = Sex), , position = &quot;dodge&quot;) +
-  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
-  ylab(&quot;Frequencies&quot;) +
-  xlab(&quot;Diabetes&quot;) +
-  ggtitle(&quot;Sex over Diabetes Status&quot;) +
-  theme_minimal()
-
-Sex_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 #### 7. Income via Diabetes</p>
 <pre class="r"><code>Income_dist = 
   ggplot(diabetes_new, aes(Income, ..count..)) + 
@@ -680,7 +668,7 @@ Sex_dist</code></pre>
   theme_minimal()
 
 Income_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="education-via-diabetes" class="section level4">
 <h4>8. Education via Diabetes</h4>
@@ -694,7 +682,7 @@ Income_dist</code></pre>
   theme_minimal()
 
 Education_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="fruits-via-diabetes" class="section level4">
 <h4>9. Fruits via Diabetes</h4>
@@ -708,7 +696,7 @@ Education_dist</code></pre>
   theme_minimal()
 
 Fruits_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 #### 10. Veggies via Diabetes</p>
 <pre class="r"><code>Veggies_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
@@ -720,8 +708,79 @@ Fruits_dist</code></pre>
   theme_minimal()
 
 Veggies_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
+<div id="smoker-via-diabetes" class="section level4">
+<h4>11. Smoker via Diabetes</h4>
+<pre class="r"><code>Smoker_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Smoker), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;Smokers over Diabetes&quot;) +
+  theme_minimal()
+
+Smoker_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+#### 12. PhysActivity via Diabetes</p>
+<pre class="r"><code>Physactivity_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = PhysActivity), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;PhysActivity over Diabetes&quot;) +
+  theme_minimal()
+
+Physactivity_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+#### 13. HvyAlcoholConsump via Diabetes</p>
+<pre class="r"><code>HvyAlcohol_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HvyAlcoholConsump), , position = &quot;dodge&quot;) +
+  scale_fill_brewer(palette = &#39;Pastel1&#39;) +
+  ylab(&quot;Frequencies&quot;) +
+  xlab(&quot;Diabetes&quot;) +
+  ggtitle(&quot;Alcohol over Diabetes&quot;) +
+  theme_minimal()
+
+HvyAlcohol_dist</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+</div>
+<div
+id="according-to-the-bar-chart-distribution-we-decide-to-drop-heavyalcoholconsumption-heart-disease-attack-these-two-variables-due-to-following-reasons.-1.-for-the-heavy-alcohol-consumption-the-samples-drinking-alcohol-in-large-amount-is-overall-too-few-in-the-sample-so-the-variable-more-not-be-fully-accutately-captured.-therefore-if-we-test-on-this-variable-it-may-be-not-representitive-and-significant.-2.-for-the-heart-disease-attack-it-is-the-same-reason-that-sample-size-with-heart-disease-attack-is-too-small-so-it-may-not-be-representitive-and-meaningful-to-test-on.-we-will-also-drop-age-and-education-these-two-variables-due-to-following-reasons.-1.-for-the-age-the-measure-and-categorize-method-is-not-suitable-for-our-statistical-test-since-it-is-a-categorical-variable-showing-the-individuals-age.-1-18-24-9-60-64-13-80-or-older-and-each-number-does-not-represent-the-true-age-of-the-samples-so-we-cannot-do-a-precise-test-on-it.-2.-for-the-education-it-is-the-same-reason-that-it-is-a-categorical-variable-showing-the-individuals-education-level-in-the-scale-of-1-6.-1-never-attended-school-or-only-kindergarten-2-grades-1-through-8-elementary-3-grades-9-through-11-some-high-school-4-grade-12-or-ged-high-school-graduate-5-college-1-year-to-3-years-some-college-or-technical-school-6-college-4-years-or-more-college-graduate."
+class="section level3">
+<h3>According to the bar chart distribution, we decide to drop
+Heavyalcoholconsumption, heart disease attack these two variables due to
+following reasons. 1. For the heavy alcohol consumption, the samples
+drinking alcohol in large amount is overall too few in the sample, so
+the variable more not be fully accutately captured. Therefore, if we
+test on this variable, it may be not representitive and significant. 2.
+For the heart disease attack, it is the same reason that sample size
+with heart disease attack is too small, so it may not be representitive
+and meaningful to test on. We will also drop age and education these two
+variables due to following reasons. 1. For the age, the measure and
+categorize method is not suitable for our statistical test, since it is
+a categorical variable showing the individual’s age. (1 = 18-24 9 =
+60-64 13 = 80 or older), and each number does not represent the true age
+of the samples, so we cannot do a precise test on it. 2. For the
+education, it is the same reason that it is a categorical variable
+showing the individual’s Education level in the scale of 1-6. [1 = Never
+attended school or only kindergarten, 2 = Grades 1 through 8
+(Elementary), 3 = Grades 9 through 11 (Some high school), 4 = Grade 12
+or GED (High school graduate), 5 = College 1 year to 3 years (Some
+college or technical school), 6 = College 4 years or more (College
+graduate)].</h3>
+</div>
+<div
+id="therefore-now-we-come-to-close-with-9-variables-that-are-potential-estimates-in-our-model.-they-are-1.-high-blood-pressure.-2.-high-cholesterol-level.-3.-bmi.-4.-sex.-5.-fruits-consumption.-6.-veggies-consumption.-7.-smoking.-8.-income-level.-9.-physical-acitivity."
+class="section level3">
+<h3>Therefore, now we come to close with 9 variables that are potential
+estimates in our model. They are: 1. High Blood Pressure. 2. High
+Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6. Veggies
+Consumption. 7. Smoking. 8. Income Level. 9. Physical Acitivity.</h3>
 </div>
 </div>
 <div id="plots-all-together" class="section level2">
@@ -729,24 +788,16 @@ Veggies_dist</code></pre>
 <pre class="r"><code>plots1 = plot_grid(
   HighBP_dist + theme(legend.position=&quot;none&quot;),
   HighChol_dist + theme(legend.position=&quot;none&quot;), 
-  Heartdisease_dist + theme(legend.position=&quot;none&quot;),
   Fruits_dist + theme(legend.position=&quot;none&quot;), 
   Veggies_dist + theme(legend.position=&quot;none&quot;),
-  Age_dist + theme(legend.position=&quot;none&quot;),
   BMI_dist + theme(legend.position=&quot;none&quot;),
-  Education_dist + theme(legend.position=&quot;none&quot;), 
-  Income_dist + theme(legend.position=&quot;none&quot;)) +
+  Sex_dist + theme(legend.position=&quot;none&quot;),
+  Income_dist + theme(legend.position=&quot;none&quot;),
+  Physactivity_dist + theme(legend.position=&quot;none&quot;),
+  Smoker_dist + theme(legend.position=&quot;none&quot;)) +
   theme(axis.text.x = element_text(size = 5))
 plots1</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<pre class="r"><code>plots2 = plot_grid(
-  Age_dist + theme(legend.position=&quot;none&quot;), 
-  BMI_dist + theme(legend.position=&quot;none&quot;), 
-  Education_dist + theme(legend.position=&quot;none&quot;), 
-  Income_dist) +
-  theme(axis.text.x = element_text(size = 5))
-plots2</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>BMI Categorization</p>
 <pre class="r"><code># write a function to categorize bmi values to diverse weight status
 categorize_bmi &lt;- function(bmi) {
@@ -774,7 +825,7 @@ status</h4>
   ggtitle(&quot;Association between Diabetes Status and Blood Pressure Status&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
 <div id="plot-association-between-diabetes-status-and-weight-status"
 class="section level4">
@@ -786,7 +837,7 @@ class="section level4">
   ggtitle(&quot;Association between Diabetes Status and Weight Status&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="plot-box-plot-distribution-of-bmi-in-different-diabetes-status"
 class="section level4">
@@ -803,7 +854,7 @@ class="section level4">
   
   
 plotBMI</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div id="plot-smoking-status-over-diabetes-status"
 class="section level4">
@@ -818,10 +869,10 @@ class="section level4">
   theme_minimal()
 
 plot_smoke</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 ### Plot: Fruits or Veggies over different Diabetes Status</p>
 <pre class="r"><code>mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c(&quot;Light Pink&quot;,&quot;Light Blue&quot;))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
 <div
 id="plot-distribution-of-education-level-over-different-diabetes-status"
@@ -838,7 +889,7 @@ Status</h4>
   theme_minimal()
 
 plot_education</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 <div
 id="plot-distribution-of-income-level-over-different-diabetes-status"
@@ -855,7 +906,7 @@ Status</h4>
   theme_minimal()
 
 plot_income</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 <div id="tables" class="section level4">
 <h4>Tables</h4>
@@ -1208,20 +1259,20 @@ diabetes_sample =
 
 diabetes_sample</code></pre>
 <pre><code>## # A tibble: 500 × 15
-##    Diabetes_012 HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex    Income
-##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt;   &lt;dbl&gt;
-##  1 Diabetes     Yes    Yes         32      1 No                   Male        7
-##  2 Diabetes     Yes    Yes         30      0 No                   Male        8
-##  3 Diabetes     Yes    Yes         33      1 Yes                  Male        8
-##  4 Diabetes     Yes    Yes         38      1 No                   Female      3
-##  5 Diabetes     Yes    Yes         21      0 No                   Female      3
-##  6 Diabetes     Yes    No          32      1 Yes                  Female      7
-##  7 Diabetes     Yes    Yes         34      1 No                   Male        1
-##  8 Diabetes     Yes    No          30      1 No                   Male        1
-##  9 Diabetes     Yes    Yes         21      1 Yes                  Female      6
-## 10 Diabetes     Yes    Yes         27      0 No                   Female      6
+##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income
+##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;                &lt;fct&gt;  &lt;dbl&gt;
+##  1 Diabetes     Yes    Yes         32 Smoker   No                   Male       7
+##  2 Diabetes     Yes    Yes         30 Nonsmok… No                   Male       8
+##  3 Diabetes     Yes    Yes         33 Smoker   Yes                  Male       8
+##  4 Diabetes     Yes    Yes         38 Smoker   No                   Fema…      3
+##  5 Diabetes     Yes    Yes         21 Nonsmok… No                   Fema…      3
+##  6 Diabetes     Yes    No          32 Smoker   Yes                  Fema…      7
+##  7 Diabetes     Yes    Yes         34 Smoker   No                   Male       1
+##  8 Diabetes     Yes    No          30 Smoker   No                   Male       1
+##  9 Diabetes     Yes    Yes         21 Smoker   Yes                  Fema…      6
+## 10 Diabetes     Yes    Yes         27 Nonsmok… No                   Fema…      6
 ## # ℹ 490 more rows
-## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;, Fruits &lt;fct&gt;,
+## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 <pre class="r"><code>nondiabetes= 
   diabetes_raw |&gt;
@@ -1231,20 +1282,20 @@ nondiabetes_sample =
 
 nondiabetes_sample</code></pre>
 <pre><code>## # A tibble: 500 × 15
-##    Diabetes_012 HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex    Income
-##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt;   &lt;dbl&gt;
-##  1 No Diabetes  No     No          30      1 No                   Female      8
-##  2 No Diabetes  Yes    Yes         28      1 No                   Female      6
-##  3 No Diabetes  No     Yes         26      1 No                   Male        2
-##  4 No Diabetes  No     No          24      1 No                   Female      7
-##  5 No Diabetes  No     No          26      0 No                   Male        7
-##  6 No Diabetes  Yes    No          26      0 No                   Female      6
-##  7 No Diabetes  No     Yes         20      0 No                   Female      3
-##  8 No Diabetes  Yes    Yes         34      0 No                   Female      4
-##  9 No Diabetes  No     No          23      1 No                   Male        8
-## 10 No Diabetes  No     No          24      1 No                   Female      7
+##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income
+##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;                &lt;fct&gt;  &lt;dbl&gt;
+##  1 No Diabetes  No     No          30 Smoker   No                   Fema…      8
+##  2 No Diabetes  Yes    Yes         28 Smoker   No                   Fema…      6
+##  3 No Diabetes  No     Yes         26 Smoker   No                   Male       2
+##  4 No Diabetes  No     No          24 Smoker   No                   Fema…      7
+##  5 No Diabetes  No     No          26 Nonsmok… No                   Male       7
+##  6 No Diabetes  Yes    No          26 Nonsmok… No                   Fema…      6
+##  7 No Diabetes  No     Yes         20 Nonsmok… No                   Fema…      3
+##  8 No Diabetes  Yes    Yes         34 Nonsmok… No                   Fema…      4
+##  9 No Diabetes  No     No          23 Smoker   No                   Male       8
+## 10 No Diabetes  No     No          24 Smoker   No                   Fema…      7
 ## # ℹ 490 more rows
-## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;, Fruits &lt;fct&gt;,
+## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 <pre class="r"><code>sample_df = full_join(diabetes_sample, nondiabetes_sample)</code></pre>
 <pre><code>## Joining with `by = join_by(Diabetes_012, HighBP, HighChol, BMI, Smoker,
@@ -1252,20 +1303,20 @@ nondiabetes_sample</code></pre>
 ## Age, HvyAlcoholConsump, weight_status)`</code></pre>
 <pre class="r"><code>sample_df</code></pre>
 <pre><code>## # A tibble: 1,000 × 15
-##    Diabetes_012 HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex    Income
-##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt;   &lt;dbl&gt;
-##  1 Diabetes     Yes    Yes         32      1 No                   Male        7
-##  2 Diabetes     Yes    Yes         30      0 No                   Male        8
-##  3 Diabetes     Yes    Yes         33      1 Yes                  Male        8
-##  4 Diabetes     Yes    Yes         38      1 No                   Female      3
-##  5 Diabetes     Yes    Yes         21      0 No                   Female      3
-##  6 Diabetes     Yes    No          32      1 Yes                  Female      7
-##  7 Diabetes     Yes    Yes         34      1 No                   Male        1
-##  8 Diabetes     Yes    No          30      1 No                   Male        1
-##  9 Diabetes     Yes    Yes         21      1 Yes                  Female      6
-## 10 Diabetes     Yes    Yes         27      0 No                   Female      6
+##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income
+##    &lt;fct&gt;        &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;                &lt;fct&gt;  &lt;dbl&gt;
+##  1 Diabetes     Yes    Yes         32 Smoker   No                   Male       7
+##  2 Diabetes     Yes    Yes         30 Nonsmok… No                   Male       8
+##  3 Diabetes     Yes    Yes         33 Smoker   Yes                  Male       8
+##  4 Diabetes     Yes    Yes         38 Smoker   No                   Fema…      3
+##  5 Diabetes     Yes    Yes         21 Nonsmok… No                   Fema…      3
+##  6 Diabetes     Yes    No          32 Smoker   Yes                  Fema…      7
+##  7 Diabetes     Yes    Yes         34 Smoker   No                   Male       1
+##  8 Diabetes     Yes    No          30 Smoker   No                   Male       1
+##  9 Diabetes     Yes    Yes         21 Smoker   Yes                  Fema…      6
+## 10 Diabetes     Yes    Yes         27 Nonsmok… No                   Fema…      6
 ## # ℹ 990 more rows
-## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;, Fruits &lt;fct&gt;,
+## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -1280,7 +1331,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between HighBP &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 </div>
 <div id="highchol-bmi" class="section level3">
 <h3>1. HighChol + BMI</h3>
@@ -1291,7 +1342,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between Cholesterol Level &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-34-1.png" width="672" />
 ### Veggies + Fruits vs Physactivity</p>
 <div id="high-blood-pressure-in-different-diabetes-status"
 class="section level4">

@@ -87,16 +87,16 @@ diabetes_raw <- diabetes_raw |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
          PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump) |>
-   mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2), 
-         labels = c("No Diabetes", "Pre-Diabetes", "Diabetes")),
+   mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2), labels = c("No Diabetes", "Pre-Diabetes", "Diabetes")),
          HighBP = factor(HighBP, levels = c(0, 1), labels = c("No", "Yes")),
          HighChol = factor(HighChol, levels = c(0, 1), labels = c("No", "Yes")),
-         HeartDiseaseorAttack = factor(HeartDiseaseorAttack, 
-                                       levels = c(0, 1), labels = c("No", "Yes")),
+         HeartDiseaseorAttack = factor(HeartDiseaseorAttack, levels = c(0, 1), labels = c("No", "Yes")),
+         Smoker = factor(Smoker, levels = c(0, 1), labels = c("Nonsmoker", "Smoker")),
          Sex = factor(Sex, levels = c(0, 1), labels = c("Female", "Male")),
          Fruits = factor(Fruits, levels = c(0, 1), labels = c("No", "Yes")),
          Veggies = factor(Veggies, levels = c(0, 1), labels = c("No", "Yes")),
-         HvyAlcoholConsump = factor(HvyAlcoholConsump, levels = c(0, 1), labels = c("No", "Yes")))
+         HvyAlcoholConsump = factor(HvyAlcoholConsump, levels = c(0, 1), labels = c("No", "Yes")),
+         PhysActivity = factor(PhysActivity, levels = c(0, 1), labels = c("No", "Yes")))
 
 diabetes_raw
 
@@ -213,20 +213,6 @@ Age_dist =
 Age_dist
 ```
 
-
-####  5. Sex via Diabetes
-```{r}
-Sex_dist = 
-  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
-  geom_bar(aes(fill = Sex), , position = "dodge") +
-  scale_fill_brewer(palette = 'Pastel1') +
-  ylab("Frequencies") +
-  xlab("Diabetes") +
-  ggtitle("Sex over Diabetes Status") +
-  theme_minimal()
-
-Sex_dist
-```
 ####  6. Sex via Diabetes
 ```{r}
 Sex_dist = 
@@ -297,29 +283,64 @@ Veggies_dist =
 Veggies_dist
 ```
 
+####  11. Smoker via Diabetes
+```{r}
+Smoker_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = Smoker), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("Smokers over Diabetes") +
+  theme_minimal()
+
+Smoker_dist
+```
+####  12. PhysActivity via Diabetes
+```{r}
+Physactivity_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = PhysActivity), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("PhysActivity over Diabetes") +
+  theme_minimal()
+
+Physactivity_dist
+```
+####  13. HvyAlcoholConsump via Diabetes
+```{r}
+HvyAlcohol_dist = 
+  ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
+  geom_bar(aes(fill = HvyAlcoholConsump), , position = "dodge") +
+  scale_fill_brewer(palette = 'Pastel1') +
+  ylab("Frequencies") +
+  xlab("Diabetes") +
+  ggtitle("Alcohol over Diabetes") +
+  theme_minimal()
+
+HvyAlcohol_dist
+```
+
+### According to the bar chart distribution, we decide to drop Heavyalcoholconsumption, heart disease attack these two variables due to following reasons. 1. For the heavy alcohol consumption, the samples drinking alcohol in large amount is overall too few in the sample, so the variable more not be fully accutately captured. Therefore, if we test on this variable, it may be not representitive and significant. 2. For the heart disease attack, it is the same reason that sample size with heart disease attack is too small, so it may not be representitive and meaningful to test on. We will also drop age and education these two variables due to following reasons. 1. For the age, the measure and categorize method is not suitable for our statistical test, since it is a categorical variable showing the individual's age. (1 = 18-24 9 = 60-64 13 = 80 or older), and each number does not represent the true age of the samples, so we cannot do a precise test on it. 2. For the education, it is the same reason that it is a categorical variable showing the individual's Education level in the scale of 1-6. [1 = Never attended school or only kindergarten, 2 = Grades 1 through 8 (Elementary), 3 = Grades 9 through 11 (Some high school), 4 = Grade 12 or GED (High school graduate), 5 = College 1 year to 3 years (Some college or technical school), 6 = College 4 years or more (College graduate)].
+
+### Therefore, now we come to close with 9 variables that are potential estimates in our model. They are: 1. High Blood Pressure. 2. High Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6. Veggies Consumption. 7. Smoking. 8. Income Level. 9. Physical Acitivity.
+
 ## Plots all together
 ```{r}
 plots1 = plot_grid(
   HighBP_dist + theme(legend.position="none"),
   HighChol_dist + theme(legend.position="none"), 
-  Heartdisease_dist + theme(legend.position="none"),
   Fruits_dist + theme(legend.position="none"), 
   Veggies_dist + theme(legend.position="none"),
-  Age_dist + theme(legend.position="none"),
   BMI_dist + theme(legend.position="none"),
-  Education_dist + theme(legend.position="none"), 
-  Income_dist + theme(legend.position="none")) +
+  Sex_dist + theme(legend.position="none"),
+  Income_dist + theme(legend.position="none"),
+  Physactivity_dist + theme(legend.position="none"),
+  Smoker_dist + theme(legend.position="none")) +
   theme(axis.text.x = element_text(size = 5))
 plots1
-
-plots2 = plot_grid(
-  Age_dist + theme(legend.position="none"), 
-  BMI_dist + theme(legend.position="none"), 
-  Education_dist + theme(legend.position="none"), 
-  Income_dist) +
-  theme(axis.text.x = element_text(size = 5))
-plots2
-
 
 ```
 
