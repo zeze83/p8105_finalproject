@@ -15,7 +15,7 @@ navbar:
       - text: "Statistics Testing"
         href: statisticalanaylsis.html
       - text: "Shiny App"
-        href: shiny_dashboard_template.html
+        href: https://to00ox-zheshu-jiang.shinyapps.io/final_project/
     - text: "Report"
       href: report.html
     - icon: fa-envelope fa-lg
