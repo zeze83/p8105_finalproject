@@ -16,13 +16,6 @@ library(shiny)
 diabetes_new <- read.csv("data/diabetes_new.csv")
 ```
 
-```{r}
-rsconnect::setAccountInfo(name='to00ox-zheshu-jiang',
-			  token='68E861501BE932F70F590659CDEC12D1',
-			  secret='eKNAHwCb0aKSlTosb0Fs9P0ED9hppzdIxajLZt7x')
-library(rsconnect)
-deployApp()
-```
 
 ```{r,echo=FALSE}
 variable_list <- diabetes_new %>% 
