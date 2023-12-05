@@ -37,9 +37,11 @@ selectInput(
 renderPlotly({
   selected_variable <- input[["variable_choice"]]
   
+  sampled_data <- sample_n(diabetes_new, 2000)
+  
   if (selected_variable %in% c("HighBP", "HighChol","Sex","HeartDiseaseorAttack","Smoker","PhysActivity","Fruits","Veggies","HvyAlcoholConsump","weight_status")) {
     # Categorical variable bar chart
-    p <- ggplot(diabetes_new, aes_string(x = "Diabetes_status", fill = selected_variable)) + 
+    p <- ggplot(sampled_data, aes_string(x = "Diabetes_status", fill = selected_variable)) + 
       geom_bar(position = "dodge") +
       scale_fill_brewer(palette = 'Pastel1') +
       ylab("Frequencies") +
@@ -48,7 +50,7 @@ renderPlotly({
       theme_minimal()
   } else {
     # Numerical variable histogram
-  p <-  ggplot(diabetes_new, aes_string(x = selected_variable, fill = "Diabetes_status")) +
+  p <-  ggplot(sampled_data, aes_string(x = selected_variable, fill = "Diabetes_status")) +
   geom_histogram(aes(y = ..count..), position = "identity", alpha = 0.5, binwidth = 1) +
   scale_fill_brewer(palette = "Pastel1") +
       ylab("Count") +
