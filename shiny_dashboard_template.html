@@ -11,7 +11,7 @@
 
 
 
-<title>P8105 Final Project - Diabetes</title>
+<title>Shiny Dashboard</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,12 +29,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/selectize-0.12.4/css/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="site_libs/selectize-0.12.4/js/selectize.min.js"></script>
+<script src="site_libs/selectize-0.12.4/accessibility/js/selectize-plugin-a11y.min.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.3/plotly.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 <div class="header1.jpeg"> 
@@ -231,69 +233,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -301,16 +240,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -374,36 +303,78 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div id="header">
+<div id="section-header">
 
 
 
-<h1 class="title toc-ignore">P8105 Final Project - Diabetes</h1>
+<h1 class="title toc-ignore">Shiny Dashboard</h1>
 
+</div>
+
+
+<pre class="r"><code>rsconnect::setAccountInfo(name=&#39;to00ox-zheshu-jiang&#39;,
+              token=&#39;68E861501BE932F70F590659CDEC12D1&#39;,
+              secret=&#39;eKNAHwCb0aKSlTosb0Fs9P0ED9hppzdIxajLZt7x&#39;)
+library(rsconnect)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rsconnect&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:shiny&#39;:
+## 
+##     serverInfo</code></pre>
+<pre class="r"><code>deployApp()</code></pre>
+<pre><code>## ── Preparing for deployment ────────────────────────────</code></pre>
+<pre><code>## ✔ Re-deploying &quot;final_project&quot; to &quot;server: shinyapps.io / username: to00ox-zheshu-jiang&quot;</code></pre>
+<pre><code>## ℹ Looking up application with id &quot;10706964&quot;...</code></pre>
+<pre><code>## ✔ Found application &lt;https://to00ox-zheshu-jiang.shinyapps.io/final_project/&gt;</code></pre>
+<pre><code>## ℹ Bundling 175 files: &#39;_site.yml&#39;, &#39;data/Diabetes_012_data.csv&#39;, &#39;data/diabetes_new.csv&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-10-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-11-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-2-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-3-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-5-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-6-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-7-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-8-1.png&#39;, &#39;EDA_files/figure-gfm/unnamed-chunk-9-1.png&#39;, &#39;EDA_files/figure-html/unnamed-chunk-10-1.png&#39;, &#39;EDA_files/figure-html/unnamed-chunk-11-1.png&#39;, &#39;EDA_files/figure-html/unnamed-chunk-12-1.png&#39;, &#39;EDA_files/figure-html/unnamed-chunk-13-1.png&#39;, &#39;EDA_files/figure-html/unnamed-chunk-14-1.png&#39;, &#39;EDA_files/figure-html/unnamed-chunk-15-1.png&#39;, …, &#39;statisticalanaylsis.Rmd&#39;, and &#39;style.css&#39;</code></pre>
+<pre><code>## ℹ Capturing R dependencies with renv</code></pre>
+<pre><code>## ✔ Found 126 dependencies</code></pre>
+<pre><code>## ✔ Created 13,626,179b bundle</code></pre>
+<pre><code>## ℹ Uploading bundle...</code></pre>
+<pre><code>## ✔ Uploaded bundle with id 8007735</code></pre>
+<pre><code>## ── Deploying to server ─────────────────────────────────</code></pre>
+<pre><code>## Waiting for task: 1362470374
+##   building: Parsing manifest
+##   building: Building image: 9624656
+##   building: Installing system dependencies
+##   building: Fetching packages
+##   building: Installing packages
+##   building: Installing files
+##   building: Pushing image: 9624656
+##   deploying: Starting instances
+##   rollforward: Activating new instances
+##   unstaging: Stopping old instances</code></pre>
+<pre><code>## ── Deployment complete ─────────────────────────────────</code></pre>
+<pre><code>## ✔ Successfully deployed to &lt;https://to00ox-zheshu-jiang.shinyapps.io/final_project/&gt;</code></pre>
+<div class="form-group shiny-input-container">
+<label class="control-label" id="variable_choice-label" for="variable_choice">
+<h3>Please choose a variable to explore its relationship with diabetes status</h3>
+</label>
+<div>
+<select id="variable_choice" class="shiny-input-select"><option value="HighBP" selected>HighBP</option>
+<option value="HighChol">HighChol</option>
+<option value="BMI">BMI</option>
+<option value="Smoker">Smoker</option>
+<option value="HeartDiseaseorAttack">HeartDiseaseorAttack</option>
+<option value="Sex">Sex</option>
+<option value="Income">Income</option>
+<option value="Education">Education</option>
+<option value="PhysActivity">PhysActivity</option>
+<option value="Fruits">Fruits</option>
+<option value="Veggies">Veggies</option>
+<option value="Age">Age</option>
+<option value="HvyAlcoholConsump">HvyAlcoholConsump</option></select>
+<script type="application/json" data-for="variable_choice" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+</div>
+</div>
+<div id="section-here-is-the-plot-we-made-for-you"
+class="section level3">
+<h3>Here is the plot we made for you!</h3>
+<div class="plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item-overflow-hidden html-fill-item" id="outf523853f6b9fcd4c" style="width:100%;height:400px;"></div>
 </div>
 
 
-<div id="link-to-other-website" class="section level1">
-<h1>Link to other website</h1>
-<p>This is a <a
-href="https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data">resource</a>
-for our project.</p>
-<p>This is a <a href="EDA.html">EDA</a> for our project.</p>
-</div>
-<div id="new-section-include-picture" class="section level1">
-<h1>New section: include picture</h1>
-<p>There is an image of diabetes. <img
-src="images/diabetes1.jpeg" /></p>
-</div>
-<div id="other-stuff" class="section level1">
-<h1>Other stuff</h1>
-<p><a href="plotly.html">plotly</a> codes</p>
-</div>
 
-
-
-</div>
-</div>
 
 </div>
 
@@ -424,7 +395,7 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function () {
-  window.buildTabsets("TOC");
+  window.buildTabsets("section-TOC");
 });
 
 $(document).ready(function () {
@@ -436,35 +407,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
