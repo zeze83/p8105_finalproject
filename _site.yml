@@ -14,10 +14,10 @@ navbar:
         href: modelbuilding.html
       - text: "Statistics Testing"
         href: statisticalanaylsis.html
+      - text: "Shiny App"
+        href: shiny_dashboard_template.html
     - text: "Report"
       href: report.html
-    - text: "Shiny App"
-      href: shiny.html
     - icon: fa-envelope fa-lg
       href: mailto:<you@youremail.com>
     - icon: fa-github fa-lg
