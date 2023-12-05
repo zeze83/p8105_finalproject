@@ -21,7 +21,7 @@ navbar:
     - icon: fa-envelope fa-lg
       href: mailto:<you@youremail.com>
     - icon: fa-github fa-lg
-      href: https://github.com/zeze83/p8105_finalproject
+      href: https://to00ox-zheshu-jiang.shinyapps.io/final_project/
 output:
   html_document:
     css: style.css
