@@ -30,19 +30,26 @@ Click to [learn more](statisticalanaylsis.html) about our statistics testing.
 
 # Our members
 
-![](images/YimengCai.jpg)   
-Yimeng, Cai 
+![](images/YimengCai.jpg)  
+
+Yimeng, Cai
+
 (yc3577) 
 
-
 ![](images/ZheshuJiang.jpg)  
-Zheshu, Jiang 
+
+Zheshu, Jiang
+
 (zj2379) 
 
 ![](images/ZeLi.jpg)   
-Ze, Li              
+
+Ze, Li
+
 (zl2746)  
 
 ![](images/QianyingWu.jpg)
+
 Qianying, Wu
+
 (qw2318)
