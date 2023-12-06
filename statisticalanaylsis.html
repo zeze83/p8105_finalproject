@@ -455,12 +455,12 @@ head(diabetes_data)</code></pre>
 <pre><code>## # A tibble: 6 × 14
 ##   Diabetes_status HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex   Income
 ##   &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                &lt;chr&gt;  &lt;dbl&gt;
-## 1 Diabetes        Yes    No          22 Nonsm… Yes                  Male       2
-## 2 Diabetes        Yes    No          20 Smoker Yes                  Fema…      2
-## 3 No Diabetes     No     No          34 Nonsm… No                   Male       8
-## 4 No Diabetes     No     No          25 Nonsm… No                   Fema…      8
-## 5 No Diabetes     No     No          27 Nonsm… No                   Fema…      7
-## 6 No Diabetes     No     No          26 Smoker No                   Fema…      8
+## 1 No Diabetes     No     Yes         27 Nonsm… No                   Fema…      5
+## 2 No Diabetes     No     No          26 Nonsm… No                   Fema…      8
+## 3 No Diabetes     Yes    Yes         29 Nonsm… No                   Fema…      6
+## 4 Diabetes        Yes    Yes         28 Nonsm… No                   Fema…      5
+## 5 No Diabetes     No     No          30 Nonsm… No                   Fema…      7
+## 6 No Diabetes     Yes    Yes         23 Nonsm… No                   Fema…      6
 ## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;chr&gt;, Fruits &lt;chr&gt;,
 ## #   Veggies &lt;chr&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;chr&gt;</code></pre>
 <pre class="r"><code>diabetes_data &lt;- diabetes_data |&gt;
@@ -469,9 +469,9 @@ head(diabetes_data)</code></pre>
 
 
 cor(diabetes_data$BMI, as.numeric(diabetes_data$Diabetes_binary), method = &quot;pearson&quot;) </code></pre>
-<pre><code>## [1] 0.1845246</code></pre>
+<pre><code>## [1] 0.2344414</code></pre>
 <pre class="r"><code>cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = &quot;pearson&quot;) </code></pre>
-<pre><code>## [1] 0.2453711</code></pre>
+<pre><code>## [1] 0.1903596</code></pre>
 <pre><code>
 
 ```r
@@ -481,14 +481,14 @@ chisq_test_HighBP</code></pre>
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$HighBP)
-## X-squared = 16.627, df = 1, p-value = 4.551e-05</code></pre>
+## X-squared = 21.388, df = 1, p-value = 3.751e-06</code></pre>
 <pre class="r"><code>chisq_test_HighChol &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighChol))
 chisq_test_HighChol</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$HighChol)
-## X-squared = 7.5032, df = 1, p-value = 0.006159</code></pre>
+## X-squared = 8.7769, df = 1, p-value = 0.003051</code></pre>
 <pre class="r"><code>chisq_test_HeartDiseaseorAttack &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HeartDiseaseorAttack))</code></pre>
 <pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
 ## diabetes_data$HeartDiseaseorAttack)): Chi-squared approximation may be
@@ -498,21 +498,21 @@ chisq_test_HighChol</code></pre>
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$HeartDiseaseorAttack)
-## X-squared = 24.547, df = 1, p-value = 7.251e-07</code></pre>
+## X-squared = 13.948, df = 1, p-value = 0.0001879</code></pre>
 <pre class="r"><code>chisq_test_Smoker &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Smoker))
 chisq_test_Smoker</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$Smoker)
-## X-squared = 0, df = 1, p-value = 1</code></pre>
+## X-squared = 1.4262, df = 1, p-value = 0.2324</code></pre>
 <pre class="r"><code>chisq_test_Sex &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Sex))
 chisq_test_Sex</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$Sex)
-## X-squared = 2.9346e-31, df = 1, p-value = 1</code></pre>
+## X-squared = 0.014717, df = 1, p-value = 0.9034</code></pre>
 <pre class="r"><code>chisq_test_Income &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Income))</code></pre>
 <pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
 ## diabetes_data$Income)): Chi-squared approximation may be incorrect</code></pre>
@@ -521,7 +521,7 @@ chisq_test_Sex</code></pre>
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$Income)
-## X-squared = 15.035, df = 7, p-value = 0.03555</code></pre>
+## X-squared = 17.721, df = 7, p-value = 0.01329</code></pre>
 <pre class="r"><code>chisq_test_Education &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Education))</code></pre>
 <pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
 ## diabetes_data$Education)): Chi-squared approximation may be incorrect</code></pre>
@@ -530,32 +530,28 @@ chisq_test_Sex</code></pre>
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$Education)
-## X-squared = 1.3805, df = 3, p-value = 0.7101</code></pre>
-<pre class="r"><code>chisq_test_PhysActivity &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity))</code></pre>
-<pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
-## diabetes_data$PhysActivity)): Chi-squared approximation may be incorrect</code></pre>
-<pre class="r"><code>chisq_test_PhysActivity</code></pre>
+## X-squared = 16.511, df = 4, p-value = 0.002404</code></pre>
+<pre class="r"><code>chisq_test_PhysActivity &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity))
+chisq_test_PhysActivity</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity)
-## X-squared = 5.1764, df = 1, p-value = 0.0229</code></pre>
+## X-squared = 15.867, df = 1, p-value = 6.797e-05</code></pre>
 <pre class="r"><code>chisq_test_Fruits &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Fruits))
 chisq_test_Fruits</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$Fruits)
-## X-squared = 1.2862, df = 1, p-value = 0.2567</code></pre>
-<pre class="r"><code>chisq_test_Veggies &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Veggies))</code></pre>
-<pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
-## diabetes_data$Veggies)): Chi-squared approximation may be incorrect</code></pre>
-<pre class="r"><code>chisq_test_Veggies</code></pre>
+## X-squared = 0.74786, df = 1, p-value = 0.3872</code></pre>
+<pre class="r"><code>chisq_test_Veggies &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Veggies))
+chisq_test_Veggies</code></pre>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$Veggies)
-## X-squared = 0.010394, df = 1, p-value = 0.9188</code></pre>
+## X-squared = 9.2774e-31, df = 1, p-value = 1</code></pre>
 <pre class="r"><code>chisq_test_HvyAlcoholConsump &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HvyAlcoholConsump))</code></pre>
 <pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
 ## diabetes_data$HvyAlcoholConsump)): Chi-squared approximation may be incorrect</code></pre>
@@ -564,7 +560,7 @@ chisq_test_Fruits</code></pre>
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  table(diabetes_data$Diabetes_status, diabetes_data$HvyAlcoholConsump)
-## X-squared = 0.37063, df = 1, p-value = 0.5427</code></pre>
+## X-squared = 2.145, df = 1, p-value = 0.143</code></pre>
 <pre class="r"><code># Install the &#39;infotheo&#39; package if you haven&#39;t already
 # install.packages(&quot;infotheo&quot;)
 
@@ -610,30 +606,30 @@ summary(model)</code></pre>
 ## 
 ## Coefficients:
 ##                           Estimate Std. Error z value Pr(&gt;|z|)  
-## (Intercept)               -6.16953    2.52365  -2.445   0.0145 *
-## HighBPYes                  1.20395    0.65765   1.831   0.0671 .
-## HighCholYes                0.51671    0.62326   0.829   0.4071  
-## BMI                        0.07496    0.03713   2.019   0.0435 *
-## SmokerSmoker              -0.42825    0.61219  -0.700   0.4842  
-## HeartDiseaseorAttackYes    1.21610    0.68534   1.774   0.0760 .
-## SexMale                    0.04980    0.58151   0.086   0.9318  
-## Income                    -0.32903    0.13648  -2.411   0.0159 *
-## Education                  0.14958    0.40558   0.369   0.7123  
-## PhysActivityYes           -1.13082    0.69396  -1.630   0.1032  
-## FruitsYes                  0.06562    0.58559   0.112   0.9108  
-## VeggiesYes                 0.46071    0.75211   0.613   0.5402  
-## Age                        0.26633    0.12338   2.159   0.0309 *
-## HvyAlcoholConsumpYes     -14.74687 1167.38855  -0.013   0.9899  
+## (Intercept)               -2.42512    2.03392  -1.192   0.2331  
+## HighBPYes                  1.21714    0.60847   2.000   0.0455 *
+## HighCholYes                1.12447    0.53079   2.118   0.0341 *
+## BMI                        0.06923    0.02827   2.449   0.0143 *
+## SmokerSmoker               0.36451    0.52650   0.692   0.4887  
+## HeartDiseaseorAttackYes    1.52385    0.70767   2.153   0.0313 *
+## SexMale                    0.22770    0.53317   0.427   0.6693  
+## Income                    -0.15050    0.12611  -1.193   0.2327  
+## Education                 -0.34360    0.31306  -1.098   0.2724  
+## PhysActivityYes           -1.13917    0.50420  -2.259   0.0239 *
+## FruitsYes                 -0.19529    0.56663  -0.345   0.7304  
+## VeggiesYes                 0.13103    0.69583   0.188   0.8506  
+## Age                        0.02871    0.09860   0.291   0.7709  
+## HvyAlcoholConsumpYes     -16.15452 1467.41927  -0.011   0.9912  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 146.770  on 199  degrees of freedom
-## Residual deviance:  96.331  on 186  degrees of freedom
-## AIC: 124.33
+##     Null deviance: 175.87  on 199  degrees of freedom
+## Residual deviance: 115.78  on 186  degrees of freedom
+## AIC: 143.78
 ## 
-## Number of Fisher Scoring iterations: 16</code></pre>
+## Number of Fisher Scoring iterations: 17</code></pre>
 </div>
 </div>
 
