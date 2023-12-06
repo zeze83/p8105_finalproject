@@ -5,6 +5,6 @@ account: yc3577
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10728868
-bundleId: 8012769
+bundleId: 8012815
 url: https://yc3577.shinyapps.io/diabetes_final_project/
 version: 1
