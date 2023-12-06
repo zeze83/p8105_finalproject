@@ -13,7 +13,6 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 library(shiny)
-library(rsconnect)
 diabetes_new <- read.csv("data/diabetes_new.csv")
 ```
 
@@ -38,7 +37,7 @@ selectInput(
 renderPlotly({
   selected_variable <- input[["variable_choice"]]
   
-  sampled_data <- sample_n(diabetes_new, 2000)
+  sampled_data <- sample_n(diabetes_new, 100)
   
   if (selected_variable %in% c("HighBP", "HighChol","Sex","HeartDiseaseorAttack","Smoker","PhysActivity","Fruits","Veggies","HvyAlcoholConsump","weight_status")) {
     # Categorical variable bar chart
