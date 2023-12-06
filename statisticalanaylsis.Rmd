@@ -49,6 +49,11 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
+#### ANOVA
+```{r}
+X <- diabetes_data01[, -1]
+Y <- diabetes_data01[, 1] 
+```
 
 #### Chi-Square for Independence for Categorical Variables
 
@@ -69,6 +74,8 @@ cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = "pear
 
 ```
 ```
+
+
 
 ```{r}
 

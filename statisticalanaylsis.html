@@ -13,7 +13,7 @@
 
 <title>Statistical Analysis</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -391,7 +391,7 @@ predictive model.</p>
 <p>First, we read in the dataset.</p>
 <pre class="r"><code>diabetes_data01 &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ──────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -436,12 +436,17 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
 <p><img src="statisticalanaylsis_files/figure-html/correlation-1.png" width="672" /></p>
 </div>
+<div id="anova" class="section level4">
+<h4>ANOVA</h4>
+<pre class="r"><code>X &lt;- diabetes_data01[, -1]
+Y &lt;- diabetes_data01[, 1] </code></pre>
+</div>
 <div id="chi-square-for-independence-for-categorical-variables"
 class="section level4">
 <h4>Chi-Square for Independence for Categorical Variables</h4>
 <pre class="r"><code>diabetes_data &lt;- read_csv(&quot;data/diabetes_new1.csv&quot;) </code></pre>
 <pre><code>## Rows: 200 Columns: 14
-## ── Column specification ──────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (10): Diabetes_status, HighBP, HighChol, Smoker, HeartDiseaseorAttack, S...
 ## dbl  (4): BMI, Income, Education, Age
@@ -473,6 +478,8 @@ cor(diabetes_data$BMI, as.numeric(diabetes_data$Diabetes_binary), method = &quot
 <pre class="r"><code>cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = &quot;pearson&quot;) </code></pre>
 <pre><code>## [1] 0.2578625</code></pre>
 <pre><code>
+
+
 
 ```r
 chisq_test_HighBP &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighBP))
