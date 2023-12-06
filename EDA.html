@@ -13,7 +13,7 @@
 
 <title>Data cleaning and EDA</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 <div class="hero-image"> 
     <div class="image-text">
       <div class="top-text">Data Science Project</div>
@@ -350,13 +350,13 @@ div.tocify {
     <li>
       <a href="statisticalanaylsis.html">Statistics Testing</a>
     </li>
+    <li>
+      <a href="https://yc3577.shinyapps.io/diabetes_final_project/">Shiny App</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="report.html">Report</a>
-</li>
-<li>
-  <a href="shiny.html">Shiny App</a>
 </li>
 <li>
   <a href="mailto:&lt;you@youremail.com&gt;">
@@ -491,7 +491,7 @@ levels. Therefore, we want to keep <code>Income</code>,
 <p>First, we read in our data from the csv file.</p>
 <pre class="r"><code>diabetes_raw &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ────────────────────────────────
+## ── Column specification ─────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -589,7 +589,11 @@ diabetes_new</code></pre>
 ## # ℹ 249,039 more rows
 ## # ℹ 7 more variables: Income &lt;dbl&gt;, Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;,
 ## #   Fruits &lt;fct&gt;, Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;</code></pre>
-<pre class="r"><code>write.csv(diabetes_new, &quot;data/diabetes_new.csv&quot;, row.names = FALSE)</code></pre>
+<pre class="r"><code>write.csv(diabetes_new, &quot;data/diabetes_new.csv&quot;, row.names = FALSE)
+
+diabetes_new1=diabetes_new|&gt;
+  sample_n(200, replace = FALSE)
+write.csv(diabetes_new1, &quot;data/diabetes_new1.csv&quot;, row.names = FALSE)</code></pre>
 </div>
 <div id="high-blood-pressure-via-diabetes" class="section level4">
 <h4>1. High Blood Pressure via Diabetes</h4>
@@ -603,12 +607,12 @@ diabetes_new</code></pre>
   theme_minimal()
 
 HighBP_dist</code></pre>
-<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in
-## ggplot2 3.4.0.
+<pre><code>## Warning: The dot-dot notation (`..count..`) was
+## deprecated in ggplot2 3.4.0.
 ## ℹ Please use `after_stat(count)` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see
-## where this warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to
+## see where this warning was generated.</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="high-cholesterol-level-via-diabetes" class="section level4">
@@ -1322,9 +1326,9 @@ nondiabetes_sample</code></pre>
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 <pre class="r"><code>sample_df = full_join(diabetes_sample, nondiabetes_sample)</code></pre>
 <pre><code>## Joining with `by = join_by(Diabetes_012, HighBP,
-## HighChol, BMI, Smoker, HeartDiseaseorAttack, Sex,
-## Income, Education, PhysActivity, Fruits, Veggies, Age,
-## HvyAlcoholConsump, weight_status)`</code></pre>
+## HighChol, BMI, Smoker, HeartDiseaseorAttack,
+## Sex, Income, Education, PhysActivity, Fruits,
+## Veggies, Age, HvyAlcoholConsump, weight_status)`</code></pre>
 <pre class="r"><code>sample_df</code></pre>
 <pre><code>## # A tibble: 1,000 × 15
 ##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income
