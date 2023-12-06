@@ -13,7 +13,7 @@
 
 <title>Data cleaning and EDA</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -36,8 +36,8 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 <div class="hero-image"> 
     <div class="image-text">
       <div class="top-text">Data Science Project</div>
@@ -345,15 +345,15 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="modelbuilding.html">Predictive Model Building</a>
-    </li>
-    <li>
       <a href="statisticalanaylsis.html">Statistics Testing</a>
     </li>
     <li>
-      <a href="https://yc3577.shinyapps.io/diabetes_final_project/">Shiny App</a>
+      <a href="modeling.html">Predictive Model Building</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="https://yc3577.shinyapps.io/diabetes_final_project/">Shiny App</a>
 </li>
 <li>
   <a href="report.html">Report</a>
@@ -491,7 +491,7 @@ levels. Therefore, we want to keep <code>Income</code>,
 <p>First, we read in our data from the csv file.</p>
 <pre class="r"><code>diabetes_raw &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ─────────────────────────
+## ── Column specification ────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -607,12 +607,12 @@ write.csv(diabetes_new1, &quot;data/diabetes_new1.csv&quot;, row.names = FALSE)<
   theme_minimal()
 
 HighBP_dist</code></pre>
-<pre><code>## Warning: The dot-dot notation (`..count..`) was
-## deprecated in ggplot2 3.4.0.
+<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in
+## ggplot2 3.4.0.
 ## ℹ Please use `after_stat(count)` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to
-## see where this warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see
+## where this warning was generated.</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="high-cholesterol-level-via-diabetes" class="section level4">
@@ -774,12 +774,7 @@ Physactivity_dist</code></pre>
 
 HvyAlcohol_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-</div>
-</div>
-<div
-id="according-to-the-bar-chart-distribution-we-decide-to-drop-heavyalcoholconsumption-heart-disease-attack-these-two-variables-due-to-following-reasons.-1.-for-the-heavy-alcohol-consumption-the-samples-drinking-alcohol-in-large-amount-is-overall-too-few-in-the-sample-so-the-variable-more-not-be-fully-accutately-captured.-therefore-if-we-test-on-this-variable-it-may-be-not-representitive-and-significant.-2.-for-the-heart-disease-attack-it-is-the-same-reason-that-sample-size-with-heart-disease-attack-is-too-small-so-it-may-not-be-representitive-and-meaningful-to-test-on.-we-will-also-drop-age-and-education-these-two-variables-due-to-following-reasons.-1.-for-the-age-the-measure-and-categorize-method-is-not-suitable-for-our-statistical-test-since-it-is-a-categorical-variable-showing-the-individuals-age.-1-18-24-9-60-64-13-80-or-older-and-each-number-does-not-represent-the-true-age-of-the-samples-so-we-cannot-do-a-precise-test-on-it.-2.-for-the-education-it-is-the-same-reason-that-it-is-a-categorical-variable-showing-the-individuals-education-level-in-the-scale-of-1-6.-1-never-attended-school-or-only-kindergarten-2-grades-1-through-8-elementary-3-grades-9-through-11-some-high-school-4-grade-12-or-ged-high-school-graduate-5-college-1-year-to-3-years-some-college-or-technical-school-6-college-4-years-or-more-college-graduate."
-class="section level3">
-<h3>According to the bar chart distribution, we decide to drop
+<p><strong>According to the bar chart distribution, we decide to drop
 Heavyalcoholconsumption, heart disease attack these two variables due to
 following reasons. 1. For the heavy alcohol consumption, the samples
 drinking alcohol in large amount is overall too few in the sample, so
@@ -799,15 +794,13 @@ attended school or only kindergarten, 2 = Grades 1 through 8
 (Elementary), 3 = Grades 9 through 11 (Some high school), 4 = Grade 12
 or GED (High school graduate), 5 = College 1 year to 3 years (Some
 college or technical school), 6 = College 4 years or more (College
-graduate)].</h3>
+graduate)].</strong></p>
+<p><strong>Therefore, now we come to close with 9 variables that are
+potential estimates in our model. They are: 1. High Blood Pressure. 2.
+High Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6.
+Veggies Consumption. 7. Smoking. 8. Income Level. 9. Physical
+Acitivity.</strong></p>
 </div>
-<div
-id="therefore-now-we-come-to-close-with-9-variables-that-are-potential-estimates-in-our-model.-they-are-1.-high-blood-pressure.-2.-high-cholesterol-level.-3.-bmi.-4.-sex.-5.-fruits-consumption.-6.-veggies-consumption.-7.-smoking.-8.-income-level.-9.-physical-acitivity."
-class="section level3">
-<h3>Therefore, now we come to close with 9 variables that are potential
-estimates in our model. They are: 1. High Blood Pressure. 2. High
-Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6. Veggies
-Consumption. 7. Smoking. 8. Income Level. 9. Physical Acitivity.</h3>
 </div>
 </div>
 <div id="plots-all-together" class="section level2">
@@ -1326,9 +1319,9 @@ nondiabetes_sample</code></pre>
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 <pre class="r"><code>sample_df = full_join(diabetes_sample, nondiabetes_sample)</code></pre>
 <pre><code>## Joining with `by = join_by(Diabetes_012, HighBP,
-## HighChol, BMI, Smoker, HeartDiseaseorAttack,
-## Sex, Income, Education, PhysActivity, Fruits,
-## Veggies, Age, HvyAlcoholConsump, weight_status)`</code></pre>
+## HighChol, BMI, Smoker, HeartDiseaseorAttack, Sex,
+## Income, Education, PhysActivity, Fruits, Veggies, Age,
+## HvyAlcoholConsump, weight_status)`</code></pre>
 <pre class="r"><code>sample_df</code></pre>
 <pre><code>## # A tibble: 1,000 × 15
 ##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income

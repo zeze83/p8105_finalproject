@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readr)
 library(ggplot2)
-
+library(reshape2)
 ```
 
 
@@ -21,16 +21,43 @@ To investigate the relationship between the variables (...) and diabetes status,
 
 First, we read in the dataset. 
 
+```{r read data01}
+diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 
-```{r}
-diabetes_data <- read_csv("data/diabetes_new.csv")
+diabetes_data01 <- 
+  diabetes_data01 |>
+  select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
+         HeartDiseaseorAttack, Sex,Income, Education, 
+         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)
 
-head(diabetes_data)
+diabetes_data01
 ```
 
-#### Correlation analysis for Continuous Variables
-```{r}
 
+#### Correlation analysis for Continuous Variables
+```{r correlation}
+correlationX <- 
+  diabetes_data01 |>
+  select(-starts_with("Diabetes_012"))
+
+correlations <- cor(correlationX,diabetes_data01$Diabetes_012)
+cor_df <- data.frame(Variable = names(correlationX), Correlation = correlations)
+ggplot(cor_df, aes(x = Variable, y = Correlation)) +
+  geom_bar(stat = "identity", fill = "purple") +
+  theme_minimal() +
+  labs(title = "Correlation with Diabetes_012", x = "Variable", y = "Correlation") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+
+#### Chi-Square for Independence for Categorical Variables
+
+```{r read data}
+diabetes_data <- read_csv("data/diabetes_new1.csv") 
+numeric_cols <- sapply(diabetes_data, is.numeric)
+diabetes_data[numeric_cols] <- lapply(diabetes_data[numeric_cols], as.numeric)
+
+head(diabetes_data)
 
 diabetes_data <- diabetes_data |>
      mutate(Diabetes_binary = factor(Diabetes_status, levels = c("No Diabetes", "Diabetes"), labels = c(0, 1)))
@@ -41,8 +68,7 @@ cor(diabetes_data$BMI, as.numeric(diabetes_data$Diabetes_binary), method = "pear
 cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = "pearson") 
 
 ```
-
-#### Chi-Square for Independence for Categorical Variables
+```
 
 ```{r}
 
@@ -94,42 +120,29 @@ library(infotheo)
 
 
 ```{r}
-diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
-
-diabetes_data01 <- 
-  diabetes_data01 |>
-  select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
-         HeartDiseaseorAttack, Sex,Income, Education, 
-         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)
-
-diabetes_data01
-```
-
-
-```{r}
-X <- diabetes_data01 |>
-  select(-Diabetes_012)
-Y <- diabetes_data01$Diabetes_012
+#X <- diabetes_data01 |>
+#  select(-Diabetes_012)
+#Y <- diabetes_data01$Diabetes_012
 
 # Function to calculate mutual information between each feature and the target variable
-mutual_info <- function(feature, target) {
-  infotheo::info_gain(feature, target)
-}
+#mutual_info <- function(feature, target) {
+#  infotheo::info_gain(feature, target)
+#}
 
 # Apply the mutual_info function to each feature in X
-feature_scores <- sapply(X, mutual_info, target = Y)
+#feature_scores <- sapply(X, mutual_info, target = Y)
 
 # Create a data frame with feature names and their scores
-f_Scores <- data.frame(Feature = names(feature_scores), Score = feature_scores)
+#f_Scores <- data.frame(Feature = names(feature_scores), Score = feature_scores)
 
 # Sort the data frame by scores in descending order
-f_Scores <- f_Scores[order(-f_Scores$Score), ]
+#f_Scores <- f_Scores[order(-f_Scores$Score), ]
 
 # Select the top 10 features
-top_10_features <- f_Scores[1:10, ]
+#top_10_features <- f_Scores[1:10, ]
 
 # Print the result
-print(top_10_features)
+#print(top_10_features)
 
 ```
 

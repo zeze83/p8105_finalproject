@@ -10,12 +10,12 @@ navbar:
       href: EDA.html
     - text: "Statistical Anaylsis"
       menu:
-      - text: "Predictive Model Building"
-        href: modelbuilding.html
       - text: "Statistics Testing"
         href: statisticalanaylsis.html
-      - text: "Shiny App"
-        href: https://yc3577.shinyapps.io/diabetes_final_project/
+      - text: "Predictive Model Building"
+        href: modeling.html
+    - text: "Shiny App"
+      href: https://yc3577.shinyapps.io/diabetes_final_project/
     - text: "Report"
       href: report.html
     - icon: fa-envelope fa-lg
