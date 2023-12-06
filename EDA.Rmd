@@ -136,7 +136,10 @@ diabetes_new =
 
 diabetes_new
 write.csv(diabetes_new, "data/diabetes_new.csv", row.names = FALSE)
-  
+
+diabetes_new1=diabetes_new|>
+  sample_n(200, replace = FALSE)
+write.csv(diabetes_new1, "data/diabetes_new1.csv", row.names = FALSE)
 ```
 
 
