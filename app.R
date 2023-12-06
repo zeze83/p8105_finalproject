@@ -1,6 +1,14 @@
 library(shiny)
+library(DT)
+library(readr)
+library(leaflet)
 library(tidyverse)
+library(shinydashboard)
+library(shinyWidgets)
 library(plotly)
+library(shinybusy)
+library(rsconnect)
+library(dplyr)
 
 # Load your data
 diabetes_new1 <- read.csv("data/diabetes_new1.csv")
@@ -25,7 +33,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   output$plot <- renderPlotly({
-
+    
     
     # Generate the plot based on input
     selected_variable <- input$variable_choice
