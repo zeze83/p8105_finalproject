@@ -11,7 +11,7 @@ library(rsconnect)
 library(dplyr)
 
 # Load your data
-diabetes_new1 <- read.csv("data/diabetes_new1.csv")
+diabetes_new <- read.csv("data/diabetes_new.csv")
 
 # Define UI
 ui <- fluidPage(
@@ -20,7 +20,7 @@ ui <- fluidPage(
     sidebarPanel(
       selectInput("variable_choice",
                   "Please choose a variable to explore its relationship with diabetes status",
-                  choices = names(diabetes_new1)[-which(names(diabetes_new1) == "Diabetes_status")], # Exclude 'Diabetes_status'
+                  choices = names(diabetes_new)[-which(names(diabetes_new) == "Diabetes_status")], # Exclude 'Diabetes_status'
                   selected = "HighBP")
     ),
     mainPanel(
@@ -40,7 +40,7 @@ server <- function(input, output) {
     
     if (selected_variable %in% c("HighBP", "HighChol", "Sex", "HeartDiseaseorAttack", "Smoker", "PhysActivity", "Fruits", "Veggies", "HvyAlcoholConsump", "weight_status")) {
       # Categorical variable bar chart
-      p <- ggplot(diabetes_new1, aes_string(x = "Diabetes_status", fill = selected_variable)) + 
+      p <- ggplot(diabetes_new, aes_string(x = "Diabetes_status", fill = selected_variable)) + 
         geom_bar(position = "dodge") +
         scale_fill_brewer(palette = 'Pastel1') +
         ylab("Frequencies") +
@@ -49,7 +49,7 @@ server <- function(input, output) {
         theme_minimal()
     } else {
       # Numerical variable histogram
-      p <- ggplot(diabetes_new1, aes_string(x = selected_variable, fill = "Diabetes_status")) +
+      p <- ggplot(diabetes_new, aes_string(x = selected_variable, fill = "Diabetes_status")) +
         geom_histogram(aes(y = ..count..), position = "identity", alpha = 0.5, binwidth = 1) +
         scale_fill_brewer(palette = "Pastel1") +
         ylab("Count") +
