@@ -339,7 +339,7 @@ plots1 = plot_grid(
   Income_dist + theme(legend.position="none"),
   Physactivity_dist + theme(legend.position="none"),
   Smoker_dist + theme(legend.position="none")) +
-  theme(axis.text.x = element_text(size = 5))
+  theme(axis.text.x = element_text(size = 4))
 plots1
 
 ```

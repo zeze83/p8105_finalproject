@@ -9,6 +9,7 @@ runtime: shiny
 
 
 ```{r setup, include=FALSE, echo=FALSE}
+install.packages("rsconnect")
 library(flexdashboard)
 library(tidyverse)
 library(plotly)
