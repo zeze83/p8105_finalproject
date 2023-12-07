@@ -438,8 +438,36 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
 </div>
 <div id="anova" class="section level4">
 <h4>ANOVA</h4>
-<pre class="r"><code>X &lt;- diabetes_data01[, -1]
-Y &lt;- diabetes_data01[, 1] </code></pre>
+<pre class="r"><code>dependent_var &lt;- diabetes_data01[[1]]
+independent_vars &lt;- diabetes_data01[,-1]
+independent_vars &lt;- data.frame(lapply(independent_vars, function(x) as.factor(x)))
+lm_model &lt;- lm(dependent_var ~ ., data = independent_vars)
+
+# Perform ANOVA
+anova_results &lt;- anova(lm_model)
+
+# Display the ANOVA results
+print(anova_results)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: dependent_var
+##                          Df Sum Sq Mean Sq    F value    Pr(&gt;F)    
+## HighBP                    1   9121  9121.0 22241.5669 &lt; 2.2e-16 ***
+## HighChol                  1   2227  2226.9  5430.3372 &lt; 2.2e-16 ***
+## BMI                      83   4251    51.2   124.8835 &lt; 2.2e-16 ***
+## Smoker                    1    107   106.7   260.1201 &lt; 2.2e-16 ***
+## HeartDiseaseorAttack      1   1409  1408.6  3434.7828 &lt; 2.2e-16 ***
+## Sex                       1      2     1.6     3.9852    0.0459 *  
+## Income                    7   1177   168.1   409.8757 &lt; 2.2e-16 ***
+## Education                 5    132    26.3    64.1470 &lt; 2.2e-16 ***
+## PhysActivity              1    145   145.3   354.2420 &lt; 2.2e-16 ***
+## Fruits                    1      1     0.8     2.0050    0.1568    
+## Veggies                   1      7     6.7    16.3283 5.328e-05 ***
+## Age                      12    925    77.1   187.9796 &lt; 2.2e-16 ***
+## HvyAlcoholConsump         1    165   165.5   403.4858 &lt; 2.2e-16 ***
+## Residuals            253563 103983     0.4                         
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <div id="chi-square-for-independence-for-categorical-variables"
 class="section level4">

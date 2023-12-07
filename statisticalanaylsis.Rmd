@@ -51,9 +51,18 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
 
 #### ANOVA
 ```{r}
-X <- diabetes_data01[, -1]
-Y <- diabetes_data01[, 1] 
+dependent_var <- diabetes_data01[[1]]
+independent_vars <- diabetes_data01[,-1]
+independent_vars <- data.frame(lapply(independent_vars, function(x) as.factor(x)))
+lm_model <- lm(dependent_var ~ ., data = independent_vars)
+
+# Perform ANOVA
+anova_results <- anova(lm_model)
+
+# Display the ANOVA results
+print(anova_results)
 ```
+
 
 #### Chi-Square for Independence for Categorical Variables
 
