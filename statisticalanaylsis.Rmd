@@ -62,7 +62,29 @@ anova_results <- anova(lm_model)
 # Display the ANOVA results
 print(anova_results)
 ```
+#### Chi-Square all together
+```{r}
+chi_square_results <- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
 
+# Perform chi-square test for each independent variable
+for (var in names(independent_vars)) {
+  # Create a contingency table
+  table <- table(dependent_var, independent_vars[[var]])
+  
+  # Perform chi-square test
+  test <- chisq.test(table)
+  
+  # Store the results
+  chi_square_results <- rbind(chi_square_results, data.frame(Variable = var, ChiSquare = test$statistic, PValue = test$p.value))
+}
+
+# Order results by p-value
+chi_square_results <- chi_square_results %>%
+  arrange(PValue)
+
+# Print the results
+print(chi_square_results)
+```
 
 #### Chi-Square for Independence for Categorical Variables
 
