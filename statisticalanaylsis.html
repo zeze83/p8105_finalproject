@@ -401,10 +401,13 @@ predictive model.</p>
   diabetes_data01 |&gt;
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
-         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)
+         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)|&gt;
+         filter(Diabetes_012 == &#39;2&#39; | Diabetes_012 == &#39;0&#39;) |&gt;
+  mutate(Diabetes_012=ifelse(Diabetes_012==&quot;2&quot;,&quot;1&quot;,Diabetes_012))|&gt;
+  mutate(Diabetes_012=as.numeric(Diabetes_012))
 
 diabetes_data01</code></pre>
-<pre><code>## # A tibble: 253,680 × 14
+<pre><code>## # A tibble: 249,049 × 14
 ##    Diabetes_012 HighBP HighChol   BMI Smoker HeartDiseaseorAttack   Sex Income
 ##           &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;                &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
 ##  1            0      1        1    40      1                    0     0      3
@@ -415,9 +418,9 @@ diabetes_data01</code></pre>
 ##  6            0      1        1    25      1                    0     1      8
 ##  7            0      1        0    30      1                    0     0      7
 ##  8            0      1        1    25      1                    0     0      4
-##  9            2      1        1    30      1                    1     0      1
+##  9            1      1        1    30      1                    1     0      1
 ## 10            0      0        0    24      0                    0     1      3
-## # ℹ 253,670 more rows
+## # ℹ 249,039 more rows
 ## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;, Fruits &lt;dbl&gt;,
 ## #   Veggies &lt;dbl&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;dbl&gt;</code></pre>
 <div id="correlation-analysis-for-continuous-variables"
@@ -451,21 +454,21 @@ print(anova_results)</code></pre>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: dependent_var
-##                          Df Sum Sq Mean Sq    F value    Pr(&gt;F)    
-## HighBP                    1   9121  9121.0 22241.5669 &lt; 2.2e-16 ***
-## HighChol                  1   2227  2226.9  5430.3372 &lt; 2.2e-16 ***
-## BMI                      83   4251    51.2   124.8835 &lt; 2.2e-16 ***
-## Smoker                    1    107   106.7   260.1201 &lt; 2.2e-16 ***
-## HeartDiseaseorAttack      1   1409  1408.6  3434.7828 &lt; 2.2e-16 ***
-## Sex                       1      2     1.6     3.9852    0.0459 *  
-## Income                    7   1177   168.1   409.8757 &lt; 2.2e-16 ***
-## Education                 5    132    26.3    64.1470 &lt; 2.2e-16 ***
-## PhysActivity              1    145   145.3   354.2420 &lt; 2.2e-16 ***
-## Fruits                    1      1     0.8     2.0050    0.1568    
-## Veggies                   1      7     6.7    16.3283 5.328e-05 ***
-## Age                      12    925    77.1   187.9796 &lt; 2.2e-16 ***
-## HvyAlcoholConsump         1    165   165.5   403.4858 &lt; 2.2e-16 ***
-## Residuals            253563 103983     0.4                         
+##                          Df  Sum Sq Mean Sq    F value    Pr(&gt;F)    
+## HighBP                    1  2199.9 2199.88 21396.9679 &lt; 2.2e-16 ***
+## HighChol                  1   523.8  523.83  5095.0035 &lt; 2.2e-16 ***
+## BMI                      82  1029.2   12.55   122.0743 &lt; 2.2e-16 ***
+## Smoker                    1    25.7   25.75   250.4334 &lt; 2.2e-16 ***
+## HeartDiseaseorAttack      1   355.5  355.51  3457.7952 &lt; 2.2e-16 ***
+## Sex                       1     0.6    0.60     5.7897   0.01612 *  
+## Income                    7   275.5   39.36   382.7997 &lt; 2.2e-16 ***
+## Education                 5    30.9    6.18    60.0628 &lt; 2.2e-16 ***
+## PhysActivity              1    35.7   35.67   346.9600 &lt; 2.2e-16 ***
+## Fruits                    1     0.2    0.17     1.6976   0.19261    
+## Veggies                   1     1.6    1.62    15.7919 7.073e-05 ***
+## Age                      12   216.3   18.02   175.2859 &lt; 2.2e-16 ***
+## HvyAlcoholConsump         1    41.2   41.22   400.8931 &lt; 2.2e-16 ***
+## Residuals            248933 25593.5    0.10                         
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -484,9 +487,7 @@ for (var in names(independent_vars)) {
   # Store the results
   chi_square_results &lt;- rbind(chi_square_results, data.frame(Variable = var, ChiSquare = test$statistic, PValue = test$p.value))
 }</code></pre>
-<pre><code>## Warning in chisq.test(table): Chi-squared approximation may be incorrect
-
-## Warning in chisq.test(table): Chi-squared approximation may be incorrect</code></pre>
+<pre><code>## Warning in chisq.test(table): Chi-squared approximation may be incorrect</code></pre>
 <pre class="r"><code># Order results by p-value
 chi_square_results &lt;- chi_square_results %&gt;%
   arrange(PValue)
@@ -494,19 +495,19 @@ chi_square_results &lt;- chi_square_results %&gt;%
 # Print the results
 print(chi_square_results)</code></pre>
 <pre><code>##                         Variable  ChiSquare        PValue
-## X-squared                 HighBP 18794.6441  0.000000e+00
-## X-squared1              HighChol 11258.9204  0.000000e+00
-## X-squared2                   BMI 16040.9372  0.000000e+00
-## X-squared4  HeartDiseaseorAttack  8244.8891  0.000000e+00
-## X-squared6                Income  7816.4629  0.000000e+00
-## X-squared7             Education  4560.6403  0.000000e+00
-## X-squared8          PhysActivity  3789.3015  0.000000e+00
-## X-squared11                  Age  9641.3765  0.000000e+00
-## X-squared3                Smoker  1010.5118 3.716732e-220
-## X-squared10              Veggies   893.8419 8.029646e-195
-## X-squared12    HvyAlcoholConsump   850.3240 2.261930e-185
-## X-squared9                Fruits   454.3471  2.186703e-99
-## X-squared5                   Sex   250.8506  3.376679e-55</code></pre>
+## X-squared                 HighBP 18062.6213  0.000000e+00
+## X-squared1              HighChol 10535.0369  0.000000e+00
+## X-squared2                   BMI 15209.2925  0.000000e+00
+## X-squared4  HeartDiseaseorAttack  8180.5748  0.000000e+00
+## X-squared6                Income  7267.2494  0.000000e+00
+## X-squared7             Education  4201.2403  0.000000e+00
+## X-squared8          PhysActivity  3647.1812  0.000000e+00
+## X-squared11                  Age  9034.3397  0.000000e+00
+## X-squared3                Smoker   963.5432 1.509376e-211
+## X-squared10              Veggies   840.5152 8.386730e-185
+## X-squared12    HvyAlcoholConsump   835.3496 1.113358e-183
+## X-squared9                Fruits   433.5626  2.725768e-96
+## X-squared5                   Sex   250.5281  1.992061e-56</code></pre>
 </div>
 <div id="chi-square-for-independence-for-categorical-variables"
 class="section level4">

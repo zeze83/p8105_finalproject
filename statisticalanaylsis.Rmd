@@ -28,7 +28,10 @@ diabetes_data01 <-
   diabetes_data01 |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
-         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)
+         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)|>
+         filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
+  mutate(Diabetes_012=ifelse(Diabetes_012=="2","1",Diabetes_012))|>
+  mutate(Diabetes_012=as.numeric(Diabetes_012))
 
 diabetes_data01
 ```

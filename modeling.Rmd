@@ -9,3 +9,33 @@ output:
 
 Here is for modeling
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(reshape2)
+```
+
+```{r read data01}
+diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
+
+diabetes_data01 <- 
+  diabetes_data01 |>
+  select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
+         HeartDiseaseorAttack, Sex,Income, Education, 
+         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)|>
+         filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
+  mutate(Diabetes_012=ifelse(Diabetes_012=="2","1",Diabetes_012))|>
+  mutate(Diabetes_012=as.numeric(Diabetes_012))
+
+diabetes_data01
+```
+
+#### Modeling with Logistic Regression
+
+```{r}
+model <- glm(Diabetes_012 ~ HighBP + HighChol + BMI + Smoker + HeartDiseaseorAttack + Sex + Income + Education + PhysActivity + Fruits + Veggies + Age + HvyAlcoholConsump, data = diabetes_data01)
+summary(model)
+
+```
