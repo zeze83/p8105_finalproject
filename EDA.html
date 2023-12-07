@@ -491,7 +491,7 @@ levels. Therefore, we want to keep <code>Income</code>,
 <p>First, we read in our data from the csv file.</p>
 <pre class="r"><code>diabetes_raw &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ──────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -544,6 +544,154 @@ diabetes_raw</code></pre>
 ## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;</code></pre>
 </div>
+<div id="statistical-summary-of-variables" class="section level2">
+<h2>Statistical Summary of Variables</h2>
+<p>This table presented a statistical summary of the variables in our
+dataset.</p>
+<pre class="r"><code>knitr::kable(summary(diabetes_raw))</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="1%" />
+<col width="9%" />
+<col width="5%" />
+<col width="5%" />
+<col width="6%" />
+<col width="8%" />
+<col width="10%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Diabetes_012</th>
+<th align="left">HighBP</th>
+<th align="left">HighChol</th>
+<th align="left">BMI</th>
+<th align="left">Smoker</th>
+<th align="left">HeartDiseaseorAttack</th>
+<th align="left">Sex</th>
+<th align="left">Income</th>
+<th align="left">Education</th>
+<th align="left">PhysActivity</th>
+<th align="left">Fruits</th>
+<th align="left">Veggies</th>
+<th align="left">Age</th>
+<th align="left">HvyAlcoholConsump</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">No Diabetes :213703</td>
+<td align="left">No :144851</td>
+<td align="left">No :146089</td>
+<td align="left">Min. :12.00</td>
+<td align="left">Nonsmoker:141257</td>
+<td align="left">No :229787</td>
+<td align="left">Female:141974</td>
+<td align="left">Min. :1.000</td>
+<td align="left">Min. :1.00</td>
+<td align="left">No : 61760</td>
+<td align="left">No : 92782</td>
+<td align="left">No : 47839</td>
+<td align="left">Min. : 1.000</td>
+<td align="left">No :239424</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Pre-Diabetes: 4631</td>
+<td align="left">Yes:108829</td>
+<td align="left">Yes:107591</td>
+<td align="left">1st Qu.:24.00</td>
+<td align="left">Smoker :112423</td>
+<td align="left">Yes: 23893</td>
+<td align="left">Male :111706</td>
+<td align="left">1st Qu.:5.000</td>
+<td align="left">1st Qu.:4.00</td>
+<td align="left">Yes:191920</td>
+<td align="left">Yes:160898</td>
+<td align="left">Yes:205841</td>
+<td align="left">1st Qu.: 6.000</td>
+<td align="left">Yes: 14256</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Diabetes : 35346</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Median :27.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Median :7.000</td>
+<td align="left">Median :5.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Median : 8.000</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Mean :28.38</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Mean :6.054</td>
+<td align="left">Mean :5.05</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Mean : 8.032</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.:31.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.:8.000</td>
+<td align="left">3rd Qu.:6.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">3rd Qu.:10.000</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Max. :98.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Max. :8.000</td>
+<td align="left">Max. :6.00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Max. :13.000</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="exploratory-data-analysis" class="section level2">
 <h2>Exploratory Data Analysis</h2>
 <div id="bivariate-plots-and-analysis-analysis" class="section level3">
@@ -563,7 +711,7 @@ our interested factors with the diabetes variable respectively.</p>
   theme_minimal()
 
 Diabetesraw_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>From the distribution of Diabetes Status, we realize that
 Pre-Diabetes status has extreme low data samples, so we will exclude
 this data in our future analysis.</p>
@@ -607,19 +755,12 @@ write.csv(diabetes_new1, &quot;data/diabetes_new1.csv&quot;, row.names = FALSE)<
   theme_minimal()
 
 HighBP_dist</code></pre>
-<pre><code>## Warning: The dot-dot notation
-## (`..count..`) was deprecated
-## in ggplot2 3.4.0.
-## ℹ Please use
-##   `after_stat(count)`
-##   instead.
-## This warning is displayed
-## once every 8 hours.
-## Call
-## `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was
+<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+## ℹ Please use `after_stat(count)` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 ## generated.</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="high-cholesterol-level-via-diabetes" class="section level4">
 <h4>2. High Cholesterol Level via Diabetes</h4>
@@ -633,7 +774,7 @@ HighBP_dist</code></pre>
   theme_minimal()
 
 HighChol_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="bmi-via-diabetes" class="section level4">
 <h4>3. BMI via Diabetes</h4>
@@ -647,7 +788,7 @@ HighChol_dist</code></pre>
   theme_minimal() 
 
 BMI_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="heart-disease-or-attack-via-diabetes" class="section level4">
 <h4>4. Heart Disease or Attack via Diabetes</h4>
@@ -661,7 +802,7 @@ BMI_dist</code></pre>
   theme_minimal()
 
 Heartdisease_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="age-via-diabetes" class="section level4">
 <h4>5. Age via Diabetes</h4>
@@ -675,7 +816,7 @@ Heartdisease_dist</code></pre>
   theme_minimal()
 
 Age_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="sex-via-diabetes" class="section level4">
 <h4>6. Sex via Diabetes</h4>
@@ -689,7 +830,7 @@ Age_dist</code></pre>
   theme_minimal()
 
 Sex_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 #### 7. Income via Diabetes</p>
 <pre class="r"><code>Income_dist = 
   ggplot(diabetes_new, aes(Income, ..count..)) + 
@@ -701,7 +842,7 @@ Sex_dist</code></pre>
   theme_minimal()
 
 Income_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="education-via-diabetes" class="section level4">
 <h4>8. Education via Diabetes</h4>
@@ -715,7 +856,7 @@ Income_dist</code></pre>
   theme_minimal()
 
 Education_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="fruits-via-diabetes" class="section level4">
 <h4>9. Fruits via Diabetes</h4>
@@ -729,7 +870,7 @@ Education_dist</code></pre>
   theme_minimal()
 
 Fruits_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 #### 10. Veggies via Diabetes</p>
 <pre class="r"><code>Veggies_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
@@ -741,7 +882,7 @@ Fruits_dist</code></pre>
   theme_minimal()
 
 Veggies_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 <div id="smoker-via-diabetes" class="section level4">
 <h4>11. Smoker via Diabetes</h4>
@@ -755,7 +896,7 @@ Veggies_dist</code></pre>
   theme_minimal()
 
 Smoker_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 #### 12. PhysActivity via Diabetes</p>
 <pre class="r"><code>Physactivity_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
@@ -767,7 +908,7 @@ Smoker_dist</code></pre>
   theme_minimal()
 
 Physactivity_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 #### 13. HvyAlcoholConsump via Diabetes</p>
 <pre class="r"><code>HvyAlcohol_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
@@ -779,7 +920,7 @@ Physactivity_dist</code></pre>
   theme_minimal()
 
 HvyAlcohol_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p><strong>According to the bar chart distribution, we decide to drop
 Heavyalcoholconsumption, heart disease attack these two variables due to
 following reasons. 1. For the heavy alcohol consumption, the samples
@@ -823,7 +964,7 @@ Acitivity.</strong></p>
   Smoker_dist + theme(legend.position=&quot;none&quot;)) +
   theme(axis.text.x = element_text(size = 4))
 plots1</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>BMI Categorization</p>
 <pre class="r"><code># write a function to categorize bmi values to diverse weight status
 categorize_bmi &lt;- function(bmi) {
@@ -851,7 +992,7 @@ status</h4>
   ggtitle(&quot;Association between Diabetes Status and Blood Pressure Status&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="plot-association-between-diabetes-status-and-weight-status"
 class="section level4">
@@ -863,7 +1004,7 @@ class="section level4">
   ggtitle(&quot;Association between Diabetes Status and Weight Status&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div id="plot-box-plot-distribution-of-bmi-in-different-diabetes-status"
 class="section level4">
@@ -880,7 +1021,7 @@ class="section level4">
   
   
 plotBMI</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div id="plot-smoking-status-over-diabetes-status"
 class="section level4">
@@ -895,10 +1036,10 @@ class="section level4">
   theme_minimal()
 
 plot_smoke</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 ### Plot: Fruits or Veggies over different Diabetes Status</p>
 <pre class="r"><code>mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c(&quot;Light Pink&quot;,&quot;Light Blue&quot;))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 <div
 id="plot-distribution-of-education-level-over-different-diabetes-status"
@@ -915,7 +1056,7 @@ Status</h4>
   theme_minimal()
 
 plot_education</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 <div
 id="plot-distribution-of-income-level-over-different-diabetes-status"
@@ -932,7 +1073,7 @@ Status</h4>
   theme_minimal()
 
 plot_income</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 </div>
 <div id="tables" class="section level4">
 <h4>Tables</h4>
@@ -1324,15 +1465,9 @@ nondiabetes_sample</code></pre>
 ## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 <pre class="r"><code>sample_df = full_join(diabetes_sample, nondiabetes_sample)</code></pre>
-<pre><code>## Joining with `by =
-## join_by(Diabetes_012, HighBP,
-## HighChol, BMI, Smoker,
-## HeartDiseaseorAttack, Sex,
-## Income, Education,
-## PhysActivity, Fruits,
-## Veggies, Age,
-## HvyAlcoholConsump,
-## weight_status)`</code></pre>
+<pre><code>## Joining with `by = join_by(Diabetes_012, HighBP, HighChol, BMI, Smoker,
+## HeartDiseaseorAttack, Sex, Income, Education, PhysActivity, Fruits, Veggies,
+## Age, HvyAlcoholConsump, weight_status)`</code></pre>
 <pre class="r"><code>sample_df</code></pre>
 <pre><code>## # A tibble: 1,000 × 15
 ##    Diabetes_012 HighBP HighChol   BMI Smoker   HeartDiseaseorAttack Sex   Income
@@ -1363,7 +1498,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between HighBP &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 </div>
 <div id="highchol-bmi" class="section level3">
 <h3>1. HighChol + BMI</h3>
@@ -1374,7 +1509,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between Cholesterol Level &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-34-1.png" width="672" />
+<p><img src="EDA_files/figure-html/unnamed-chunk-35-1.png" width="672" />
 ### Veggies + Fruits vs Physactivity</p>
 <div id="high-blood-pressure-in-different-diabetes-status"
 class="section level4">

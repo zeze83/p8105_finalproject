@@ -103,6 +103,15 @@ diabetes_raw
 
 ```
 
+## Statistical Summary of Variables
+
+This table presented a statistical summary of the variables in our dataset.
+```{r}
+knitr::kable(summary(diabetes_raw))
+
+
+```
+
 
 ## Exploratory Data Analysis
 
