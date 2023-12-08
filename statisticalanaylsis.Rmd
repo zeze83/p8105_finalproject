@@ -23,7 +23,7 @@ To investigate the relationship between the variables High Blood Pressure, High 
 
 First, we read in the dataset. 
 
-```{r read data01}
+```{r read data01,echo=FALSE}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv", show_col_types = FALSE)
 diabetes_data01 <- 
   diabetes_data01 %>%

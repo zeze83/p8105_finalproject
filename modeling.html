@@ -398,7 +398,6 @@ div.tocify {
 
 
 <p>Here is for modeling</p>
-<pre class="r"><code>diabetes_data01 &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
 ## ── Column specification ─────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -406,13 +405,6 @@ div.tocify {
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>diabetes_data01 &lt;- 
-  diabetes_data01 |&gt;
-  dplyr::select(Diabetes_012, HighBP, HighChol, BMI, Smoker, 
-                Income, Sex, PhysActivity, Fruits, Veggies) |&gt;
-  filter(Diabetes_012 == &#39;2&#39; | Diabetes_012 == &#39;0&#39;) |&gt;
-  mutate(Diabetes_012 = ifelse(Diabetes_012 == &quot;2&quot;, &quot;1&quot;, Diabetes_012)) |&gt;
-  mutate(Diabetes_012 = as.numeric(Diabetes_012))</code></pre>
 <div id="logistic-regression-model" class="section level4">
 <h4>Logistic Regression Model</h4>
 <p>First, we split our data set into train and test data set in the

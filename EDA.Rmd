@@ -4,6 +4,7 @@ output:
   html_document:
     toc: true
     toc_float: true
+    code_folding: hide
     theme: flatly
 ---
 
@@ -14,6 +15,7 @@ library(readr)
 library(ggplot2)
 library(table1)
 library(cowplot)
+library(broom)
 ```
 
 
@@ -76,7 +78,7 @@ We also predict that social factors including income, education, smoking habits,
 
 First, we read in our data from the csv file. 
 
-```{r}
+```{r echo=FALSE}
 diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
 
 head(diabetes_raw)
@@ -99,8 +101,6 @@ diabetes_raw <- diabetes_raw |>
          PhysActivity = factor(PhysActivity, levels = c(0, 1), labels = c("No", "Yes")))
 
 diabetes_raw
-
-
 ```
 
 ## Statistical Summary of Variables
@@ -108,8 +108,6 @@ diabetes_raw
 This table presented a statistical summary of the variables in our dataset.
 ```{r}
 summary(diabetes_raw)
-
-
 ```
 
 
