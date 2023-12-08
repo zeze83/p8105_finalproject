@@ -39,7 +39,7 @@ diabetes_data01 <-
 ```{r correlation}
 correlationX <- 
   diabetes_data01 |>
-  select(-starts_with("Diabetes_012"))
+  dplyr::select(-starts_with("Diabetes_012"))
 
 correlations <- cor(correlationX,diabetes_data01$Diabetes_012)
 cor_df <- data.frame(Variable = names(correlationX), Correlation = correlations)

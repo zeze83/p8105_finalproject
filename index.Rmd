@@ -24,9 +24,11 @@ Click to [learn more](EDA.html) about our EDA.
 
 # Statistical Analysis
 
+## Statistical Tests
+
 We applied ANOVA Test and Chi-squared test on our data.
 
-```{r read data01,include=FALSE,echo=FALSE}
+```{r read data01,include=FALSE}
 library(readr)
 library(tidyverse)
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
@@ -41,7 +43,7 @@ diabetes_data01 <-
   mutate(Diabetes_012=as.numeric(Diabetes_012))
 ```
 
-```{r anova,include=FALSE,echo=FALSE}
+```{r anova,include=FALSE}
 dependent_var <- diabetes_data01[[1]]
 independent_vars <- diabetes_data01[,-1]
 independent_vars <- data.frame(lapply(independent_vars, function(x) as.factor(x)))
@@ -55,12 +57,12 @@ anova_results|>
   knitr::kable()
 ```
 
-```{r, echo=FALSE}
+```{r anovaresult,echo=FALSE}
 anova_results|>
   knitr::kable()
 ```
 
-```{r chisq,include=FALSE,echo=FALSE}
+```{r chisq,include=FALSE}
 chi_square_results <- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
 
 # Perform chi-square test for each independent variable
@@ -84,11 +86,40 @@ chi_square_results|>
   knitr::kable()
 ```
 
-```{r echo=FALSE}
+```{r chisqresult,echo=FALSE}
 chi_square_results|>
   knitr::kable()
 ```
 
+## Model Fitting
+
+```{r include=FALSE}
+# Set seed for reproducibility
+set.seed(1)
+
+# Create indices for the train set
+y <- diabetes_data01[["Diabetes_012"]] # Target column
+trainIndex <- caret::createDataPartition(y, p = 0.67, list = FALSE)
+
+# Create training and testing sets
+train=diabetes_data01[trainIndex,]
+test=diabetes_data01[-trainIndex,]
+head(train)
+head(test)
+
+# model fitting
+model <- glm(Diabetes_012 ~ HighBP + HighChol + BMI + Smoker + Sex + Income + PhysActivity + Fruits + Veggies, data = train)
+summary(model)
+
+# Tidy the summary of the model
+tidy_model <- broom::tidy(model)
+```
+
+```{r echo=FALSE}
+# Use kable to create a clean table output
+knitr::kable(tidy_model, format = "html", caption = "Logistic Regression Model Summary") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+```
 
 Click to [learn more](statisticalanaylsis.html) about our statistics testing.
 
