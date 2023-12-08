@@ -17,14 +17,19 @@ Click to [learn more](Proposal.html) about our propopsal.
 
 # Exploratory Data Analysis
 
-There is an combined plots for our all variables.
-![](images/RplotCombined.png)
+There is a combined plots for our all variables.
+
+![](images/DistributionVariables.png)
 
 Click to [learn more](EDA.html) about our EDA.
 
 # Statistical Analysis
 
 ## Statistical Tests
+
+There is a correlation plots for our all variables.
+
+![](images/RplotCombined.png)
 
 We applied ANOVA Test and Chi-squared test on our data.
 
