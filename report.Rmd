@@ -7,4 +7,129 @@ output:
     theme: flatly
 ---
 
-Here is report.
+
+# Abstract & Introduction
+Diabetes is currently a chronic metabolic disorder in which prevalence is expediting and occurrence appears in younger age. Even nowadays, we have different methods of treatment targeting such diseases. Although diabetes has reaped a host of effective treatments with advances in technology and medical care, the pain and lengthy treatment of the disease still places a heavy burden on the patient as well as the patient's family. Not only that, since the cause of diabetes has been proven to have a certain genotype of genetic factors, for many people in the early stages of the prevention of the disease seems to be very important. Therefore, in this study, we analyze the effects of different physiological, lifestyle and social factors on diabetes status and their interactions by analyzing data from real diabetic patients and non-diabetic patients. We perform EDA and statistical analysis to analyze and determine the significance level of the factors, and after finding the relevant factors, we add them into our logistic model and run the regression. Finally, based on our statistical test and regression model, we may provide some insights and recommendations to the diabetes potential population for preventing diabetes through lifestyle adjustments, testing of biological indicators, and access to more social resources.
+
+### Data Resource and Description
+Data Source: https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data
+
+The dataset was collected by the Behavioral Risk Factor Surveillance System (BRFSS) in 2015. This original dataset contains responses from 441,455 individuals and has 330 features. In the dataset we used, there are 22 variables with 253,680 responses. The diabetes variable is a three-class diabetes target variable indicating no diabetes, prediabetes, or diabetes. The potential factors for diabetes are biological factors such as sex, blood pressure, cholesterol, BMI, heart disease, social factors such as education and income, and habits of smoking, physical exercise, eating fruit.
+
+
+### Motivation and Question of Interest
+
+Type II Diabetes is a global health concern that affects more than 37 million Americans. By analyzing a comprehensive dataset from the Behavioral Risk Factor Surveillance System, we aim to uncover the correlations between diabetes prevalence and social and biological factors such as sex, education, income, bmi, smoking status and bioindicators like blood glucose and cholesterol levels. Through visualizations and statistical analysis in R, we aspire to highlight patterns that could inform better prevention and management strategies, thereby contributing to the broader dialogue on public health and policies related to diabetes.
+
+We are interested in the question of whether some biological factors and social factors are associated with different outcomes of diabetes. We investigated the relationship between diabetes and biological factors such as sex, blood pressure, cholesterol, BMI and social factors such as income, and physical life habits of smoking, physical exercise, eating fruits and veggies. Through our investigation, we may learn which factors play a more significant role in diabetes cases and we aim to build a model to better fit the factor significance and importance across diabetes cases. In this way, people can be more vigilant  in their daily lifestyle. Since we are shrinking our mindsight into the variables that are most commonly observed and involved in daily life, it is a useful and efficient model to provide reference for potential population with a family history of diabetes in the society. 
+
+
+### Data Cleaning
+We utilized a partially sorted dataset, in which the NA values were drawn, and some featured variables were selected. In the data cleaning process, we created a new dataset to convert all the categorical variables with numbers to characters. For example, for the variable `HighBP` that indicates whether the individual has high blood pressure or not, we changed “0” and “1” to “no” and “yes” for future visualization. We also dropped a few variables so that the dataset was then refined to focus on relevant variables for our study objectives. We eventually kept variables 
+
+### EDA
+Our exploratory data analysis began with plotting a bar chart to examine the distribution of diabetes types. This revealed a disproportionately low number of pre-diabetes cases. Consequently, we decided to exclude this category from subsequent analyses. We redefined `Diabetes_012` as a binary variable, indicating 0 for no diabetes and 1 for diabetes. This simplification allowed for a more focused analysis on the direct impact of various factors on diabetes prevalence.
+
+Our dataset contains 441,455 samples and 22 potential factors, they are: `HighBP`, `HighChol`, `Cholcheck`, `BMI`, `Smoker`, `Stroke`, `HeartDiseaseorAttack`, `PhysActivity`, `Fruits`, `Veggies`, `HvyAlcoholConsump`, `AnyHealthcare`, `NoDocbcCost`, `GenHlth`, `MentHlth`,  `PhysHlth`,  `DiffWalk`,  `Sex`, `Age`, `Education`，`Income`. To make our EDA step more efficient, we first compress the variables and focus on the 13 variables that we are interested in. They are `HighBP`, `HighChol`, `BMI`, `Smoker`, `HeartDiseaseorAttack`, `PhysActivity`, `Fruits`, `Veggies`, `HvyAlcoholConsump`,  `Sex`, `Age`, `Education`，`Income`. The reasons for the selection are for example: 1) some variables do not have sufficient sample size for study like `Stroke`; 2) some variables may have strong correlation with another variable that we are interested in like `Cholcheck`(associated with `HighChol`), `DiffWalk` (associated with `PhysActivity`); 3) the variables themselves are not measured precisely or accurately enough for statistical analysis like `GenHlth`, `MentHlth`,  `PhysHlth`, `AnyHealthcare`, `NoDocbcCost`. 
+
+As a result, after a close investigation on the variables we include in our study, we come down to 13 variables. Through these variables, we decided to do bar charts to first see the distribution of different variables across two diabetes statuses. In this way, we can visually understand the distribution of the factors in the datasets. We used `ggplot()` + `geom_bar` to assign the `x` variable as Diabetes status, and `y` variable as the frequency of the event at the same time using different colors to label the variable status we are looking at. 
+
+From the 13 bar chart distribution plots we made, we discovered the following trend: 
+
+1. The high blood pressure frequencies are higher than normal blood pressure frequencies in the diabetes group while it is the opposite in the no diabetes group. There is a relatively higher proportion of frequency of individuals with high blood pressure in the diabetes group than that in the nondiabetic group. 
+
+2. The high cholesterol frequencies are higher than normal cholesterol frequencies in the diabetes group while it is the opposite in the no diabetes group. There is a relatively higher proportion of frequency of individuals with high cholesterol levels in the diabetes group than that in the nondiabetic group.  
+
+3. For both diabetes and no diabetes group, the BMI of the population is approximately normal with a slight right tail. The BMI distribution for the diabetes group extends further to the right, indicating a presence of higher BMI values in this group compared to those without diabetes.
+
+4. For both Diabetes and No Diabetes groups, they have similar distribution across different age groups. More people in both Diabetes and No Diabetes are in their age group 9 or group 10, which indicates they are between 60-70 years old. In younger age groups, there is less population in our dataset. For the age, the measure and categorize method is not suitable for our statistical test, since it is a categorical variable showing the individual’s age. (1 = 18-24 9 = 60-64 13 = 80 or older), and each number does not represent the true age of the samples, so we cannot do a precise test on it. We decided to drop this variable.
+
+5. For Sex variable, there are approximately the same number of females and males in the Diabetes group, and there are more females than males in the No Diabetes group.
+
+6. For the Diabetes group, the income distribution was relatively flat from 1 to 8. For the No Diabetes group, the income distribution is highly skewed with the highest frequency in the highest income level.
+
+7. In the No Diabetes group, the education is highly skewed with more frequency in high education levels, while in the Diabetes group, the frequency of education level remains the same from 4 to 6. This means that they are in High school graduate, College 1 year to 3 years, and College 4 years or more education levels.
+
+8. There is a higher proportion of fruit eating in the No Diabetes group than the Diabetes group.
+
+9. For both Diabetes and No Diabetes groups, more people tend to eat veggies.
+
+10. In the Smoker variable, more people are smokers than nonsmokers in the Diabetes group, while a much higher population are smokers in the No Diabetes group compared to the Diabetes group.
+
+11. In the HvyAlcoholConsump variable, there are very few samples of heavy alcohol consumption in both the Diabetes and No Diabetes groups, the proportion of heavy alcohol consumption is approximately the same across two groups, but the sample size of alcohol consumption for the Diabetes group is very small. So we decided to drop this variable. 
+
+12. The heart disease attack frequency is lower than the no heart disease attack frequency for both diabetes and no diabetes groups while the proportions are different. There is a relatively higher proportion of heart disease attacks in the diabetes group. Since we consider heart disease attacks to be a low probability emergency, we decide to drop this variable. 
+
+13. The physical activity frequency are higher for both diabetes and non diabetes group, while the relative ratio of physical activity in the diabetes group is much lower than the non diabetes group, which means there is a higher proportion of the population doing physical activities in the healthy population than in the diabetes population. 
+
+According to the bar chart distribution, we decide to drop Heavy Alcohol Consumption. Heart disease attacks these two variables due to the following reasons. 
+
+1. For the heavy alcohol consumption, the samples drinking alcohol in large amounts are overall too few in the sample, so the variable may not be fully accurately captured. Therefore, if we test on this variable, it may be not representative and significant. 
+
+2. For the heart disease attack, it is the same reason that sample size with heart disease attack is too small, so it may not be representative and meaningful to test on. 
+
+We will also drop age and education these two variables due to following reasons: 
+
+For the age, the measure and categorize method is not suitable for our statistical test, since it is a categorical variable showing the individual's age. (1 = 18-24 9 = 60-64 13 = 80 or older), and each number does not represent the true age of the samples, so we cannot do a precise test on it. 
+
+For education, it is the same reason that it is a categorical variable showing the individual's Education level in the scale of 1-6. [1 = Never attended school or only kindergarten, 2 = Grades 1 through 8 (Elementary), 3 = Grades 9 through 11 (Some high school), 4 = Grade 12 or GED (High school graduate), 5 = College 1 year to 3 years (Some college or technical school), 6 = College 4 years or more (College graduate)].
+
+Therefore, now we come to close with 9 variables that are potential estimates in our model. They are: 1. High Blood Pressure. 2. High Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6. Veggies Consumption. 7. Smoking. 8. Income Level. 9. Physical Activity.
+
+We decide to make a box plot for the numeric values variables like BMI. From the box plot for BMI value, we can see that Diabetes group BMI has a higher median which is around 30 than the median in non diabetes group of which is around 27. The No diabetes group also has a left shifted distribution than the diabetes group meaning that generally Diabetes group has a higher BMI value distribution than the non diabetes group. 
+
+Then since veggies and fruits consumptions are two variables closely related, we also need to generate a plot for these 2 variable interrelationships. Our mosaic map shows that through the whole sample, a large amount of people have a good habit of consuming both fruits and veggies, and only a small number of people consume veggies without fruits and quite a few people only consume fruits. There are also a small number of people who do not consume fruits and veggies. 
+
+To further visualize the variable stats, we also build a R table to investigate each factor's significance. From the R table 1, we can see that all the categorical variables have p-values smaller than 0.001 which means that the variables are good to test and may be significant in our further analysis, so we can include them all in. From the table, we can clearly see that both proportions of high cholesterol and high blood pressure are higher in diabetes than in no diabetes. Male proportions in diabetes are higher than females. Diabetes group BMI has a mean of 31.9 which is much higher than the mean in non diabetes group of 27.7. There are higher proportions of smokers in the diabetes group than in the non diabetic group. The no diabetes group has higher proportions of high level incomes than the no diabetes group. Diabetes group also generates a lower proportion of physical activity than the non diabetes group. Diabetes group also has a lower proportion of people consuming fruits (58.5% ) and veggies (75.6%) than the non-diabetes group (fruits:64.3% veggies:82.1%).
+
+
+Beside that, we also make a small heat map to show the correlation between each variable to make sure that we are including only the variables with little correlation to each other to inhibit the collinearity problem. The heatmap presents a visual representation of the strength and direction of the relationships between various health, lifestyle, and socioeconomic variables in relation to diabetes. The color spectrum from dark blue to bright yellow indicates the range of correlation coefficients, with darker shades representing weaker correlations and brighter shades indicating stronger ones. Notably, variables such as High Blood Pressure (HighBP), High Cholesterol (HighChol), and Body Mass Index (BMI) show brighter hues along the diagonal, suggesting a stronger positive correlation with the diabetes outcome (Diabetes_012). This implies that higher values of these factors are associated with a greater likelihood of diabetes. In contrast, variables like vegetable consumption (Veggies) exhibit a dark shade when correlated with High Cholesterol (HighChol), indicating a weak, potentially negative relationship.
+
+### Statistical Test
+
+First, we plotted correlation between predictors. The following bar chart depicts the correlation coefficients between various lifestyle and demographic variables with diabetes. High Blood Pressure, High Cholesterol, and BMI show a positive correlation, indicating that an increase in these factors is associated with higher diabetes metrics. Physical Activity and increased Income exhibit a slight negative correlation, suggesting they may contribute to lower diabetes measures. Fruits, sex, smoker and vegetable intake also show varying degrees of correlation, reflecting the complex interplay between socioeconomic factors, dietary habits, and health outcomes.
+
+ANOVA is used when one variable is numeric and one is categorical, such as numerical input variables and a classification target variable in a classification task. The results of this test can be used for feature selection where those features that are independent of the target variable can be removed from the dataset. In this case, all variables have p-values smaller than 0.05, which is significant .
+
+In this dataset, we have many categorical variables, thus we use Chi-square test for independence. When two features are independent, the observed count is close to the expected count, thus we will have a smaller Chi-Square value. Therefore, high Chi-Square value indicates that the hypothesis of independence is incorrect.  In our table, we can see that all variables have significant small p-values. Therefore, we can conclude that all variables are independent of each other.
+
+Following the above two tests, we decide to keep all variables for the model training. Therefore, High Blood Pressure, High Cholesterol, BMI, Smoker, Sex, Income, Physical Activity, Fruits, and Veggies are all influential factors for diabetes.
+
+### Model Building
+
+We plan to fit our dataset by logistic regression models.  First, we split our data set into train and test data set in the portion of 2:1. Then, we use train data set to fit our model with logistic regression. From the summary table, we can see that only fruits are insignificant with a p value of 0.401. After that, we validate the model fitting in test data set. By calculating the accuracy, 85.89% shows that our logistic regression model performs pretty well. Therefore, backward stepwise regression can sometimes exclude important variables or lead to overfitting. To double check the insignificant variable Smoker by using backward stepwise, which removes Fruits compared to our logistic regression model, so we conclude that our model is the most appropriate model. As a result, 
+Diabetes_binary = -0.050 + 0.123 HighBP +0.087 HighChol +0.008 BMI + 0.009 Smoker + 0.017 Sex - 0.017 Income - 0.036 PhysActivity - 0.008 Veggies,
+is our final model.
+
+### Shiny
+
+We developed an innovative Shiny platform designed to enhance user interaction with our diabetes dataset. Users can select from a comprehensive array of 'x' variables, including but not limited to BMI, high blood pressure status, and high blood cholesterol status, among others. Upon selection, the platform dynamically generates and displays a histogram illustrating the association between the chosen 'x' variables and the 'y' variable (the status of diabetes). This visualization not only aids in identifying potential correlations but also in understanding the extent and nature of the relationship between various risk factors and the prevalence of diabetes. 
+
+# Result & Data summaries 
+
+We started our analysis by charting the prevalence of different types of diabetes and noticed a very low count of pre-diabetes. This led us to focus solely on diabetes and no-diabetes cases, recoding Diabetes_012 into a binary variable. Out of the 22 factors in our dataset of 441,455 entries, we concentrated on 13 key variables that were most relevant and reliable for our analysis. We used bar charts to visualize and compare the distribution of these variables between the diabetes and no-diabetes groups.
+
+Our exploratory data analysis has identified key trends: higher rates of high blood pressure, high cholesterol, and elevated BMI in the diabetes group; a similar age distribution in both groups, with more females in the non-diabetes group; more uniform income levels in the diabetic group, contrasting with higher incomes in non-diabetics; greater fruit consumption among non-diabetics, while both groups have high vegetable intake; and more smokers in the non-diabetes group. 
+
+Our statistical analysis has shown that lifestyle and demographic factors such as High Blood Pressure, High Cholesterol, BMI, Physical Activity, and Income are significantly correlated with diabetes. All variables tested demonstrate significant relationships with diabetes and were retained for model training, highlighting the complex interplay of various influences on diabetes risk.
+
+Chi-square tests  have confirmed the significance of all examined factors, with p-values below 0.05 indicating a meaningful association with diabetes. Employing nine key predictive variables from our dataset, our logistic regression model achieved an 85.96% accuracy rate.
+
+# Discussion
+Our exploratory data analysis and statistical testing have yielded a multi-faceted view of the factors influencing diabetes. Data visualization helps show a discernible association between certain lifestyle, health-related factors, and socioeconomic influences with diabetes status. Smokers, alcohol consumers, and people without enough physical activity are at higher risk of developing diabetes. Individuals with high blood pressure and high cholesterol appear to have a higher frequency of diabetes. Conversely, fruit and vegetable consumption shows an inverse association with diabetes status. Older age, lower education, and low-income groups show increased diabetes prevalence. Our subsequent statistical tests evaluate the significance of each independent variable associated with the diabetes status. Based on ANOVA results, all variables are significant and should be kept in the model. The Chi-square tests further delineated the independence of our variables and reaffirmed that lifestyle, demographic, and socioeconomic factors are all intricately linked with diabetes in ways that are not due to chance. Utilizing 9 potential predictor variables in our dataset, our logistic regression model yielded a high accuracy that effectively predicted the diabetes status with high reliability.
+
+These findings largely met our expectations. Lifestyle choices such as smoking and physical inactivity, along with health-related factors like high blood pressure and cholesterol, have a well-documented association with diabetes, which our analysis confirmed. The inverse relationship observed between fruit and vegetable intake and diabetes prevalence, although expected, adds further evidence to the protective role of a healthy diet. Socioeconomic factors such as age, education, and income were also significant predictors, reinforcing the notion that diabetes is a complex disease influenced by a wide range of interrelated factors. The high accuracy of our logistic regression model underscores the predictive power of these variables and validates the comprehensive nature of our analytical approach.
+
+Our data analysis reinforces the multifactorial nature of diabetes. Individual life choices, health-related factors, and socioeconomic influences all interplay in affecting diabetes risk. For individuals seeking to lower their diabetes risk, our findings support the advice of maintaining a healthy blood pressure and cholesterol level, avoiding smoking and heavy alcohol consumption, and engaging in regular physical activity. Additionally, our data suggests that addressing socioeconomic disparities could play a crucial role in diabetes prevention efforts. As such, individuals, healthcare providers, and policymakers should consider a holistic approach that includes both personal health behaviors and broader social determinants of health.
+
+# Conclusion
+
+This comprehensive study has illuminated the multifaceted nature of diabetes, a condition that not only affects individuals on a biological level but is also deeply intertwined with socioeconomic and lifestyle factors. Our analysis of the extensive dataset from the Behavioral Risk Factor Surveillance System has yielded crucial insights into the various influences on diabetes prevalence and progression.
+
+We found that biological factors like high blood pressure, high cholesterol, and BMI play significant roles in diabetes risk. Lifestyle choices such as smoking and physical inactivity further exacerbate this risk. Intriguingly, our data suggests a complex relationship between diet (specifically fruit and vegetable intake) and diabetes, indicating the need for further exploration in this area.
+
+From a socioeconomic perspective, our analysis reveals a clear association between lower income and education levels and increased diabetes prevalence. This highlights the critical need for targeted public health interventions and policies that address not only individual health behaviors but also the broader social determinants of health. Such strategies could significantly aid in mitigating the risk of diabetes, especially in more vulnerable populations.
+
+Moreover, the development of our Shiny application provides an accessible platform for users to interact with the data and draw personal insights. This tool could be particularly beneficial for healthcare professionals, policymakers, and individuals at risk, enabling them to understand and visualize the complex interplay of various factors associated with diabetes.
+
+In conclusion, our study emphasizes the importance of a comprehensive approach to diabetes prevention and management. Addressing the issue requires not just medical intervention but also social and behavioral changes. By incorporating a multidimensional strategy that includes medical care, lifestyle modification, and social support, we can make significant strides in combating the diabetes epidemic and improving public health outcomes. Future research should continue to explore these relationships and develop targeted interventions to reduce the burden of diabetes on individuals and society as a whole.
