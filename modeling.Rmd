@@ -18,7 +18,7 @@ library(MASS)
 library(kableExtra)
 ```
 
-```{r read data01,echo=FALSE}
+```{r read data01,echo=FALSE, message = FALSE}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 
 diabetes_data01 <- 
@@ -66,6 +66,7 @@ knitr::kable(tidy_model, format = "html", caption = "Logistic Regression Model S
 # model validation
 yhat <- predict(model, newdata = test, type = "response")
 binary_predictions <- ifelse(yhat > 0.5, 1, 0)
+print("Head data of y hat for binary prediction")
 head(binary_predictions)
 
 # prediction accuracy

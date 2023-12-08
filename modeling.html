@@ -13,7 +13,7 @@
 
 <title>Modeling</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -38,8 +38,8 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 <div class="hero-image"> 
     <div class="image-text">
       <div class="top-text">Data Science Project</div>
@@ -398,13 +398,6 @@ div.tocify {
 
 
 <p>Here is for modeling</p>
-<pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ─────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div id="logistic-regression-model" class="section level4">
 <h4>Logistic Regression Model</h4>
 <p>First, we split our data set into train and test data set in the
@@ -678,7 +671,9 @@ Veggies
 <pre class="r"><code># model validation
 yhat &lt;- predict(model, newdata = test, type = &quot;response&quot;)
 binary_predictions &lt;- ifelse(yhat &gt; 0.5, 1, 0)
-head(binary_predictions)</code></pre>
+print(&quot;Head data of y hat for binary prediction&quot;)</code></pre>
+<pre><code>## [1] &quot;Head data of y hat for binary prediction&quot;</code></pre>
+<pre class="r"><code>head(binary_predictions)</code></pre>
 <pre><code>## 1 2 3 4 5 6 
 ## 0 0 0 0 0 0</code></pre>
 <pre class="r"><code># prediction accuracy

@@ -7,9 +7,7 @@ output:
     code_folding: hide
     theme: flatly
 ---
-```{r}
 
-```
 
 ```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
@@ -19,6 +17,8 @@ library(ggplot2)
 library(table1)
 library(cowplot)
 library(broom)
+library(heatmaply)
+library(RColorBrewer)
 ```
 
 
@@ -81,24 +81,17 @@ We also predict that social factors including income, education, smoking habits,
 
 First, we read in our data from the csv file. 
 
-<<<<<<< HEAD
-```{r}
-#diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
-#=======
-#```{r echo=FALSE}
-#diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
+```{r, echo = FALSE}
+diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
 
-#>>>>>>> 5efc80d7ce17eab832bfc61ec2475e0637504a8b
-
-#head(diabetes_raw0)
+head(diabetes_raw0)
 ```
 
 
+
 ```{r}
-diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
-diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
 diabetes_raw  = diabetes_raw0 |>
-  select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
+  dplyr::select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
          PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump) |>
    mutate(Diabetes_012 = factor(Diabetes_012, levels = c(0, 1, 2), labels = c("No Diabetes", "Pre-Diabetes", "Diabetes")),
@@ -118,6 +111,7 @@ diabetes_raw
 ## Statistical Summary of Variables
 
 This table presented a statistical summary of the variables in our dataset.
+
 ```{r}
 summary(diabetes_raw)
 ```
@@ -387,9 +381,9 @@ We will also drop age and education these two variables due to following reasons
 
 **Therefore, now we come to close with 9 variables that are potential estimates in our model. They are: 1. High Blood Pressure. 2. High Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6. Veggies Consumption. 7. Smoking. 8. Income Level. 9. Physical Acitivity.**
 
-## Plots all together
+### Plots all together
 ```{r}
-plots1 = plot_grid(
+plotsall = plot_grid(
   HighBP_dist + theme(legend.position="none"),
   HighChol_dist + theme(legend.position="none"), 
   Fruits_dist + theme(legend.position="none"), 
@@ -400,60 +394,55 @@ plots1 = plot_grid(
   Physactivity_dist + theme(legend.position="none"),
   Smoker_dist + theme(legend.position="none")) +
   theme(axis.text.x = element_text(size = 4))
-plots1
+plotsall
 
 ```
+We now can see all the 9 variables distributions from our plot together. 
+
+### Plots for further investigation: After we investigate all the 9 variables distribution, we are now ready to investigate further in specific variables that we are interested in.
+- Firstly, we decide to make one box plot for the numeric values variables like BMI. 
+- Then since veggies and fruits consumptions are two variables close related, we also need to generate a plot for these 2 variable interelationship. 
+- To further visualize the variable stats, we also build a R table to investigate each factor's significance.
+- Finally, we also make a small heat map to show the correlation between each variable to make sure that we are including only the variables with little correlation to each other to inhibit the collinearity problem. 
 
 
-
-
-
-
-BMI Categorization
-
+####  1. Box plot distribution of BMI in different Diabetes status
 ```{r}
-# write a function to categorize bmi values to diverse weight status
-categorize_bmi <- function(bmi) {
-  if (bmi < 18.5) {
-    return("Underweight")
-  } else if (bmi >= 18.5 & bmi < 25) {
-    return("Normal weight")
-  } else if (bmi >= 25 & bmi < 30) {
-    return("Overweight")
-  } else {
-    return("Obesity")
-  }
-}
-# add a column named weight_status to the data set
-diabetes_raw$weight_status <- sapply(diabetes_raw$BMI, categorize_bmi)
+diabetes_bmi = 
+  diabetes_new |>
+  filter(Diabetes_status == "Diabetes" | Diabetes_status == "No Diabetes")
 
-```
-
-
-
-#### Plot: Box plot distribution of BMI in different Diabetes status
-```{r}
-plotBMI = ggplot(diabetes_raw, aes(x = BMI, y = Diabetes_012, fill = Diabetes_012))+
+plotBMI = 
+        ggplot(diabetes_bmi, aes(x = BMI, y = Diabetes_status, fill = Diabetes_status))+
         geom_boxplot(alpha = 0.5) +
         theme(legend.position = 'none') +
         scale_fill_brewer(palette = 'Pastel1') +
         ylab("Diabetes Status") +
-        xlab("BMI Distribution") +
+        xlab("BMI Value") +
         ggtitle("Box Plot Distribution of BMI over Diabetes Status") +
         theme_minimal()
-        
-  
   
 plotBMI
 ```
+From the box plot for BMI value, we can see that Diabetes group BMI has a higher median which is around 30 than the median in non diabetes group of which is around 27. The No diabetes group also has a left shifted distribution than the diabetes group meaning that generally Diabetes group has a higher BMI value distribution than the non diabetes group. 
 
-### Plot: Fruits or Veggies over different Diabetes Status
+
+####  2. Mosaic plot to see distribution of Fruits and Veggies
 ```{r}
-mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c("Light Pink","Light Blue"))
+Mosaicplot = 
+  mosaicplot(Fruits ~ Veggies, data=diabetes_new,
+          labeling = labeling_cells(text = round(x, 2)), 
+          legend = TRUE,
+          main = "Fruits and Veggies Consumption Mosaic Map",
+          xlab = "Veggies Consumption",
+          ylab = "Fruits Consumption",
+          las = 0.5, color = brewer.pal(2, name = "Pastel1")) 
+
+Mosaicplot
 ```
+Our mosaic map shows that through the whole sample, a large amount of people have a good habit of consuming both fruits and veggies, and only a small number of people consume veggies without fruits and quite a few people only consume fruits. There are also a small number of people who do not consume fruits and veggies. 
 
-
-#### R Table test for P-value function
+#### Test for P-value function
 ```{r}
 pvalue <- function(x, ...) {
     # Construct vectors of data y, and groups (strata) g
@@ -473,7 +462,7 @@ pvalue <- function(x, ...) {
 ```
 
 
-#### Create R table 1
+#### 3. R table 1 for 9 variables with P-value attached
 ```{r}
 ## Rtable_1 shows the demographics stats
 Rtable_1 = 
@@ -481,29 +470,25 @@ Rtable_1 =
 
 Rtable_1
 ```
+From the R table 1, we can see that all the categorical variables have p-values smaller than 0.001 which means that the variables are good to test and may be significant in our further analysis, so we can include them all in. 
+From the table, we can clearly see that both proportions of high cholesterol and high blood pressure are higher in diabetes than in no diabetes. Male proportions in diabetes are higher than females. Diabetes group BMI has a mean of 31.9 which is much higher than the mean in non diabetes group of 27.7. There are higher proportions of smokers in the diabetes group than in the non diabetic group. The no diabetes group has higher proportions of high level incomes than the no diabetes group. Diabetes group also generate a lower proportion of physical activity than the non diabetes group. Diabetes group also has a lower proportion of people consuming fruits (58.5% ) and veggies (75.6%) than the non-diabetes group (fruits:64.3% veggies:82.1%).
 
-# In order to visualize the intercorrelation between different variables. We do a correlation heat map.
+
+
+#### 4. Heat map to see correlation between each variables.
 ```{r}
-if (!requireNamespace("heatmaply", quietly = TRUE)) {
-  install.packages("heatmaply")
-}
 
-# Load the required libraries
-library(heatmaply)
-library(dplyr)
+options(repr.plot.width=30, repr.plot.height=40)
 
-# Assuming 'diabetes_data' is your data frame
-# Replace 'diabetes_data' with your actual data frame name
-
-# Set the size of the plot
-options(repr.plot.width=12, repr.plot.height=10)
-
-# Create the heatmap
-heatmaply(cor(diabetes_raw0), 
+heatmapplot = 
+          heatmaply(cor(diabetes_raw0), 
+          col = brewer.pal(8, name = "PiYG"),
           main = "Correlation Heatmap", 
           margins = c(100, 100),
-          notecol = "black", 
+          notecol = "Black", 
           symmetric = TRUE)
+
+heatmapplot
 ```
 
 The correlation heatmap presents a visual representation of the strength and direction of the relationships between various health, lifestyle, and socioeconomic variables in relation to diabetes. The color spectrum from dark blue to bright yellow indicates the range of correlation coefficients, with darker shades representing weaker correlations and brighter shades indicating stronger ones. Notably, variables such as High Blood Pressure (HighBP), High Cholesterol (HighChol), and Body Mass Index (BMI) show brighter hues along the diagonal, suggesting a stronger positive correlation with the diabetes outcome (Diabetes_012). This implies that higher values of these factors are associated with a greater likelihood of diabetes. In contrast, variables like vegetable consumption (Veggies) exhibit a dark shade when correlated with High Cholesterol (HighChol), indicating a weak, potentially negative relationship.
