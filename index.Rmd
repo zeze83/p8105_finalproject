@@ -26,29 +26,93 @@ Click to [learn more](EDA.html) about our EDA.
 
 We applied ANOVA Test and Chi-squared test on our data.
 
+```{r read data01,include=FALSE,echo=FALSE}
+library(readr)
+library(tidyverse)
+diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
+
+diabetes_data01 <- 
+  diabetes_data01 |>
+  select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
+         Income, Sex,
+         PhysActivity, Fruits, Veggies)|>
+         filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
+  mutate(Diabetes_012=ifelse(Diabetes_012=="2","1",Diabetes_012))|>
+  mutate(Diabetes_012=as.numeric(Diabetes_012))
+```
+
+```{r anova,include=FALSE,echo=FALSE}
+dependent_var <- diabetes_data01[[1]]
+independent_vars <- diabetes_data01[,-1]
+independent_vars <- data.frame(lapply(independent_vars, function(x) as.factor(x)))
+lm_model <- lm(dependent_var ~ ., data = independent_vars)
+
+# Perform ANOVA
+anova_results <- anova(lm_model)
+
+# Display the ANOVA results
+anova_results|>
+  knitr::kable()
+```
+
+```{r, echo=FALSE}
+anova_results|>
+  knitr::kable()
+```
+
+```{r chisq,include=FALSE,echo=FALSE}
+chi_square_results <- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
+
+# Perform chi-square test for each independent variable
+for (var in names(independent_vars)) {
+  # Create a contingency table
+  table <- table(dependent_var, independent_vars[[var]])
+  
+  # Perform chi-square test
+  test <- chisq.test(table)
+  
+  # Store the results
+  chi_square_results <- rbind(chi_square_results, data.frame(Variable = var, ChiSquare = test$statistic, PValue = test$p.value))
+}
+
+# Order results by p-value
+chi_square_results <- chi_square_results %>%
+  arrange(PValue) 
+
+# Print the results
+chi_square_results|>
+  knitr::kable()
+```
+
+```{r echo=FALSE}
+chi_square_results|>
+  knitr::kable()
+```
+
+
 Click to [learn more](statisticalanaylsis.html) about our statistics testing.
 
 # Our members
 
-![](images/YimengCai.jpg)  
+![](images/YimengCai.jpg){width=50%}  
 
 Yimeng, Cai
 
 (yc3577) 
 
-![](images/ZheshuJiang.jpg)  
+![](images/ZheshuJiang.jpg){width=50%}    
 
 Zheshu, Jiang
 
 (zj2379) 
 
-![](images/ZeLi.jpg)   
+![](images/ZeLi.jpg){width=50%}     
 
 Ze, Li
 
 (zl2746)  
 
-![](images/QianyingWu.jpg)
+![](images/QianyingWu.jpg){width=50%}  
 
 Qianying, Wu
 
