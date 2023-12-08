@@ -13,7 +13,7 @@
 
 <title>Statistical Analysis</title>
 
-<script src="site_libs/header-attrs-2.24/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -385,13 +385,15 @@ div.tocify {
 
 <div id="statistical-analysis" class="section level2">
 <h2>Statistical Analysis</h2>
-<p>To investigate the relationship between the variables (…) and
-diabetes status, we conducted (…) statistical tests and build a
+<p>To investigate the relationship between the variables High Blood
+Pressure, High Cholesterol Level, BMI, Sex, Fruits Consumption, Veggies
+Consumption, Smoking, Income Level, Physical Acitivity, and diabetes
+status, we conducted correlation and ANOVA statistical tests and build a
 predictive model.</p>
 <p>First, we read in the dataset.</p>
 <pre class="r"><code>diabetes_data01 &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -400,29 +402,28 @@ predictive model.</p>
 <pre class="r"><code>diabetes_data01 &lt;- 
   diabetes_data01 |&gt;
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
-         HeartDiseaseorAttack, Sex,Income, Education, 
-         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)|&gt;
+         Income, Sex,
+         PhysActivity, Fruits, Veggies)|&gt;
          filter(Diabetes_012 == &#39;2&#39; | Diabetes_012 == &#39;0&#39;) |&gt;
   mutate(Diabetes_012=ifelse(Diabetes_012==&quot;2&quot;,&quot;1&quot;,Diabetes_012))|&gt;
   mutate(Diabetes_012=as.numeric(Diabetes_012))
 
 diabetes_data01</code></pre>
-<pre><code>## # A tibble: 249,049 × 14
-##    Diabetes_012 HighBP HighChol   BMI Smoker HeartDiseaseorAttack   Sex Income
-##           &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;                &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1            0      1        1    40      1                    0     0      3
-##  2            0      0        0    25      1                    0     0      1
-##  3            0      1        1    28      0                    0     0      8
-##  4            0      1        0    27      0                    0     0      6
-##  5            0      1        1    24      0                    0     0      4
-##  6            0      1        1    25      1                    0     1      8
-##  7            0      1        0    30      1                    0     0      7
-##  8            0      1        1    25      1                    0     0      4
-##  9            1      1        1    30      1                    1     0      1
-## 10            0      0        0    24      0                    0     1      3
+<pre><code>## # A tibble: 249,049 × 10
+##    Diabetes_012 HighBP HighChol   BMI Smoker Income   Sex PhysActivity Fruits
+##           &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;
+##  1            0      1        1    40      1      3     0            0      0
+##  2            0      0        0    25      1      1     0            1      0
+##  3            0      1        1    28      0      8     0            0      1
+##  4            0      1        0    27      0      6     0            1      1
+##  5            0      1        1    24      0      4     0            1      1
+##  6            0      1        1    25      1      8     1            1      1
+##  7            0      1        0    30      1      7     0            0      0
+##  8            0      1        1    25      1      4     0            1      0
+##  9            1      1        1    30      1      1     0            0      1
+## 10            0      0        0    24      0      3     1            0      0
 ## # ℹ 249,039 more rows
-## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;dbl&gt;, Fruits &lt;dbl&gt;,
-## #   Veggies &lt;dbl&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;dbl&gt;</code></pre>
+## # ℹ 1 more variable: Veggies &lt;dbl&gt;</code></pre>
 <div id="correlation-analysis-for-continuous-variables"
 class="section level4">
 <h4>Correlation analysis for Continuous Variables</h4>
@@ -454,21 +455,17 @@ print(anova_results)</code></pre>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: dependent_var
-##                          Df  Sum Sq Mean Sq    F value    Pr(&gt;F)    
-## HighBP                    1  2199.9 2199.88 21396.9679 &lt; 2.2e-16 ***
-## HighChol                  1   523.8  523.83  5095.0035 &lt; 2.2e-16 ***
-## BMI                      82  1029.2   12.55   122.0743 &lt; 2.2e-16 ***
-## Smoker                    1    25.7   25.75   250.4334 &lt; 2.2e-16 ***
-## HeartDiseaseorAttack      1   355.5  355.51  3457.7952 &lt; 2.2e-16 ***
-## Sex                       1     0.6    0.60     5.7897   0.01612 *  
-## Income                    7   275.5   39.36   382.7997 &lt; 2.2e-16 ***
-## Education                 5    30.9    6.18    60.0628 &lt; 2.2e-16 ***
-## PhysActivity              1    35.7   35.67   346.9600 &lt; 2.2e-16 ***
-## Fruits                    1     0.2    0.17     1.6976   0.19261    
-## Veggies                   1     1.6    1.62    15.7919 7.073e-05 ***
-## Age                      12   216.3   18.02   175.2859 &lt; 2.2e-16 ***
-## HvyAlcoholConsump         1    41.2   41.22   400.8931 &lt; 2.2e-16 ***
-## Residuals            248933 25593.5    0.10                         
+##                  Df  Sum Sq Mean Sq    F value    Pr(&gt;F)    
+## HighBP            1  2199.9 2199.88 20942.0262 &lt; 2.2e-16 ***
+## HighChol          1   523.8  523.83  4986.6737 &lt; 2.2e-16 ***
+## BMI              82  1029.2   12.55   119.4788 &lt; 2.2e-16 ***
+## Smoker            1    25.7   25.75   245.1087 &lt; 2.2e-16 ***
+## Income            7   326.1   46.59   443.5223 &lt; 2.2e-16 ***
+## Sex               1    21.9   21.87   208.1520 &lt; 2.2e-16 ***
+## PhysActivity      1    48.9   48.86   465.1158 &lt; 2.2e-16 ***
+## Fruits            1     0.4    0.35     3.3328   0.06791 .  
+## Veggies           1     2.2    2.23    21.2105 4.117e-06 ***
+## Residuals    248952 26151.5    0.11                         
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -494,156 +491,16 @@ chi_square_results &lt;- chi_square_results %&gt;%
 
 # Print the results
 print(chi_square_results)</code></pre>
-<pre><code>##                         Variable  ChiSquare        PValue
-## X-squared                 HighBP 18062.6213  0.000000e+00
-## X-squared1              HighChol 10535.0369  0.000000e+00
-## X-squared2                   BMI 15209.2925  0.000000e+00
-## X-squared4  HeartDiseaseorAttack  8180.5748  0.000000e+00
-## X-squared6                Income  7267.2494  0.000000e+00
-## X-squared7             Education  4201.2403  0.000000e+00
-## X-squared8          PhysActivity  3647.1812  0.000000e+00
-## X-squared11                  Age  9034.3397  0.000000e+00
-## X-squared3                Smoker   963.5432 1.509376e-211
-## X-squared10              Veggies   840.5152 8.386730e-185
-## X-squared12    HvyAlcoholConsump   835.3496 1.113358e-183
-## X-squared9                Fruits   433.5626  2.725768e-96
-## X-squared5                   Sex   250.5281  1.992061e-56</code></pre>
-</div>
-<div id="chi-square-for-independence-for-categorical-variables"
-class="section level4">
-<h4>Chi-Square for Independence for Categorical Variables</h4>
-<pre class="r"><code>diabetes_data &lt;- read_csv(&quot;data/diabetes_new1.csv&quot;) </code></pre>
-<pre><code>## Rows: 200 Columns: 14
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (10): Diabetes_status, HighBP, HighChol, Smoker, HeartDiseaseorAttack, S...
-## dbl  (4): BMI, Income, Education, Age
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>numeric_cols &lt;- sapply(diabetes_data, is.numeric)
-diabetes_data[numeric_cols] &lt;- lapply(diabetes_data[numeric_cols], as.numeric)
-
-head(diabetes_data)</code></pre>
-<pre><code>## # A tibble: 6 × 14
-##   Diabetes_status HighBP HighChol   BMI Smoker HeartDiseaseorAttack Sex   Income
-##   &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                &lt;chr&gt;  &lt;dbl&gt;
-## 1 No Diabetes     No     Yes         24 Nonsm… No                   Fema…      7
-## 2 No Diabetes     Yes    No          67 Nonsm… Yes                  Male       2
-## 3 No Diabetes     No     No          25 Nonsm… No                   Fema…      8
-## 4 No Diabetes     Yes    Yes         21 Nonsm… No                   Fema…      8
-## 5 Diabetes        No     No          31 Smoker No                   Male       8
-## 6 No Diabetes     Yes    Yes         27 Nonsm… No                   Fema…      4
-## # ℹ 6 more variables: Education &lt;dbl&gt;, PhysActivity &lt;chr&gt;, Fruits &lt;chr&gt;,
-## #   Veggies &lt;chr&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;chr&gt;</code></pre>
-<pre class="r"><code>diabetes_data &lt;- diabetes_data |&gt;
-     mutate(Diabetes_binary = factor(Diabetes_status, levels = c(&quot;No Diabetes&quot;, &quot;Diabetes&quot;), labels = c(0, 1)))
-
-
-
-cor(diabetes_data$BMI, as.numeric(diabetes_data$Diabetes_binary), method = &quot;pearson&quot;) </code></pre>
-<pre><code>## [1] 0.2989871</code></pre>
-<pre class="r"><code>cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = &quot;pearson&quot;) </code></pre>
-<pre><code>## [1] 0.2578625</code></pre>
-<pre><code>
-
-
-
-```r
-chisq_test_HighBP &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighBP))
-chisq_test_HighBP</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$HighBP)
-## X-squared = 21.947, df = 1, p-value = 2.803e-06</code></pre>
-<pre class="r"><code>chisq_test_HighChol &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighChol))
-chisq_test_HighChol</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$HighChol)
-## X-squared = 6.3113, df = 1, p-value = 0.012</code></pre>
-<pre class="r"><code>chisq_test_HeartDiseaseorAttack &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HeartDiseaseorAttack))</code></pre>
-<pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
-## diabetes_data$HeartDiseaseorAttack)): Chi-squared approximation may be
-## incorrect</code></pre>
-<pre class="r"><code>chisq_test_HeartDiseaseorAttack</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$HeartDiseaseorAttack)
-## X-squared = 5.7437, df = 1, p-value = 0.01655</code></pre>
-<pre class="r"><code>chisq_test_Smoker &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Smoker))
-chisq_test_Smoker</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$Smoker)
-## X-squared = 2.8551, df = 1, p-value = 0.09108</code></pre>
-<pre class="r"><code>chisq_test_Sex &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Sex))
-chisq_test_Sex</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$Sex)
-## X-squared = 0.14687, df = 1, p-value = 0.7015</code></pre>
-<pre class="r"><code>chisq_test_Income &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Income))</code></pre>
-<pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
-## diabetes_data$Income)): Chi-squared approximation may be incorrect</code></pre>
-<pre class="r"><code>chisq_test_Income</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$Income)
-## X-squared = 12.894, df = 7, p-value = 0.07475</code></pre>
-<pre class="r"><code>chisq_test_Education &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Education))</code></pre>
-<pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
-## diabetes_data$Education)): Chi-squared approximation may be incorrect</code></pre>
-<pre class="r"><code>chisq_test_Education</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$Education)
-## X-squared = 12.56, df = 4, p-value = 0.01364</code></pre>
-<pre class="r"><code>chisq_test_PhysActivity &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity))
-chisq_test_PhysActivity</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity)
-## X-squared = 8.3038, df = 1, p-value = 0.003956</code></pre>
-<pre class="r"><code>chisq_test_Fruits &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Fruits))
-chisq_test_Fruits</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$Fruits)
-## X-squared = 0.0097861, df = 1, p-value = 0.9212</code></pre>
-<pre class="r"><code>chisq_test_Veggies &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Veggies))
-chisq_test_Veggies</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$Veggies)
-## X-squared = 3.009, df = 1, p-value = 0.08281</code></pre>
-<pre class="r"><code>chisq_test_HvyAlcoholConsump &lt;- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HvyAlcoholConsump))</code></pre>
-<pre><code>## Warning in chisq.test(table(diabetes_data$Diabetes_status,
-## diabetes_data$HvyAlcoholConsump)): Chi-squared approximation may be incorrect</code></pre>
-<pre class="r"><code>chisq_test_HvyAlcoholConsump</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(diabetes_data$Diabetes_status, diabetes_data$HvyAlcoholConsump)
-## X-squared = 0.73566, df = 1, p-value = 0.3911</code></pre>
-<pre class="r"><code># Install the &#39;infotheo&#39; package if you haven&#39;t already
-# install.packages(&quot;infotheo&quot;)
-
-# Load the necessary library
-library(infotheo)
-
-# Assume X is your feature matrix and Y is the target variable
-# Replace these with your actual data</code></pre>
+<pre><code>##                Variable  ChiSquare        PValue
+## X-squared        HighBP 18062.6213  0.000000e+00
+## X-squared1     HighChol 10535.0369  0.000000e+00
+## X-squared2          BMI 15209.2925  0.000000e+00
+## X-squared4       Income  7267.2494  0.000000e+00
+## X-squared6 PhysActivity  3647.1812  0.000000e+00
+## X-squared3       Smoker   963.5432 1.509376e-211
+## X-squared8      Veggies   840.5152 8.386730e-185
+## X-squared7       Fruits   433.5626  2.725768e-96
+## X-squared5          Sex   250.5281  1.992061e-56</code></pre>
 <pre class="r"><code>#X &lt;- diabetes_data01 |&gt;
 #  select(-Diabetes_012)
 #Y &lt;- diabetes_data01$Diabetes_012
@@ -667,44 +524,6 @@ library(infotheo)
 
 # Print the result
 #print(top_10_features)</code></pre>
-</div>
-<div id="modeling-with-logistic-regression" class="section level4">
-<h4>Modeling with Logistic Regression</h4>
-<pre class="r"><code>model &lt;- glm(Diabetes_binary ~ HighBP + HighChol + BMI + Smoker + HeartDiseaseorAttack + Sex + Income + Education + PhysActivity + Fruits + Veggies + Age + HvyAlcoholConsump, family = &quot;binomial&quot;, data = diabetes_data)
-summary(model)</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = Diabetes_binary ~ HighBP + HighChol + BMI + Smoker + 
-##     HeartDiseaseorAttack + Sex + Income + Education + PhysActivity + 
-##     Fruits + Veggies + Age + HvyAlcoholConsump, family = &quot;binomial&quot;, 
-##     data = diabetes_data)
-## 
-## Coefficients:
-##                           Estimate Std. Error z value Pr(&gt;|z|)   
-## (Intercept)               -7.96732    2.60630  -3.057  0.00224 **
-## HighBPYes                  1.63713    0.71147   2.301  0.02139 * 
-## HighCholYes                1.07383    0.60529   1.774  0.07605 . 
-## BMI                        0.11768    0.03751   3.138  0.00170 **
-## SmokerSmoker               0.85629    0.60643   1.412  0.15795   
-## HeartDiseaseorAttackYes   -0.23181    0.90268  -0.257  0.79733   
-## SexMale                    0.44081    0.57725   0.764  0.44509   
-## Income                     0.08586    0.18245   0.471  0.63791   
-## Education                 -0.29090    0.28058  -1.037  0.29984   
-## PhysActivityYes           -0.65474    0.59906  -1.093  0.27442   
-## FruitsYes                  0.38751    0.59105   0.656  0.51206   
-## VeggiesYes                -1.12467    0.66396  -1.694  0.09029 . 
-## Age                        0.27372    0.13563   2.018  0.04357 * 
-## HvyAlcoholConsumpYes     -16.03359 1682.35746  -0.010  0.99240   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 154.555  on 199  degrees of freedom
-## Residual deviance:  98.272  on 186  degrees of freedom
-## AIC: 126.27
-## 
-## Number of Fisher Scoring iterations: 17</code></pre>
 </div>
 </div>
 

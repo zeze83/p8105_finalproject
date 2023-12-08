@@ -491,7 +491,7 @@ levels. Therefore, we want to keep <code>Income</code>,
 <p>First, we read in our data from the csv file.</p>
 <pre class="r"><code>diabetes_raw &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 253680 Columns: 22
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (22): Diabetes_012, HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, He...
 ## 
@@ -548,149 +548,35 @@ diabetes_raw</code></pre>
 <h2>Statistical Summary of Variables</h2>
 <p>This table presented a statistical summary of the variables in our
 dataset.</p>
-<pre class="r"><code>knitr::kable(summary(diabetes_raw))</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="1%" />
-<col width="9%" />
-<col width="5%" />
-<col width="5%" />
-<col width="6%" />
-<col width="8%" />
-<col width="10%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="6%" />
-<col width="5%" />
-<col width="5%" />
-<col width="7%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left"></th>
-<th align="left">Diabetes_012</th>
-<th align="left">HighBP</th>
-<th align="left">HighChol</th>
-<th align="left">BMI</th>
-<th align="left">Smoker</th>
-<th align="left">HeartDiseaseorAttack</th>
-<th align="left">Sex</th>
-<th align="left">Income</th>
-<th align="left">Education</th>
-<th align="left">PhysActivity</th>
-<th align="left">Fruits</th>
-<th align="left">Veggies</th>
-<th align="left">Age</th>
-<th align="left">HvyAlcoholConsump</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">No Diabetes :213703</td>
-<td align="left">No :144851</td>
-<td align="left">No :146089</td>
-<td align="left">Min. :12.00</td>
-<td align="left">Nonsmoker:141257</td>
-<td align="left">No :229787</td>
-<td align="left">Female:141974</td>
-<td align="left">Min. :1.000</td>
-<td align="left">Min. :1.00</td>
-<td align="left">No : 61760</td>
-<td align="left">No : 92782</td>
-<td align="left">No : 47839</td>
-<td align="left">Min. : 1.000</td>
-<td align="left">No :239424</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Pre-Diabetes: 4631</td>
-<td align="left">Yes:108829</td>
-<td align="left">Yes:107591</td>
-<td align="left">1st Qu.:24.00</td>
-<td align="left">Smoker :112423</td>
-<td align="left">Yes: 23893</td>
-<td align="left">Male :111706</td>
-<td align="left">1st Qu.:5.000</td>
-<td align="left">1st Qu.:4.00</td>
-<td align="left">Yes:191920</td>
-<td align="left">Yes:160898</td>
-<td align="left">Yes:205841</td>
-<td align="left">1st Qu.: 6.000</td>
-<td align="left">Yes: 14256</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">Diabetes : 35346</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Median :27.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Median :7.000</td>
-<td align="left">Median :5.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Median : 8.000</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Mean :28.38</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Mean :6.054</td>
-<td align="left">Mean :5.05</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Mean : 8.032</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">3rd Qu.:31.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">3rd Qu.:8.000</td>
-<td align="left">3rd Qu.:6.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">3rd Qu.:10.000</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Max. :98.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Max. :8.000</td>
-<td align="left">Max. :6.00</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">Max. :13.000</td>
-<td align="left">NA</td>
-</tr>
-</tbody>
-</table>
+<pre class="r"><code>summary(diabetes_raw)</code></pre>
+<pre><code>##        Diabetes_012    HighBP       HighChol          BMI       
+##  No Diabetes :213703   No :144851   No :146089   Min.   :12.00  
+##  Pre-Diabetes:  4631   Yes:108829   Yes:107591   1st Qu.:24.00  
+##  Diabetes    : 35346                             Median :27.00  
+##                                                  Mean   :28.38  
+##                                                  3rd Qu.:31.00  
+##                                                  Max.   :98.00  
+##        Smoker       HeartDiseaseorAttack     Sex             Income     
+##  Nonsmoker:141257   No :229787           Female:141974   Min.   :1.000  
+##  Smoker   :112423   Yes: 23893           Male  :111706   1st Qu.:5.000  
+##                                                          Median :7.000  
+##                                                          Mean   :6.054  
+##                                                          3rd Qu.:8.000  
+##                                                          Max.   :8.000  
+##    Education    PhysActivity Fruits       Veggies           Age        
+##  Min.   :1.00   No : 61760   No : 92782   No : 47839   Min.   : 1.000  
+##  1st Qu.:4.00   Yes:191920   Yes:160898   Yes:205841   1st Qu.: 6.000  
+##  Median :5.00                                          Median : 8.000  
+##  Mean   :5.05                                          Mean   : 8.032  
+##  3rd Qu.:6.00                                          3rd Qu.:10.000  
+##  Max.   :6.00                                          Max.   :13.000  
+##  HvyAlcoholConsump
+##  No :239424       
+##  Yes: 14256       
+##                   
+##                   
+##                   
+## </code></pre>
 </div>
 <div id="exploratory-data-analysis" class="section level2">
 <h2>Exploratory Data Analysis</h2>
@@ -712,9 +598,12 @@ our interested factors with the diabetes variable respectively.</p>
 
 Diabetesraw_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>From the distribution of Diabetes Status, we realize that
-Pre-Diabetes status has extreme low data samples, so we will exclude
-this data in our future analysis.</p>
+<p>From the distribution of Diabetes Status, we can see that the
+frequency of No Diabetes group is very high with more than 200,000. The
+Diabetes group has around 30,000 cases, and Pre-Diabetes has less than
+10,000 cases. We realize that Pre-Diabetes status has extreme low data
+samples, so we will exclude this group of data in our future
+analysis.</p>
 <pre class="r"><code>diabetes_new = 
   diabetes_raw |&gt;
   filter(Diabetes_012 == &#39;Diabetes&#39; | Diabetes_012 == &#39;No Diabetes&#39;) |&gt;
@@ -755,12 +644,21 @@ write.csv(diabetes_new1, &quot;data/diabetes_new1.csv&quot;, row.names = FALSE)<
   theme_minimal()
 
 HighBP_dist</code></pre>
-<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+<pre><code>## Warning: The dot-dot notation (`..count..`) was deprecated in
+## ggplot2 3.4.0.
 ## ℹ Please use `after_stat(count)` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see
+## where this warning was generated.</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The graph presents a comparison of the occurrence of high blood
+pressure in individuals with and without diabetes, showing a higher
+frequency of individuals without diabetes and without high blood
+pressure, a moderate frequency of those without diabetes but with high
+blood pressure, and lower frequencies for both categories among
+individuals with diabetes. From the graph, we can see that the high
+blood pressure is more prevalent in diabetes group than in no diabetes
+group.</p>
 </div>
 <div id="high-cholesterol-level-via-diabetes" class="section level4">
 <h4>2. High Cholesterol Level via Diabetes</h4>
@@ -775,6 +673,8 @@ HighBP_dist</code></pre>
 
 HighChol_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>From the graph, we can see that the high blood pressure is more
+prevalent in Diabetes group than in No Diabetes group.</p>
 </div>
 <div id="bmi-via-diabetes" class="section level4">
 <h4>3. BMI via Diabetes</h4>
@@ -789,6 +689,11 @@ HighChol_dist</code></pre>
 
 BMI_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>For both diabetes and no diabetes group, the BMI of the population
+are approximately normal with a slight right tail. The BMI distribution
+for the diabetes group extends further to the right, indicating a
+presence of higher BMI values in this group compared to those without
+diabetes.</p>
 </div>
 <div id="heart-disease-or-attack-via-diabetes" class="section level4">
 <h4>4. Heart Disease or Attack via Diabetes</h4>
@@ -803,6 +708,8 @@ BMI_dist</code></pre>
 
 Heartdisease_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>From the graph, heart disease is in a larger proportion in the
+Diabetes group than in the No Diabetes group.</p>
 </div>
 <div id="age-via-diabetes" class="section level4">
 <h4>5. Age via Diabetes</h4>
@@ -817,6 +724,10 @@ Heartdisease_dist</code></pre>
 
 Age_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>We can see that for both Diabetes and No Diabetes groups, more people
+are in their age of group 9 or group 10, which indicates they are
+between 60-70 years old. In younger age groups, there are less
+population in our dataset.</p>
 </div>
 <div id="sex-via-diabetes" class="section level4">
 <h4>6. Sex via Diabetes</h4>
@@ -830,8 +741,13 @@ Age_dist</code></pre>
   theme_minimal()
 
 Sex_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" />
-#### 7. Income via Diabetes</p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>There are approximately same number of females and males in Diabetes
+group, and there are more females than males in the No Diabetes
+group.</p>
+</div>
+<div id="income-via-diabetes" class="section level4">
+<h4>7. Income via Diabetes</h4>
 <pre class="r"><code>Income_dist = 
   ggplot(diabetes_new, aes(Income, ..count..)) + 
   geom_bar(aes(fill = Diabetes_status)) +
@@ -842,7 +758,10 @@ Sex_dist</code></pre>
   theme_minimal()
 
 Income_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+For Diabetes group, the income distribution was relatively flat from 1
+to 8. For No Diabetes group, the income distribution is highly skewed
+with the highest frequency in the highest income level.</p>
 </div>
 <div id="education-via-diabetes" class="section level4">
 <h4>8. Education via Diabetes</h4>
@@ -856,7 +775,12 @@ Income_dist</code></pre>
   theme_minimal()
 
 Education_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+In the No Diabetes group, the education is highly skewed with more
+frequency in high education levels, while in Diabetes group, the
+frequency of education level remains the same from 4 to 6. This means
+that they are in High school graduate, College 1 year to 3 years, and
+College 4 years or more education levels.</p>
 </div>
 <div id="fruits-via-diabetes" class="section level4">
 <h4>9. Fruits via Diabetes</h4>
@@ -870,8 +794,12 @@ Education_dist</code></pre>
   theme_minimal()
 
 Fruits_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" />
-#### 10. Veggies via Diabetes</p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>There is a higher proportion of fruit eating in the No Diabetes group
+than the Diabetes group.</p>
+</div>
+<div id="veggies-via-diabetes" class="section level4">
+<h4>10. Veggies via Diabetes</h4>
 <pre class="r"><code>Veggies_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
   geom_bar(aes(fill = Veggies), , position = &quot;dodge&quot;) +
@@ -883,6 +811,8 @@ Fruits_dist</code></pre>
 
 Veggies_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>For both Diabetes and No Diabetes groups, more people tend to eat
+veggies.</p>
 </div>
 <div id="smoker-via-diabetes" class="section level4">
 <h4>11. Smoker via Diabetes</h4>
@@ -896,8 +826,12 @@ Veggies_dist</code></pre>
   theme_minimal()
 
 Smoker_dist</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" />
-#### 12. PhysActivity via Diabetes</p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>More people are smokers than nonsmokers in the Diabetes group, while
+more people are smokers than nonsmokers in the No Diabetes group.</p>
+</div>
+<div id="physactivity-via-diabetes" class="section level4">
+<h4>12. PhysActivity via Diabetes</h4>
 <pre class="r"><code>Physactivity_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
   geom_bar(aes(fill = PhysActivity), , position = &quot;dodge&quot;) +
@@ -909,7 +843,11 @@ Smoker_dist</code></pre>
 
 Physactivity_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" />
-#### 13. HvyAlcoholConsump via Diabetes</p>
+Higher proportion of people have physical activities in the No Diabetes
+group comparing to the Diabetes group.</p>
+</div>
+<div id="hvyalcoholconsump-via-diabetes" class="section level4">
+<h4>13. HvyAlcoholConsump via Diabetes</h4>
 <pre class="r"><code>HvyAlcohol_dist = 
   ggplot(diabetes_new, aes(Diabetes_status, ..count..)) + 
   geom_bar(aes(fill = HvyAlcoholConsump), , position = &quot;dodge&quot;) +
@@ -921,27 +859,34 @@ Physactivity_dist</code></pre>
 
 HvyAlcohol_dist</code></pre>
 <p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<p><strong>According to the bar chart distribution, we decide to drop
+<p>According to the bar chart distribution, we decide to drop
 Heavyalcoholconsumption, heart disease attack these two variables due to
-following reasons. 1. For the heavy alcohol consumption, the samples
-drinking alcohol in large amount is overall too few in the sample, so
-the variable more not be fully accutately captured. Therefore, if we
-test on this variable, it may be not representitive and significant. 2.
-For the heart disease attack, it is the same reason that sample size
-with heart disease attack is too small, so it may not be representitive
-and meaningful to test on. We will also drop age and education these two
-variables due to following reasons. 1. For the age, the measure and
-categorize method is not suitable for our statistical test, since it is
-a categorical variable showing the individual’s age. (1 = 18-24 9 =
-60-64 13 = 80 or older), and each number does not represent the true age
-of the samples, so we cannot do a precise test on it. 2. For the
-education, it is the same reason that it is a categorical variable
-showing the individual’s Education level in the scale of 1-6. [1 = Never
-attended school or only kindergarten, 2 = Grades 1 through 8
+following reasons.</p>
+<ol style="list-style-type: decimal">
+<li><p>For the heavy alcohol consumption, the samples drinking alcohol
+in large amount is overall too few in the sample, so the variable more
+not be fully accutately captured. Therefore, if we test on this
+variable, it may be not representitive and significant.</p></li>
+<li><p>For the heart disease attack, it is the same reason that sample
+size with heart disease attack is too small, so it may not be
+representitive and meaningful to test on.</p></li>
+</ol>
+<p>We will also drop age and education these two variables due to
+following reasons.</p>
+<ol style="list-style-type: decimal">
+<li><p>For the age, the measure and categorize method is not suitable
+for our statistical test, since it is a categorical variable showing the
+individual’s age. (1 = 18-24 9 = 60-64 13 = 80 or older), and each
+number does not represent the true age of the samples, so we cannot do a
+precise test on it.</p></li>
+<li><p>For the education, it is the same reason that it is a categorical
+variable showing the individual’s Education level in the scale of 1-6.
+[1 = Never attended school or only kindergarten, 2 = Grades 1 through 8
 (Elementary), 3 = Grades 9 through 11 (Some high school), 4 = Grade 12
 or GED (High school graduate), 5 = College 1 year to 3 years (Some
 college or technical school), 6 = College 4 years or more (College
-graduate)].</strong></p>
+graduate)].</p></li>
+</ol>
 <p><strong>Therefore, now we come to close with 9 variables that are
 potential estimates in our model. They are: 1. High Blood Pressure. 2.
 High Cholesterol Level. 3. BMI. 4. Sex. 5. Fruits Consumption. 6.
@@ -1465,8 +1410,9 @@ nondiabetes_sample</code></pre>
 ## # ℹ 7 more variables: Education &lt;dbl&gt;, PhysActivity &lt;fct&gt;, Fruits &lt;fct&gt;,
 ## #   Veggies &lt;fct&gt;, Age &lt;dbl&gt;, HvyAlcoholConsump &lt;fct&gt;, weight_status &lt;chr&gt;</code></pre>
 <pre class="r"><code>sample_df = full_join(diabetes_sample, nondiabetes_sample)</code></pre>
-<pre><code>## Joining with `by = join_by(Diabetes_012, HighBP, HighChol, BMI, Smoker,
-## HeartDiseaseorAttack, Sex, Income, Education, PhysActivity, Fruits, Veggies,
+<pre><code>## Joining with `by = join_by(Diabetes_012, HighBP,
+## HighChol, BMI, Smoker, HeartDiseaseorAttack, Sex,
+## Income, Education, PhysActivity, Fruits, Veggies,
 ## Age, HvyAlcoholConsump, weight_status)`</code></pre>
 <pre class="r"><code>sample_df</code></pre>
 <pre><code>## # A tibble: 1,000 × 15
@@ -1509,12 +1455,7 @@ nondiabetes_sample</code></pre>
   ggtitle(&quot;Association between Cholesterol Level &amp; BMI&quot;) +
   scale_fill_brewer(palette = &quot;Pastel1&quot;) +
   theme_minimal()</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-35-1.png" width="672" />
-### Veggies + Fruits vs Physactivity</p>
-<div id="high-blood-pressure-in-different-diabetes-status"
-class="section level4">
-<h4>High Blood Pressure in Different Diabetes Status</h4>
-</div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 </div>
 </div>
 

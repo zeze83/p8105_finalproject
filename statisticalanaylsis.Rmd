@@ -12,12 +12,13 @@ library(tidyverse)
 library(readr)
 library(ggplot2)
 library(reshape2)
+library(infotheo)
 ```
 
 
 ## Statistical Analysis
 
-To investigate the relationship between the variables (...) and diabetes status, we conducted (...) statistical tests and build a predictive model. 
+To investigate the relationship between the variables High Blood Pressure, High Cholesterol Level, BMI, Sex, Fruits Consumption, Veggies Consumption, Smoking, Income Level, Physical Acitivity, and diabetes status, we conducted correlation and ANOVA statistical tests and build a predictive model. 
 
 First, we read in the dataset. 
 
@@ -27,8 +28,8 @@ diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 diabetes_data01 <- 
   diabetes_data01 |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
-         HeartDiseaseorAttack, Sex,Income, Education, 
-         PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump)|>
+         Income, Sex,
+         PhysActivity, Fruits, Veggies)|>
          filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
   mutate(Diabetes_012=ifelse(Diabetes_012=="2","1",Diabetes_012))|>
   mutate(Diabetes_012=as.numeric(Diabetes_012))
@@ -89,75 +90,6 @@ chi_square_results <- chi_square_results %>%
 print(chi_square_results)
 ```
 
-#### Chi-Square for Independence for Categorical Variables
-
-```{r read data}
-diabetes_data <- read_csv("data/diabetes_new1.csv") 
-numeric_cols <- sapply(diabetes_data, is.numeric)
-diabetes_data[numeric_cols] <- lapply(diabetes_data[numeric_cols], as.numeric)
-
-head(diabetes_data)
-
-diabetes_data <- diabetes_data |>
-     mutate(Diabetes_binary = factor(Diabetes_status, levels = c("No Diabetes", "Diabetes"), labels = c(0, 1)))
-
-
-
-cor(diabetes_data$BMI, as.numeric(diabetes_data$Diabetes_binary), method = "pearson") 
-cor(diabetes_data$Age, as.numeric(diabetes_data$Diabetes_binary), method = "pearson") 
-
-```
-```
-
-
-
-```{r}
-
-
-chisq_test_HighBP <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighBP))
-chisq_test_HighBP
-
-
-chisq_test_HighChol <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HighChol))
-chisq_test_HighChol
-
-chisq_test_HeartDiseaseorAttack <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HeartDiseaseorAttack))
-chisq_test_HeartDiseaseorAttack
-
-chisq_test_Smoker <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Smoker))
-chisq_test_Smoker
-
-chisq_test_Sex <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Sex))
-chisq_test_Sex
-
-chisq_test_Income <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Income))
-chisq_test_Income
-
-chisq_test_Education <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Education))
-chisq_test_Education
-
-chisq_test_PhysActivity <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$PhysActivity))
-chisq_test_PhysActivity
-
-chisq_test_Fruits <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Fruits))
-chisq_test_Fruits
-
-chisq_test_Veggies <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$Veggies))
-chisq_test_Veggies
-
-chisq_test_HvyAlcoholConsump <- chisq.test(table(diabetes_data$Diabetes_status, diabetes_data$HvyAlcoholConsump))
-chisq_test_HvyAlcoholConsump
-```
-```{r}
-# Install the 'infotheo' package if you haven't already
-# install.packages("infotheo")
-
-# Load the necessary library
-library(infotheo)
-
-# Assume X is your feature matrix and Y is the target variable
-# Replace these with your actual data
-```
 
 
 ```{r}
@@ -187,11 +119,3 @@ library(infotheo)
 
 ```
 
-
-#### Modeling with Logistic Regression
-
-```{r}
-model <- glm(Diabetes_binary ~ HighBP + HighChol + BMI + Smoker + HeartDiseaseorAttack + Sex + Income + Education + PhysActivity + Fruits + Veggies + Age + HvyAlcoholConsump, family = "binomial", data = diabetes_data)
-summary(model)
-
-```
