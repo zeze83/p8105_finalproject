@@ -403,14 +403,6 @@ Consumption, Smoking, Income Level, Physical Acitivity, and diabetes
 status, we conducted correlation and ANOVA statistical tests and build a
 predictive model.</p>
 <p>First, we read in the dataset.</p>
-<pre class="r"><code>diabetes_data01 &lt;- read_csv(&quot;data/Diabetes_012_data.csv&quot;, show_col_types = FALSE)
-diabetes_data01 &lt;- 
-  diabetes_data01 %&gt;%
-  dplyr::select(Diabetes_012, HighBP, HighChol, BMI, Smoker, 
-                Income, Sex, PhysActivity, Fruits, Veggies) %&gt;%
-  filter(Diabetes_012 == &#39;2&#39; | Diabetes_012 == &#39;0&#39;) %&gt;%
-  mutate(Diabetes_012 = ifelse(Diabetes_012 == &quot;2&quot;, &quot;1&quot;, Diabetes_012)) %&gt;%
-  mutate(Diabetes_012 = as.numeric(Diabetes_012))</code></pre>
 <div id="correlation-analysis-for-continuous-variables"
 class="section level4">
 <h4>Correlation analysis for Continuous Variables</h4>
@@ -426,6 +418,15 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
   labs(title = &quot;Correlation with Diabetes_012&quot;, x = &quot;Variable&quot;, y = &quot;Correlation&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))</code></pre>
 <p><img src="statisticalanaylsis_files/figure-html/correlation-1.png" width="672" /></p>
+<p>High Blood Pressure, High Cholesterol, and BMI show a positive
+correlation, indicating that an increase in these factors is associated
+with higher diabetes metrics.</p>
+<p>Physical Activity and increased Income exhibit a slight negative
+correlation, suggesting they may contribute to lower diabetes
+measures.</p>
+<p>Fruits, sex, smoker and vegetable intake also show varying degrees of
+correlation, reflecting the complex interplay between socioeconomic
+factors, dietary habits, and health outcomes.</p>
 </div>
 <div id="anova-test" class="section level4">
 <h4>ANOVA test</h4>
@@ -665,6 +666,7 @@ NA
 </tr>
 </tbody>
 </table>
+<p>We can see that all variables have significant small p-values.</p>
 </div>
 <div id="chi-square-test" class="section level4">
 <h4>Chi-Square test</h4>
@@ -834,6 +836,8 @@ Sex
 </tr>
 </tbody>
 </table>
+<p>We can see that all variables have significant p-values around to
+0.</p>
 </div>
 </div>
 

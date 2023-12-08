@@ -18,6 +18,7 @@ library(readr)
 library(ggplot2)
 library(table1)
 library(cowplot)
+library(broom)
 ```
 
 
@@ -80,8 +81,13 @@ We also predict that social factors including income, education, smoking habits,
 
 First, we read in our data from the csv file. 
 
+<<<<<<< HEAD
 ```{r}
 diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
+=======
+```{r echo=FALSE}
+diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
+>>>>>>> 5efc80d7ce17eab832bfc61ec2475e0637504a8b
 
 head(diabetes_raw0)
 ```
@@ -103,8 +109,6 @@ diabetes_raw  = diabetes_raw0 |>
          PhysActivity = factor(PhysActivity, levels = c(0, 1), labels = c("No", "Yes")))
 
 diabetes_raw
-
-
 ```
 
 ## Statistical Summary of Variables
@@ -112,8 +116,6 @@ diabetes_raw
 This table presented a statistical summary of the variables in our dataset.
 ```{r}
 summary(diabetes_raw)
-
-
 ```
 
 

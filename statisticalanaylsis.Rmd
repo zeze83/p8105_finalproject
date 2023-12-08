@@ -23,7 +23,7 @@ To investigate the relationship between the variables High Blood Pressure, High 
 
 First, we read in the dataset. 
 
-```{r read data01}
+```{r read data01,echo=FALSE}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv", show_col_types = FALSE)
 diabetes_data01 <- 
   diabetes_data01 %>%
@@ -50,6 +50,13 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
+High Blood Pressure, High Cholesterol, and BMI show a positive correlation, indicating that an increase in these factors is associated with higher diabetes metrics. 
+
+Physical Activity and increased Income exhibit a slight negative correlation, suggesting they may contribute to lower diabetes measures. 
+
+Fruits, sex, smoker and vegetable intake also show varying degrees of correlation, reflecting the complex interplay between socioeconomic factors, dietary habits, and health outcomes.
+
+
 #### ANOVA test
 ```{r anova}
 dependent_var <- diabetes_data01[[1]]
@@ -64,6 +71,8 @@ anova_results <- anova(lm_model)
 anova_results|>
   knitr::kable()
 ```
+
+We can see that all variables have significant small p-values.
 
 #### Chi-Square test
 ```{r chisq}
@@ -89,3 +98,5 @@ chi_square_results <- chi_square_results %>%
 chi_square_results|>
   knitr::kable()
 ```
+
+We can see that all variables have significant p-values around to 0.

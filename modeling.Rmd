@@ -18,7 +18,7 @@ library(MASS)
 library(kableExtra)
 ```
 
-```{r read data01}
+```{r read data01,echo=FALSE}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 
 diabetes_data01 <- 
