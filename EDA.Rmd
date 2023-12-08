@@ -4,8 +4,12 @@ output:
   html_document:
     toc: true
     toc_float: true
+    code_folding: hide
     theme: flatly
 ---
+```{r}
+
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -77,13 +81,13 @@ We also predict that social factors including income, education, smoking habits,
 First, we read in our data from the csv file. 
 
 ```{r}
-diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
+diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
 
-head(diabetes_raw)
+head(diabetes_raw0)
 ```
 
 ```{r}
-diabetes_raw <- diabetes_raw |>
+diabetes_raw  = diabetes_raw0 |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
          PhysActivity, Fruits, Veggies, Age, HvyAlcoholConsump) |>
@@ -419,27 +423,7 @@ diabetes_raw$weight_status <- sapply(diabetes_raw$BMI, categorize_bmi)
 
 ```
 
-#### Plot: Association between Diabetes Status and blood pressure status
-```{r}
-ggplot(diabetes_raw, aes(x = Diabetes_012, fill = HighBP)) +
-  geom_bar(position = "fill") +
-  ylab("Blood Pressure Status") +
-  xlab("Diabetes Status") +
-  ggtitle("Association between Diabetes Status and Blood Pressure Status") +
-  scale_fill_brewer(palette = "Pastel1") +
-  theme_minimal()
-```
 
-#### Plot: Association between Diabetes Status and Weight Status
-```{r}
-ggplot(diabetes_raw, aes(x = Diabetes_012, fill = weight_status)) +
-  geom_bar(position = "fill") +
-  ylab("Proportion") +
-  xlab("Diabetes Status") +
-  ggtitle("Association between Diabetes Status and Weight Status") +
-  scale_fill_brewer(palette = "Pastel1") +
-  theme_minimal()
-```
 
 #### Plot: Box plot distribution of BMI in different Diabetes status
 ```{r}
@@ -457,55 +441,13 @@ plotBMI = ggplot(diabetes_raw, aes(x = BMI, y = Diabetes_012, fill = Diabetes_01
 plotBMI
 ```
 
-#### Plot: Smoking Status over Diabetes Status
-```{r}
-plot_smoke = 
-  ggplot(diabetes_raw, aes(Smoker, ..count..)) + 
-  geom_bar(aes(fill = Diabetes_012), position = "dodge") +
-  scale_fill_brewer(palette = 'Pastel1') +
-  ylab("Frequencies") +
-  xlab("Smoking Status") +
-  ggtitle("Smoking Status Frequencies over Diabetes Status") +
-  theme_minimal()
-
-plot_smoke
-```
 ### Plot: Fruits or Veggies over different Diabetes Status
 ```{r}
 mosaicplot(Fruits~Veggies,data=diabetes_raw,col=c("Light Pink","Light Blue"))
 ```
 
 
-
-#### Plot: Distribution of Education Level over different Diabetes Status
-```{r}
-plot_education = 
-  ggplot(diabetes_raw, aes(x = Education, ..count..)) + 
-  geom_bar(aes(fill = Diabetes_012), position = 'dodge') +
-  scale_fill_brewer(palette = 'Pastel1') +
-  ylab("Frequencies") +
-  xlab("Education Level") +
-  ggtitle("Education Level Frequencies over Diabetes Status") +
-  theme_minimal()
-
-plot_education
-```
-
-#### Plot: Distribution of Income Level over different Diabetes Status
-```{r}
-plot_income = 
-  ggplot(diabetes_raw, aes(Income, ..count..)) + 
-  geom_bar(aes(fill = Diabetes_012), position = "dodge") +
-  scale_fill_brewer(palette = 'Pastel1') +
-  ylab("Frequencies") +
-  xlab("Income Level") +
-  ggtitle("Income Level Frequencies over Diabetes Status") +
-  theme_minimal()
-
-plot_income
-```
-
-#### Tables
+#### R Table test for P-value function
 ```{r}
 pvalue <- function(x, ...) {
     # Construct vectors of data y, and groups (strata) g
@@ -529,91 +471,32 @@ pvalue <- function(x, ...) {
 ```{r}
 ## Rtable_1 shows the demographics stats
 Rtable_1 = 
-  table1(~ factor(Sex) + Age| Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+  table1(~ factor(Sex) + factor(HighBP) + factor(HighChol) + BMI + factor(Smoker) + factor(Income) + factor(PhysActivity) + factor(Fruits) + factor(Veggies) | Diabetes_status, data=diabetes_new, overall=F, extra.col=list(`P-value`=pvalue))
 
 Rtable_1
 ```
 
-
+# In order to visualize the intercorrelation between different variables. We do a correlation heat map.
 ```{r}
-## Rtable_2 shows the physiology status factor stats
-Rtable_2 = 
-  table1(~ factor(HighBP) + factor(HighChol) + BMI + factor(weight_status) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
+if (!requireNamespace("heatmaply", quietly = TRUE)) {
+  install.packages("heatmaply")
+}
 
-Rtable_2
+# Load the required libraries
+library(heatmaply)
+library(dplyr)
+
+# Assuming 'diabetes_data' is your data frame
+# Replace 'diabetes_data' with your actual data frame name
+
+# Set the size of the plot
+options(repr.plot.width=12, repr.plot.height=10)
+
+# Create the heatmap
+heatmaply(cor(diabetes_raw0), 
+          main = "Correlation Heatmap", 
+          margins = c(100, 100),
+          notecol = "black", 
+          symmetric = TRUE)
 ```
-
-
-```{r}
-## Rtable_3 shows the social-economic factor stats
-Rtable_3 = 
-  table1(~ factor(Education) + factor(Income) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
-
-Rtable_3
-```
-
-We don't have any healthcare, so drop here
-```{r}
-## Rtable_4 shows the physical-habits factor stats
-#Rtable_4 = 
-#  table1(~ factor(Smoker) + factor(PhysActivity) + factor(Fruits) + factor(Veggies) + factor(HvyAlcoholConsump) + factor(AnyHealthcare) | Diabetes_012, data=diabetes_raw, overall=F, extra.col=list(`P-value`=pvalue))
-
-#Rtable_4
-```
-
-
-
-
-
-### Data Random sampling each 500 from both diabetes and nondiabetes population. Join them together.
-
-```{r}
-set.seed(123)
-
-diabetes= 
-  diabetes_raw |>
-  filter(Diabetes_012 == 'Diabetes')
-diabetes_sample =
-  sample_n(diabetes, size = 500, replace = FALSE)
-
-diabetes_sample
-
-nondiabetes= 
-  diabetes_raw |>
-  filter(Diabetes_012 == 'No Diabetes')
-nondiabetes_sample =
-  sample_n(nondiabetes, size = 500, replace = FALSE)
-
-nondiabetes_sample
-
-sample_df = full_join(diabetes_sample, nondiabetes_sample)
-sample_df
-
-```
-
-## Covariate visualisation
-
-### 1. HighBP + BMI 
-```{r}
-ggplot(sample_df, aes(fill=Diabetes_012, y=BMI, x=HighBP)) + 
-  geom_bar(position="dodge", stat="identity") +
-  ylab("BMI") +
-  xlab("Blood Pressure Level") +
-  ggtitle("Association between HighBP & BMI") +
-  scale_fill_brewer(palette = "Pastel1") +
-  theme_minimal()
-```
-
-
-### 1. HighChol + BMI 
-```{r}
-ggplot(sample_df, aes(fill=Diabetes_012, y=BMI, x=HighChol)) + 
-  geom_bar(position="dodge", stat="identity") +
-  ylab("BMI") +
-  xlab("Cholesterol Level") +
-  ggtitle("Association between Cholesterol Level & BMI") +
-  scale_fill_brewer(palette = "Pastel1") +
-  theme_minimal()
-```
-
 
