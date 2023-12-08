@@ -4,6 +4,7 @@ output:
   html_document:
     toc: true
     toc_float: true
+    code_folding: hide
     theme: flatly
 ---
 ```{r setup, include=FALSE}
@@ -22,7 +23,7 @@ To investigate the relationship between the variables High Blood Pressure, High 
 
 First, we read in the dataset. 
 
-```{r read data01,eval=FALSE}
+```{r read data01}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 
 diabetes_data01 <- 
@@ -39,7 +40,7 @@ head(diabetes_data01)
 
 
 #### Correlation analysis for Continuous Variables
-```{r correlation,eval=FALSE}
+```{r correlation}
 correlationX <- 
   diabetes_data01 |>
   select(-starts_with("Diabetes_012"))
@@ -54,7 +55,7 @@ ggplot(cor_df, aes(x = Variable, y = Correlation)) +
 ```
 
 #### ANOVA test
-```{r anova,eval=FALSE}
+```{r anova}
 dependent_var <- diabetes_data01[[1]]
 independent_vars <- diabetes_data01[,-1]
 independent_vars <- data.frame(lapply(independent_vars, function(x) as.factor(x)))
@@ -69,7 +70,7 @@ anova_results|>
 ```
 
 #### Chi-Square test
-```{r chisq,echo=FALSE}
+```{r chisq}
 chi_square_results <- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
 
 # Perform chi-square test for each independent variable

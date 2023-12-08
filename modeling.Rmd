@@ -4,26 +4,26 @@ output:
   html_document:
     toc: true
     toc_float: true
+    code_folding: hide
     theme: flatly
 ---
 
 Here is for modeling
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup,include=FALSE}
 library(tidyverse)
 library(readr)
 library(caret)
 library(MASS)
 ```
 
-```{r read data01, echo=FALSE}
+```{r read data01}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 
 diabetes_data01 <- 
   diabetes_data01 |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
-         Sex,Income, Education, 
+         Income, Sex,
          PhysActivity, Fruits, Veggies)|>
          filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
   mutate(Diabetes_012=ifelse(Diabetes_012=="2","1",Diabetes_012))|>
@@ -36,7 +36,7 @@ head(diabetes_data01)
 
 First, we split our data set into train and test data set in the portion of 2:1.
 
-```{r splittraintest, echo=FALSE}
+```{r splittraintest}
 # Set seed for reproducibility
 set.seed(1)
 
@@ -53,7 +53,7 @@ head(test)
 
 Then, we use train data set to fit our model with logistic regression.
 
-```{r model validation, echo=FALSE}
+```{r model validation}
 # model fitting
 model <- glm(Diabetes_012 ~ HighBP + HighChol + BMI + Smoker + Sex + Income + 
                Education + PhysActivity + Fruits + Veggies, data = train)
@@ -70,7 +70,7 @@ confusionMatrix(factor(binary_predictions), factor(test[["Diabetes_012"]]))
 
 After that, we validate the model fitting in test data set. By calculating the accuracy, 85.96% shows that our logistic regression model performs pretty well.
 
-```{r stepwise,echo=FALSE}
+```{r stepwise}
 backward_model <- MASS::stepAIC(model, direction = "backward")
 summary(backward_model)
 ```
