@@ -11,8 +11,8 @@ output:
 
 ```
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 library(tidyverse)
 library(readr)
 library(ggplot2)
@@ -83,16 +83,20 @@ First, we read in our data from the csv file.
 
 <<<<<<< HEAD
 ```{r}
-diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
-=======
-```{r echo=FALSE}
-diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
->>>>>>> 5efc80d7ce17eab832bfc61ec2475e0637504a8b
+#diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
+#=======
+#```{r echo=FALSE}
+#diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
 
-head(diabetes_raw0)
+#>>>>>>> 5efc80d7ce17eab832bfc61ec2475e0637504a8b
+
+#head(diabetes_raw0)
 ```
 
+
 ```{r}
+diabetes_raw0 <- read_csv("data/Diabetes_012_data.csv")
+diabetes_raw <- read_csv("data/Diabetes_012_data.csv")
 diabetes_raw  = diabetes_raw0 |>
   select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
          HeartDiseaseorAttack, Sex,Income, Education, 
@@ -149,7 +153,7 @@ diabetes_new =
   filter(Diabetes_012 == 'Diabetes' | Diabetes_012 == 'No Diabetes') |>
   rename(Diabetes_status = Diabetes_012)
 
-diabetes_new
+#diabetes_new
 write.csv(diabetes_new, "data/diabetes_new.csv", row.names = FALSE)
 
 diabetes_new1=diabetes_new|>
@@ -502,3 +506,4 @@ heatmaply(cor(diabetes_raw0),
           symmetric = TRUE)
 ```
 
+The correlation heatmap presents a visual representation of the strength and direction of the relationships between various health, lifestyle, and socioeconomic variables in relation to diabetes. The color spectrum from dark blue to bright yellow indicates the range of correlation coefficients, with darker shades representing weaker correlations and brighter shades indicating stronger ones. Notably, variables such as High Blood Pressure (HighBP), High Cholesterol (HighChol), and Body Mass Index (BMI) show brighter hues along the diagonal, suggesting a stronger positive correlation with the diabetes outcome (Diabetes_012). This implies that higher values of these factors are associated with a greater likelihood of diabetes. In contrast, variables like vegetable consumption (Veggies) exhibit a dark shade when correlated with High Cholesterol (HighChol), indicating a weak, potentially negative relationship.
