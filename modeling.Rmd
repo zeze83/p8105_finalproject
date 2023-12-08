@@ -20,16 +20,14 @@ library(MASS)
 ```{r read data01}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv")
 
+diabetes_data01 <- read_csv("data/Diabetes_012_data.csv", show_col_types = FALSE)
 diabetes_data01 <- 
   diabetes_data01 |>
-  select(Diabetes_012,HighBP,HighChol, BMI, Smoker, 
-         Income, Sex,
-         PhysActivity, Fruits, Veggies)|>
-         filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
-  mutate(Diabetes_012=ifelse(Diabetes_012=="2","1",Diabetes_012))|>
-  mutate(Diabetes_012=as.numeric(Diabetes_012))
-
-head(diabetes_data01)
+  dplyr::select(Diabetes_012, HighBP, HighChol, BMI, Smoker, 
+                Income, Sex, PhysActivity, Fruits, Veggies) |>
+  filter(Diabetes_012 == '2' | Diabetes_012 == '0') |>
+  mutate(Diabetes_012 = ifelse(Diabetes_012 == "2", "1", Diabetes_012)) |>
+  mutate(Diabetes_012 = as.numeric(Diabetes_012))
 ```
 
 #### Logistic Regression Model
@@ -55,8 +53,7 @@ Then, we use train data set to fit our model with logistic regression.
 
 ```{r model validation}
 # model fitting
-model <- glm(Diabetes_012 ~ HighBP + HighChol + BMI + Smoker + Sex + Income + 
-               Education + PhysActivity + Fruits + Veggies, data = train)
+model <- glm(Diabetes_012 ~ HighBP + HighChol + BMI + Smoker + Sex + Income + PhysActivity + Fruits + Veggies, data = train)
 summary(model)
 
 # model validation
