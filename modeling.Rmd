@@ -8,8 +8,6 @@ output:
     theme: flatly
 ---
 
-Here is for modeling
-
 ```{r setup,include=FALSE}
 library(tidyverse)
 library(readr)
@@ -98,8 +96,15 @@ head(binary_predictions)
 head(binary_predictions)
 ```
 
+### Prediction Accuracy
+
 ```{r prediction accuracy}
 # prediction accuracy
 confusionMatrix(factor(binary_predictions), factor(test[["Diabetes_012"]]))
 ```
 
+By calculating the accuracy, 85.89% shows that our logistic regression model performs pretty well. Therefore, we conclude that this model is the most appropriate model. 
+
+Therefore, our final model is
+
+Diabetes_binary = -0.050 + 0.123 HighBP +0.087 HighChol +0.008 BMI + 0.009 Smoker + 0.017 Sex - 0.017 Income - 0.036 PhysActivity - 0.008 Veggies.

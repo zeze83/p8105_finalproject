@@ -21,8 +21,6 @@ library(infotheo)
 
 To investigate the relationship between the variables High Blood Pressure, High Cholesterol Level, BMI, Sex, Fruits Consumption, Veggies Consumption, Smoking, Income Level, Physical Acitivity, and diabetes status, we conducted correlation and ANOVA statistical tests and build a predictive model. 
 
-First, we read in the dataset. 
-
 ```{r read data01,echo=FALSE}
 diabetes_data01 <- read_csv("data/Diabetes_012_data.csv", show_col_types = FALSE)
 diabetes_data01 <- 
@@ -36,6 +34,7 @@ diabetes_data01 <-
 
 
 ## Correlation analysis for Continuous Variables
+
 ```{r correlation}
 correlationX <- 
   diabetes_data01 |>
@@ -59,6 +58,7 @@ Fruits, sex, smoker and vegetable intake also show varying degrees of correlatio
 
 
 ## ANOVA test
+
 ```{r anova}
 dependent_var <- diabetes_data01[[1]]
 independent_vars <- diabetes_data01[,-1]
@@ -73,9 +73,12 @@ anova_results|>
   knitr::kable()
 ```
 
-We can see that all variables have significant small p-values.
+
+
+We can see that variables except Fruits have significant small p-values, while Fruits also have a p value around to 0.05 (0.067).
 
 ## Chi-Square test
+
 ```{r chisq}
 chi_square_results <- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
 
@@ -99,5 +102,7 @@ chi_square_results <- chi_square_results %>%
 chi_square_results|>
   knitr::kable()
 ```
+
+
 
 We can see that all variables have significant p-values around to 0.

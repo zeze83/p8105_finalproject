@@ -397,7 +397,6 @@ div.tocify {
 </div>
 
 
-<p>Here is for modeling</p>
 <div id="logistic-regression-model" class="section level1">
 <h1>Logistic Regression Model</h1>
 <p>First, we split our data set into train and test data set in the
@@ -938,6 +937,9 @@ class="section level3">
 <pre class="r"><code>head(binary_predictions)</code></pre>
 <pre><code>## 1 2 3 4 5 6 
 ## 0 0 0 0 0 0</code></pre>
+</div>
+<div id="prediction-accuracy" class="section level3">
+<h3>Prediction Accuracy</h3>
 <pre class="r"><code># prediction accuracy
 confusionMatrix(factor(binary_predictions), factor(test[[&quot;Diabetes_012&quot;]]))</code></pre>
 <pre><code>## Registered S3 methods overwritten by &#39;proxy&#39;:
@@ -971,6 +973,13 @@ confusionMatrix(factor(binary_predictions), factor(test[[&quot;Diabetes_012&quot
 ##                                           
 ##        &#39;Positive&#39; Class : 0               
 ## </code></pre>
+<p>By calculating the accuracy, 85.89% shows that our logistic
+regression model performs pretty well. Therefore, we conclude that this
+model is the most appropriate model.</p>
+<p>Therefore, our final model is</p>
+<p>Diabetes_binary = -0.050 + 0.123 HighBP +0.087 HighChol +0.008 BMI +
+0.009 Smoker + 0.017 Sex - 0.017 Income - 0.036 PhysActivity - 0.008
+Veggies.</p>
 </div>
 </div>
 
