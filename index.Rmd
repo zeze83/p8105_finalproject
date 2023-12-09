@@ -15,6 +15,10 @@ This is a [resource](https://www.kaggle.com/datasets/alexteboul/diabetes-health-
 
 Click to [learn more](Proposal.html) about our propopsal.
 
+# Screencast
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RIcy7sn-GAY" frameborder="0" allowfullscreen></iframe>
+
 # Exploratory Data Analysis
 
 There is a combined plots for our all variables.
