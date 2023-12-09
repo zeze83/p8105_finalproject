@@ -668,50 +668,10 @@ Veggies
 </tr>
 </tbody>
 </table>
-<pre class="r"><code># model validation
-yhat &lt;- predict(model, newdata = test, type = &quot;response&quot;)
-binary_predictions &lt;- ifelse(yhat &gt; 0.5, 1, 0)
-print(&quot;Head data of y hat for binary prediction&quot;)</code></pre>
-<pre><code>## [1] &quot;Head data of y hat for binary prediction&quot;</code></pre>
-<pre class="r"><code>head(binary_predictions)</code></pre>
-<pre><code>## 1 2 3 4 5 6 
-## 0 0 0 0 0 0</code></pre>
-<pre class="r"><code># prediction accuracy
-confusionMatrix(factor(binary_predictions), factor(test[[&quot;Diabetes_012&quot;]]))</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;proxy&#39;:
-##   method               from    
-##   print.registry_field registry
-##   print.registry_entry registry</code></pre>
-<pre><code>## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction     0     1
-##          0 70411 11420
-##          1   180   175
-##                                           
-##                Accuracy : 0.8589          
-##                  95% CI : (0.8565, 0.8612)
-##     No Information Rate : 0.8589          
-##     P-Value [Acc &gt; NIR] : 0.5225          
-##                                           
-##                   Kappa : 0.0211          
-##                                           
-##  Mcnemar&#39;s Test P-Value : &lt;2e-16          
-##                                           
-##             Sensitivity : 0.99745         
-##             Specificity : 0.01509         
-##          Pos Pred Value : 0.86044         
-##          Neg Pred Value : 0.49296         
-##              Prevalence : 0.85892         
-##          Detection Rate : 0.85673         
-##    Detection Prevalence : 0.99568         
-##       Balanced Accuracy : 0.50627         
-##                                           
-##        &#39;Positive&#39; Class : 0               
-## </code></pre>
-<p>After that, we validate the model fitting in test data set. By
-calculating the accuracy, 85.89% shows that our logistic regression
-model performs pretty well.</p>
+<p>Backward stepwise regression can sometimes exclude important
+variables or lead to overfitting. To double check the insignificant
+variable Fruits by using backward stepwise, so we drop Fruits and
+conclude that this model is the most appropriate model.</p>
 <pre class="r"><code>backward_model &lt;- MASS::stepAIC(model, direction = &quot;backward&quot;)</code></pre>
 <pre><code>## Start:  AIC=99110.47
 ## Diabetes_012 ~ HighBP + HighChol + BMI + Smoker + Sex + Income + 
@@ -955,6 +915,50 @@ Veggies
 </tr>
 </tbody>
 </table>
+<p>After that, we validate the model fitting in test data set. By
+calculating the accuracy, 85.89% shows that our logistic regression
+model performs pretty well.</p>
+<pre class="r"><code># model validation
+yhat &lt;- predict(model, newdata = test, type = &quot;response&quot;)
+binary_predictions &lt;- ifelse(yhat &gt; 0.5, 1, 0)
+print(&quot;Head data of y hat for binary prediction&quot;)</code></pre>
+<pre><code>## [1] &quot;Head data of y hat for binary prediction&quot;</code></pre>
+<pre class="r"><code>head(binary_predictions)</code></pre>
+<pre><code>## 1 2 3 4 5 6 
+## 0 0 0 0 0 0</code></pre>
+<pre class="r"><code># prediction accuracy
+confusionMatrix(factor(binary_predictions), factor(test[[&quot;Diabetes_012&quot;]]))</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;proxy&#39;:
+##   method               from    
+##   print.registry_field registry
+##   print.registry_entry registry</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction     0     1
+##          0 70411 11420
+##          1   180   175
+##                                           
+##                Accuracy : 0.8589          
+##                  95% CI : (0.8565, 0.8612)
+##     No Information Rate : 0.8589          
+##     P-Value [Acc &gt; NIR] : 0.5225          
+##                                           
+##                   Kappa : 0.0211          
+##                                           
+##  Mcnemar&#39;s Test P-Value : &lt;2e-16          
+##                                           
+##             Sensitivity : 0.99745         
+##             Specificity : 0.01509         
+##          Pos Pred Value : 0.86044         
+##          Neg Pred Value : 0.49296         
+##              Prevalence : 0.85892         
+##          Detection Rate : 0.85673         
+##    Detection Prevalence : 0.99568         
+##       Balanced Accuracy : 0.50627         
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
 <p>Backward stepwise regression can sometimes exclude important
 variables or lead to overfitting. To double check the insignificant
 variable Smoker by using backward stepwise, which is the same as our
