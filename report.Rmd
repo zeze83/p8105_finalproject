@@ -89,7 +89,7 @@ Beside that, we also make a small heat map to show the correlation between each 
 
 First, we plotted correlation between predictors. The following bar chart depicts the correlation coefficients between various lifestyle and demographic variables with diabetes. High Blood Pressure, High Cholesterol, and BMI show a positive correlation, indicating that an increase in these factors is associated with higher diabetes metrics. Physical Activity and increased Income exhibit a slight negative correlation, suggesting they may contribute to lower diabetes measures. Fruits, sex, smoker and vegetable intake also show varying degrees of correlation, reflecting the complex interplay between socioeconomic factors, dietary habits, and health outcomes.
 
-ANOVA is used when one variable is numeric and one is categorical, such as numerical input variables and a classification target variable in a classification task. The results of this test can be used for feature selection where those features that are independent of the target variable can be removed from the dataset. In this case, all variables have p-values smaller than 0.05, which is significant .
+ANOVA is used when one variable is numeric and one is categorical, such as numerical input variables and a classification target variable in a classification task. The results of this test can be used for feature selection where those features that are independent of the target variable can be removed from the dataset. In this case, we can see that variables except Fruits have significant small p-values, while Fruits also have a p value around 0.05 (0.067).
 
 In this dataset, we have many categorical variables, thus we use Chi-square test for independence. When two features are independent, the observed count is close to the expected count, thus we will have a smaller Chi-Square value. Therefore, high Chi-Square value indicates that the hypothesis of independence is incorrect.  In our table, we can see that all variables have significant small p-values. Therefore, we can conclude that all variables are independent of each other.
 
@@ -97,9 +97,12 @@ Following the above two tests, we decide to keep all variables for the model tra
 
 ### Model Building
 
-We plan to fit our dataset by logistic regression models.  First, we split our data set into train and test data set in the portion of 2:1. Then, we use train data set to fit our model with logistic regression. From the summary table, we can see that only fruits are insignificant with a p value of 0.401. After that, we validate the model fitting in test data set. By calculating the accuracy, 85.89% shows that our logistic regression model performs pretty well. Therefore, backward stepwise regression can sometimes exclude important variables or lead to overfitting. To double check the insignificant variable Smoker by using backward stepwise, which removes Fruits compared to our logistic regression model, so we conclude that our model is the most appropriate model. As a result, 
+We plan to fit our dataset by logistic regression models.  First, we split our data set into train and test data set in the portion of 2:1. Then, we use train data set to fit our model with logistic regression. From the summary table, we can see that only fruits are insignificant with a p value of 0.401. After that, we validate the model fitting in test data set. Backward stepwise regression can sometimes exclude important variables or lead to overfitting. To double check the insignificant variable Fruits by using backward stepwise, which removes Fruits compared to our logistic regression model. As a result, 
+
 Diabetes_binary = -0.050 + 0.123 HighBP +0.087 HighChol +0.008 BMI + 0.009 Smoker + 0.017 Sex - 0.017 Income - 0.036 PhysActivity - 0.008 Veggies,
-is our final model.
+
+is our final model. By calculating the accuracy, 85.89% shows that our logistic regression model performs pretty well. Therefore, we conclude that this model is the most appropriate model. 
+
 
 ### Shiny
 

@@ -661,8 +661,9 @@ factors, dietary habits, and health outcomes.</p>
 such as numerical input variables and a classification target variable
 in a classification task. The results of this test can be used for
 feature selection where those features that are independent of the
-target variable can be removed from the dataset. In this case, all
-variables have p-values smaller than 0.05, which is significant .</p>
+target variable can be removed from the dataset. In this case, we can
+see that variables except Fruits have significant small p-values, while
+Fruits also have a p value around 0.05 (0.067).</p>
 <p>In this dataset, we have many categorical variables, thus we use
 Chi-square test for independence. When two features are independent, the
 observed count is close to the expected count, thus we will have a
@@ -682,15 +683,16 @@ split our data set into train and test data set in the portion of 2:1.
 Then, we use train data set to fit our model with logistic regression.
 From the summary table, we can see that only fruits are insignificant
 with a p value of 0.401. After that, we validate the model fitting in
-test data set. By calculating the accuracy, 85.89% shows that our
-logistic regression model performs pretty well. Therefore, backward
-stepwise regression can sometimes exclude important variables or lead to
-overfitting. To double check the insignificant variable Smoker by using
-backward stepwise, which removes Fruits compared to our logistic
-regression model, so we conclude that our model is the most appropriate
-model. As a result, Diabetes_binary = -0.050 + 0.123 HighBP +0.087
-HighChol +0.008 BMI + 0.009 Smoker + 0.017 Sex - 0.017 Income - 0.036
-PhysActivity - 0.008 Veggies, is our final model.</p>
+test data set. Backward stepwise regression can sometimes exclude
+important variables or lead to overfitting. To double check the
+insignificant variable Fruits by using backward stepwise, which removes
+Fruits compared to our logistic regression model. As a result,</p>
+<p>Diabetes_binary = -0.050 + 0.123 HighBP +0.087 HighChol +0.008 BMI +
+0.009 Smoker + 0.017 Sex - 0.017 Income - 0.036 PhysActivity - 0.008
+Veggies,</p>
+<p>is our final model. By calculating the accuracy, 85.89% shows that
+our logistic regression model performs pretty well. Therefore, we
+conclude that this model is the most appropriate model.</p>
 </div>
 <div id="shiny" class="section level3">
 <h3>Shiny</h3>
