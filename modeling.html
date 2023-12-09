@@ -398,8 +398,8 @@ div.tocify {
 
 
 <p>Here is for modeling</p>
-<div id="logistic-regression-model" class="section level4">
-<h4>Logistic Regression Model</h4>
+<div id="logistic-regression-model" class="section level1">
+<h1>Logistic Regression Model</h1>
 <p>First, we split our data set into train and test data set in the
 portion of 2:1.</p>
 <pre class="r"><code># Set seed for reproducibility
@@ -434,6 +434,9 @@ head(train)</code></pre>
 ## 5            0      1        0    30      1      7     0            0      0
 ## 6            1      1        1    30      1      1     0            0      1
 ## # ℹ 1 more variable: Veggies &lt;dbl&gt;</code></pre>
+</div>
+<div id="model-fitting" class="section level1">
+<h1>Model Fitting</h1>
 <p>Then, we use train data set to fit our model with logistic
 regression.</p>
 <pre class="r"><code># model fitting
@@ -915,6 +918,9 @@ Veggies
 </tr>
 </tbody>
 </table>
+</div>
+<div id="model-validation" class="section level1">
+<h1>Model Validation</h1>
 <p>After that, we validate the model fitting in test data set. By
 calculating the accuracy, 85.89% shows that our logistic regression
 model performs pretty well.</p>
@@ -923,6 +929,12 @@ yhat &lt;- predict(model, newdata = test, type = &quot;response&quot;)
 binary_predictions &lt;- ifelse(yhat &gt; 0.5, 1, 0)
 print(&quot;Head data of y hat for binary prediction&quot;)</code></pre>
 <pre><code>## [1] &quot;Head data of y hat for binary prediction&quot;</code></pre>
+<pre class="r"><code>head(binary_predictions)</code></pre>
+<pre><code>## 1 2 3 4 5 6 
+## 0 0 0 0 0 0</code></pre>
+<div id="head-data-of-y-hat-for-binary-prediction"
+class="section level3">
+<h3>Head data of y hat for binary prediction</h3>
 <pre class="r"><code>head(binary_predictions)</code></pre>
 <pre><code>## 1 2 3 4 5 6 
 ## 0 0 0 0 0 0</code></pre>
@@ -959,11 +971,7 @@ confusionMatrix(factor(binary_predictions), factor(test[[&quot;Diabetes_012&quot
 ##                                           
 ##        &#39;Positive&#39; Class : 0               
 ## </code></pre>
-<p>Backward stepwise regression can sometimes exclude important
-variables or lead to overfitting. To double check the insignificant
-variable Smoker by using backward stepwise, which is the same as our
-logistic regression model, so we conclude that our model is the most
-appropriate model.</p>
+</div>
 </div>
 
 

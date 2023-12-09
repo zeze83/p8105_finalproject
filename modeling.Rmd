@@ -30,7 +30,7 @@ diabetes_data01 <-
   mutate(Diabetes_012 = as.numeric(Diabetes_012))
 ```
 
-#### Logistic Regression Model
+# Logistic Regression Model
 
 First, we split our data set into train and test data set in the portion of 2:1.
 
@@ -48,6 +48,8 @@ test=diabetes_data01[-trainIndex,]
 head(train)
 head(test)
 ```
+
+# Model Fitting
 
 Then, we use train data set to fit our model with logistic regression.
 
@@ -78,6 +80,8 @@ knitr::kable(tidy_backward, format = "html", caption = "Backward Stepwise Model 
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
+# Model Validation
+
 After that, we validate the model fitting in test data set. By calculating the accuracy, 85.89% shows that our logistic regression model performs pretty well.
 
 ```{r model validation}
@@ -86,9 +90,16 @@ yhat <- predict(model, newdata = test, type = "response")
 binary_predictions <- ifelse(yhat > 0.5, 1, 0)
 print("Head data of y hat for binary prediction")
 head(binary_predictions)
+```
 
+### Head data of y hat for binary prediction
+
+```{r head data for y hat}
+head(binary_predictions)
+```
+
+```{r prediction accuracy}
 # prediction accuracy
 confusionMatrix(factor(binary_predictions), factor(test[["Diabetes_012"]]))
 ```
 
-Backward stepwise regression can sometimes exclude important variables or lead to overfitting. To double check the insignificant variable Smoker by using backward stepwise, which is the same as our logistic regression model, so we conclude that our model is the most appropriate model.
