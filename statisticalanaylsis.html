@@ -403,9 +403,10 @@ Consumption, Smoking, Income Level, Physical Acitivity, and diabetes
 status, we conducted correlation and ANOVA statistical tests and build a
 predictive model.</p>
 <p>First, we read in the dataset.</p>
+</div>
 <div id="correlation-analysis-for-continuous-variables"
-class="section level4">
-<h4>Correlation analysis for Continuous Variables</h4>
+class="section level2">
+<h2>Correlation analysis for Continuous Variables</h2>
 <pre class="r"><code>correlationX &lt;- 
   diabetes_data01 |&gt;
   dplyr::select(-starts_with(&quot;Diabetes_012&quot;))
@@ -428,8 +429,8 @@ measures.</p>
 correlation, reflecting the complex interplay between socioeconomic
 factors, dietary habits, and health outcomes.</p>
 </div>
-<div id="anova-test" class="section level4">
-<h4>ANOVA test</h4>
+<div id="anova-test" class="section level2">
+<h2>ANOVA test</h2>
 <pre class="r"><code>dependent_var &lt;- diabetes_data01[[1]]
 independent_vars &lt;- diabetes_data01[,-1]
 independent_vars &lt;- data.frame(lapply(independent_vars, function(x) as.factor(x)))
@@ -668,8 +669,8 @@ NA
 </table>
 <p>We can see that all variables have significant small p-values.</p>
 </div>
-<div id="chi-square-test" class="section level4">
-<h4>Chi-Square test</h4>
+<div id="chi-square-test" class="section level2">
+<h2>Chi-Square test</h2>
 <pre class="r"><code>chi_square_results &lt;- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
 
 # Perform chi-square test for each independent variable
@@ -838,7 +839,6 @@ Sex
 </table>
 <p>We can see that all variables have significant p-values around to
 0.</p>
-</div>
 </div>
 
 

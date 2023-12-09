@@ -35,7 +35,7 @@ diabetes_data01 <-
 ```
 
 
-#### Correlation analysis for Continuous Variables
+## Correlation analysis for Continuous Variables
 ```{r correlation}
 correlationX <- 
   diabetes_data01 |>
@@ -58,7 +58,7 @@ Fruits, sex, smoker and vegetable intake also show varying degrees of correlatio
 
 
 
-#### ANOVA test
+## ANOVA test
 ```{r anova}
 dependent_var <- diabetes_data01[[1]]
 independent_vars <- diabetes_data01[,-1]
@@ -75,7 +75,7 @@ anova_results|>
 
 We can see that all variables have significant small p-values.
 
-#### Chi-Square test
+## Chi-Square test
 ```{r chisq}
 chi_square_results <- data.frame(Variable = character(), ChiSquare = numeric(), PValue = numeric(), stringsAsFactors = FALSE)
 
